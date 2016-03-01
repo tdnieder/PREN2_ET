@@ -78,6 +78,63 @@ extern "C" {
 void Cpu_OnNMIINT(void);
 
 
+/*
+** ===================================================================
+**     Event       :  motor_rechts_OnEnd (module Events)
+**
+**     Component   :  motor_rechts [PWM]
+**     Description :
+**         This event is called when the specified number of cycles has
+**         been generated. (Only when the component is enabled -
+**         <Enable> and the events are enabled - <EnableEvent>). The
+**         event is available only when the <Interrupt service/event>
+**         property is enabled and selected peripheral supports
+**         appropriate interrupt.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void motor_rechts_OnEnd(void);
+
+/*
+** ===================================================================
+**     Event       :  TU1_OnChannel0 (module Events)
+**
+**     Component   :  TU1 [TimerUnit_LDD]
+*/
+/*!
+**     @brief
+**         Called if compare register match the counter registers or
+**         capture register has a new content. OnChannel0 event and
+**         Timer unit must be enabled. See [SetEventMask] and
+**         [GetEventMask] methods. This event is available only if a
+**         [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
+*/
+/* ===================================================================*/
+void TU1_OnChannel0(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  motor_links_OnEnd (module Events)
+**
+**     Component   :  motor_links [PWM]
+**     Description :
+**         This event is called when the specified number of cycles has
+**         been generated. (Only when the component is enabled -
+**         <Enable> and the events are enabled - <EnableEvent>). The
+**         event is available only when the <Interrupt service/event>
+**         property is enabled and selected peripheral supports
+**         appropriate interrupt.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void motor_links_OnEnd(void);
+
 /* END Events */
 
 #ifdef __cplusplus

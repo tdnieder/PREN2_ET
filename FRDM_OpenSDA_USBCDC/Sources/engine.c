@@ -11,6 +11,9 @@
  * Initialisiert den Motor mit 0.1Mhz und den Duty Cycle mit 50 %
  * ausserdem wurde das BIT noch gesetzt PTE2 auf 1
  */
+ uint16 counterLeft;
+ uint16 counterRight;
+
 void initEngines(void){
 	MotorBit_SetDir(true);//PTE2
 	MotorBit_SetVal();
@@ -35,3 +38,28 @@ void calcVelocityToNumber(int numberFromPi){
 
 }
 
+/*
+ * Pro Durchgang plus eins
+ */
+interrupt motor_links_OnEnd(){
+	counterLeft = 1+counterLeft;
+}
+
+/*
+ * Pro Durchgang plus eins
+ */
+interrupt motor_rechts_OnEnd(){
+	counterRight = 1+counterRight;
+}
+/*
+ * Gibt den Counter Wert des Rechten Rades zurück
+ */
+int getValueRight(){
+	return counterRight;
+}
+/*
+ * Gibt den Counter Wert des Linken Rades zurück
+ */
+int getValueLeft(){
+	return counterLeft;
+}

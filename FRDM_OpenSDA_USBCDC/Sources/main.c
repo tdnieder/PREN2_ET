@@ -73,7 +73,7 @@ static uint8_t in_buffer[USB1_DATA_BUFF_SIZE];
 //---------------------------
 void CDC_Run(void){
 	int i;
-
+	int k;
 	for(;;){	//endless loop
 		while(CDC1_App_Task(cdc_buffer, sizeof(cdc_buffer))==ERR_BUSOFF){
 			// device not enumerated
@@ -87,9 +87,24 @@ void CDC_Run(void){
 				i++;
 			}
 			in_buffer[i] = '\0';
-			(void)CDC1_SendString((unsigned char*)"echo: ");
+			//TODO SWITCH CASE
+			switch(in_buffer)
+			{
+			   case constant1:
+			       statements
+			   break;
+
+			   case constant2:
+			       statements
+			   break;
+
+			   case constant3:
+			       statements
+			   break;
+			}
+/*			(void)CDC1_SendString((unsigned char*)"echo: ");
 			(void)CDC1_SendString(in_buffer);
-			(void)CDC1_SendString((unsigned char*)"\r\n");
+			(void)CDC1_SendString((unsigned char*)"\r\n");*/
 		}
 		else{
 			WAIT1_Waitms(10);
