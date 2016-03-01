@@ -10,7 +10,11 @@
 
 void initEngines(void);
 
-void setVelocity(int v);
+void setVelocityleft(int);
 
+void setVelocityright(int);
 
+void calcVelocityToNumber(int);
+
+void calcVelocityToNumber(int,int);
 #endif /* SOURCES_ENGINE_H_ */

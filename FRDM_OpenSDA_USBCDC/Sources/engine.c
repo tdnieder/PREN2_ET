@@ -21,3 +21,17 @@ void initEngines(void){
 	motor_links_SetRatio16(50);
 	motor_rechts_SetRatio16(50);
 }
+
+
+void setVelocityleft(int v){
+	motor_links_SetDutyUS(v);//PTE22
+}
+
+void setVelocityright(int v){
+	motor_rechts_SetDutyUS(v);//PTB3
+}
+
+void calcVelocityToNumber(int numberFromPi){
+
+}
+
