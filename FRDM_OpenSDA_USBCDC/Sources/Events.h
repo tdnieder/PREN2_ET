@@ -33,6 +33,7 @@
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
+/*
 #include "LEDRed.h"
 #include "LEDpin1.h"
 #include "BitIoLdd1.h"
@@ -48,6 +49,14 @@
 #include "CDC1.h"
 #include "Tx1.h"
 #include "Rx1.h"
+#include "motor_links.h"
+#include "PwmLdd1.h"
+#include "TU1.h"
+#include "motor_rechts.h"
+#include "PwmLdd2.h"
+#include "MotorBit.h"
+#include "BitIoLdd4.h"
+*/
 
 #ifdef __cplusplus
 extern "C" {

@@ -45,12 +45,20 @@
 #include "CDC1.h"
 #include "Tx1.h"
 #include "Rx1.h"
+#include "motor_links.h"
+#include "PwmLdd1.h"
+#include "TU1.h"
+#include "motor_rechts.h"
+#include "PwmLdd2.h"
+#include "MotorBit.h"
+#include "BitIoLdd4.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
 /* User includes (#include below this line is not maintained by Processor Expert) */
+#include "engine.h"
 
 //---------------------------
 //Global variables
