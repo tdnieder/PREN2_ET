@@ -61,6 +61,7 @@
 #include "engine.h"
 #include "greifer.h"
 #include "mulde.h"
+#include "interface.h"
 
 //---------------------------
 //Global variables
@@ -71,49 +72,6 @@ static uint8_t in_buffer[USB1_DATA_BUFF_SIZE];
 //---------------------------
 //Methods
 //---------------------------
-void CDC_Run(void){
-	int i;
-	int k;
-	for(;;){	//endless loop
-		while(CDC1_App_Task(cdc_buffer, sizeof(cdc_buffer))==ERR_BUSOFF){
-			// device not enumerated
-			LEDRed_Neg(); LEDGreen_Off();
-			WAIT1_Waitms(10);
-		}
-		LEDRed_Off(); LEDGreen_Neg();
-		if(CDC1_GetCharsInRxBuf() != 0){
-			i = 0;
-			while(i < sizeof(in_buffer)-1 && CDC1_GetChar(&in_buffer[i])==ERR_OK){
-				i++;
-			}
-			in_buffer[i] = '\0';
-			//TODO SWITCH CASE
-			switch(in_buffer)
-			{
-			   case constant1:
-			       statements
-			   break;
-
-			   case constant2:
-			       statements
-			   break;
-
-			   case constant3:
-			       statements
-			   break;
-			}
-/*			(void)CDC1_SendString((unsigned char*)"echo: ");
-			(void)CDC1_SendString(in_buffer);
-			(void)CDC1_SendString((unsigned char*)"\r\n");*/
-		}
-		else{
-			WAIT1_Waitms(10);
-		}
-	}
-}
-
-
-
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
