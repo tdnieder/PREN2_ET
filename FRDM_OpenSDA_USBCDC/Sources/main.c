@@ -52,6 +52,8 @@
 #include "PwmLdd2.h"
 #include "MotorBit.h"
 #include "BitIoLdd4.h"
+#include "TrigUS.h"
+#include "TU2.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -62,16 +64,20 @@
 #include "greifer.h"
 #include "mulde.h"
 #include "interface.h"
+#include "ultrasonic.h"
 
 //---------------------------
 //Global variables
 //---------------------------
-static uint8_t cdc_buffer[USB1_DATA_BUFF_SIZE];
-static uint8_t in_buffer[USB1_DATA_BUFF_SIZE];
-
+//static uint8_t cdc_buffer[USB1_DATA_BUFF_SIZE];
+//static uint8_t in_buffer[USB1_DATA_BUFF_SIZE];
+//static char* functionName;
+//static char* param1;
+//static char* param2;
 //---------------------------
 //Methods
 //---------------------------
+
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
@@ -83,7 +89,8 @@ int main(void)
   PE_low_level_init();
   /*** End of Processor Expert internal initialization.                    ***/
 
-  CDC_Run();
+ CDC_Run();
+
 
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
@@ -93,18 +100,4 @@ int main(void)
   /*** End of RTOS startup code.  ***/
   /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
   for(;;){}
-  /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
-} /*** End of main routine. DO NOT MODIFY THIS TEXT!!! ***/
-
-/* END main */
-/*!
-** @}
-*/
-/*
-** ###################################################################
-**
-**     This file was created by Processor Expert 10.5 [05.21]
-**     for the Freescale Kinetis series of microcontrollers.
-**
-** ###################################################################
-*/
+}/*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/

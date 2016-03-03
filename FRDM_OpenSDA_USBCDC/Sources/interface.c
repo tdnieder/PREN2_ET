@@ -1,129 +1,116 @@
 /*
  * interface.c
+
  *
  *  Created on: 02.03.2016
  *      Author: danie
  */
+#include "interface.h"
+#include "Cpu.h"
+#include "Events.h"
+#include "LEDRed.h"
+#include "LEDpin1.h"
+#include "BitIoLdd1.h"
+#include "LEDGreen.h"
+#include "LEDpin2.h"
+#include "BitIoLdd2.h"
+#include "LEDBlue.h"
+#include "LEDpin3.h"
+#include "BitIoLdd3.h"
+#include "WAIT1.h"
+#include "USB1.h"
+#include "USB0.h"
+#include "CDC1.h"
+#include "Tx1.h"
+#include "Rx1.h"
+#include "motor_links.h"
+#include "PwmLdd1.h"
+#include "TU1.h"
+#include "motor_rechts.h"
+#include "PwmLdd2.h"
+#include "MotorBit.h"
+#include "BitIoLdd4.h"
 
-/*
- * Ist mit dem PI verbunden unendliche schlaufe.
- */
-char *functionName;
-char *param1;
-char *param2;
+static uint8_t cdc_buffer[USB1_DATA_BUFF_SIZE];
+static uint8_t in_buffer[USB1_DATA_BUFF_SIZE];
+char* functionName;
+char* param1;
+char* param2;
+int returnValue;
 
-void CDC_Run(void){
-	int i;
-	int k;
-	char* word;
-	for(;;){	//endless loop
-		while(CDC1_App_Task(cdc_buffer, sizeof(cdc_buffer))==ERR_BUSOFF){
-		}
-
-		//Warten bis Funktion ausgeführt wird Lockout!!
-
-		if(CDC1_GetCharsInRxBuf() != 0){
-			i = 0;
-			while(i < sizeof(in_buffer)-1 && CDC1_GetChar(&in_buffer[i])==ERR_OK){
-				i++;
-			}
-			in_buffer[i] = '\0';
-			while(in_buffer == NULL){
-			word = stringToken(in_buffer);
-			switchCase(word);
-			}
-		}
-		else{
-			WAIT1_Waitms(10);
-		}
-	}
-}
 /*
  * Sollte den String in_buffer in Stücke zerteilen und einzelne Stücke zurückgeben
  */
-char* stringToken(char* answer){
-	char delimiter[] = ",;";
-
-	functionName = strtok(answer, delimiter);
-
-	while(functionName != NULL) {
-		(void)CDC1_SendString(functionName);
-		(void)CDC1_SendString((unsigned char*)"\r\n");
-	 	functionName = strtok(NULL, delimiter);
+void cutString(char* answer) {
+	//Danach wird getrennt
+	char delimiter[2] = ",";
+	functionName = (char*) strtok(answer, delimiter);
+	if (functionName != NULL) {
+		param1 = (char*) strtok(NULL, delimiter);
+		if (param1 != NULL) {
+			param2 = (char*) strtok(NULL, delimiter);
+		}
 	}
-	return functionName;
+
 }
 /*
  * wählt mit dem String eine Funktion auf.
  * Parameter fehlt noch
  */
-void switchCase(char* funtion){
-	switch(function)
-	{
-	   case "init":
-		   initEngines();
-	   break;
-
-	   case "takeContainer":
-	       //statements
-	   break;
-
-	   case "setCorrectionAngle":
-	       //statements
-	   break;
-
-	   case "getDistance":
-	       //statements
-	   break;
-
-	   case "checkEnemy":
-		   //statements
-	   break;
-
-	   case "unloadThrough":
-		   //statements
-	   break;
-
-	   case "setGrabberPosition":
-		   //statements
-	   break;
-
-	   case "setSpeed":
-		   //statements
-	   break;
-
+void switchCase(char* function) {
+	if (strcmp(function, "init") == 0) {
+		initEngines();
 	}
+    if (strcmp(function, "setCorrectionAngle") == 0) {
+    	//setCorrectionAngle(param1);
+    }
+    if (strcmp(function, "getDistance") == 0) {
+    	//getDistance();
+    	CDC1_SendString(1);//eig getDistance
+    }
+    if (strcmp(function, "checkEnemy") == 0) {
+    	//checkEnemy();
+    	CDC1_SendString(1);//checkEnemy
+    }
+    if (strcmp(function, "unloadThrough") == 0) {
+    	//unloadThrough();
+    }
+    if (strcmp(function, "setGrabberPosition") == 0) {
+    	//setGrabberPosition(param1,param2);
+    }
+    if (strcmp(function, "setSpeed") == 0) {
+    	//setSpeed(param1);
+    }
+    if (strcmp(function, "takeContainer") == 0) {
+    	//takeContainer();
+    }
+	//clear Variablen!!
+	functionName = "NULL";
+	param1 = "NULL";
+	param2 = "NULL";
 }
 
-/*
-void CDC_Run(void){
+void CDC_Run() {
 	int i;
 	int k;
 	char* word;
-	for(;;){	//endless loop
-		while(CDC1_App_Task(cdc_buffer, sizeof(cdc_buffer))==ERR_BUSOFF){
-			// device not enumerated
-			//LEDRed_Neg(); LEDGreen_Off();
+	for (;;) {	//endless loop
+		while (CDC1_App_Task(cdc_buffer, sizeof(cdc_buffer)) == ERR_BUSOFF) {
 			WAIT1_Waitms(10);
 		}
-		//LEDRed_Off(); LEDGreen_Neg();
-		if(CDC1_GetCharsInRxBuf() != 0){
+		LEDGreen_On();
+		if (CDC1_GetCharsInRxBuf() != 0) {
 			i = 0;
-			while(i < sizeof(in_buffer)-1 && CDC1_GetChar(&in_buffer[i])==ERR_OK){
+			while (i < sizeof(in_buffer) - 1
+					&& CDC1_GetChar(&in_buffer[i]) == ERR_OK) {
 				i++;
 			}
 			in_buffer[i] = '\0';
-			while(in_buffer == NULL){
-			word = stringToken(in_buffer);
-			(void)CDC1_SendString((unsigned char*)"echo: ");
-			(void)CDC1_SendString(in_buffer);
-			(void)CDC1_SendString((unsigned char*)"\r\n");
-			}
-		}
-		else{
+			cutString((char*) in_buffer);
+			switchCase(functionName);
+		} else {
 			WAIT1_Waitms(10);
 		}
 	}
 }
 
-*/

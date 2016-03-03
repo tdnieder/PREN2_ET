@@ -10,7 +10,7 @@
 
 void CDC_Run(void);
 
-char* stringToken(char*);
+void cutString(char*);
 
 void switchCase(char*);
 

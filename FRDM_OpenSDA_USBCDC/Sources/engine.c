@@ -6,16 +6,17 @@
  */
 # include "engine.h"
 
-
+extern int counterLeft;
+extern int counterRight;
 /**
  * Initialisiert den Motor mit 0.1Mhz und den Duty Cycle mit 50 %
  * ausserdem wurde das BIT noch gesetzt PTE2 auf 1
  */
- uint16 counterLeft;
- uint16 counterRight;
 
 void initEngines(void){
-	MotorBit_SetDir(true);//PTE2
+	(void)CDC1_SendString((unsigned char*)"\r\n");
+	(void)CDC1_SendString("Ist bei den Scheiss Motoren");
+	MotorBit_SetDir(1);//PTE2
 	MotorBit_SetVal();
 
 	motor_links_SetDutyUS(10);//PTE22
@@ -38,19 +39,11 @@ void calcVelocityToNumber(int numberFromPi){
 
 }
 
-/*
- * Pro Durchgang plus eins
- */
-void motor_links_OnEnd(){
-	counterLeft = 1+counterLeft;
+void calcVelocityToNumber2(int param1,int param2){
+
 }
 
-/*
- * Pro Durchgang plus eins
- */
-void motor_rechts_OnEnd(){
-	counterRight = 1+counterRight;
-}
+
 /*
  * Gibt den Counter Wert des Rechten Rades zurück
  */
