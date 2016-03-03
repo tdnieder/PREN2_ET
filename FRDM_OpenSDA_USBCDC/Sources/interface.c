@@ -8,6 +8,10 @@
 /*
  * Ist mit dem PI verbunden unendliche schlaufe.
  */
+char *functionName;
+char *param1;
+char *param2;
+
 void CDC_Run(void){
 	int i;
 	int k;
@@ -15,6 +19,9 @@ void CDC_Run(void){
 	for(;;){	//endless loop
 		while(CDC1_App_Task(cdc_buffer, sizeof(cdc_buffer))==ERR_BUSOFF){
 		}
+
+		//Warten bis Funktion ausgeführt wird Lockout!!
+
 		if(CDC1_GetCharsInRxBuf() != 0){
 			i = 0;
 			while(i < sizeof(in_buffer)-1 && CDC1_GetChar(&in_buffer[i])==ERR_OK){
@@ -23,6 +30,7 @@ void CDC_Run(void){
 			in_buffer[i] = '\0';
 			while(in_buffer == NULL){
 			word = stringToken(in_buffer);
+			switchCase(word);
 			}
 		}
 		else{
@@ -35,16 +43,15 @@ void CDC_Run(void){
  */
 char* stringToken(char* answer){
 	char delimiter[] = ",;";
-	char *ptr;
 
-	ptr = strtok(answer, delimiter);
+	functionName = strtok(answer, delimiter);
 
-	while(ptr != NULL) {
-		(void)CDC1_SendString(ptr);
+	while(functionName != NULL) {
+		(void)CDC1_SendString(functionName);
 		(void)CDC1_SendString((unsigned char*)"\r\n");
-	 	ptr = strtok(NULL, delimiter);
+	 	functionName = strtok(NULL, delimiter);
 	}
-	return ptr;
+	return functionName;
 }
 /*
  * wählt mit dem String eine Funktion auf.
@@ -58,31 +65,31 @@ void switchCase(char* funtion){
 	   break;
 
 	   case "takeContainer":
-	       statements
+	       //statements
 	   break;
 
 	   case "setCorrectionAngle":
-	       statements
+	       //statements
 	   break;
 
 	   case "getDistance":
-	       statements
+	       //statements
 	   break;
 
 	   case "checkEnemy":
-	       statements
+		   //statements
 	   break;
 
 	   case "unloadThrough":
-	       statements
+		   //statements
 	   break;
 
 	   case "setGrabberPosition":
-	       statements
+		   //statements
 	   break;
 
 	   case "setSpeed":
-	       statements
+		   //statements
 	   break;
 
 	}

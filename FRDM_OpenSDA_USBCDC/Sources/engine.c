@@ -41,14 +41,14 @@ void calcVelocityToNumber(int numberFromPi){
 /*
  * Pro Durchgang plus eins
  */
-interrupt motor_links_OnEnd(){
+void motor_links_OnEnd(){
 	counterLeft = 1+counterLeft;
 }
 
 /*
  * Pro Durchgang plus eins
  */
-interrupt motor_rechts_OnEnd(){
+void motor_rechts_OnEnd(){
 	counterRight = 1+counterRight;
 }
 /*

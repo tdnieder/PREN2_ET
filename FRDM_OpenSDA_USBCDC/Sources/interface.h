@@ -13,4 +13,5 @@ void CDC_Run(void);
 char* stringToken(char*);
 
 void switchCase(char*);
+
 #endif /* SOURCES_INTERFACE_H_ */
