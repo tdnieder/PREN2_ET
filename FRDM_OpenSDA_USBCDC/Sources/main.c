@@ -64,7 +64,7 @@
 #include "greifer.h"
 #include "mulde.h"
 #include "interface.h"
-#include "ultrasonic.h"
+#include <inttypes.h>
 
 //---------------------------
 //Global variables
@@ -89,7 +89,7 @@ int main(void)
   PE_low_level_init();
   /*** End of Processor Expert internal initialization.                    ***/
 
- CDC_Run();
+ //CDC_Run();
 
 
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
@@ -100,4 +100,5 @@ int main(void)
   /*** End of RTOS startup code.  ***/
   /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
   for(;;){}
-}/*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
+  /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
+}

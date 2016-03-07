@@ -14,11 +14,12 @@ extern int counterRight;
  */
 
 void initEngines(void){
-	(void)CDC1_SendString((unsigned char*)"\r\n");
-	(void)CDC1_SendString("Ist bei den Scheiss Motoren");
+//	(void)CDC1_SendString((unsigned char*)"\r\n");
+//	(void)CDC1_SendString("Ist bei den Scheiss Motoren");
+	LEDBlue_On();
+	LEDGreen_Off();
 	MotorBit_SetDir(1);//PTE2
 	MotorBit_SetVal();
-
 	motor_links_SetDutyUS(10);//PTE22
 	motor_rechts_SetDutyUS(10);//PTB3
 

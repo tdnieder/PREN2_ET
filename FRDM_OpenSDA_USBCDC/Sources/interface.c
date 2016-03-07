@@ -59,6 +59,7 @@ void cutString(char* answer) {
  */
 void switchCase(char* function) {
 	if (strcmp(function, "init") == 0) {
+		LEDGreen_Off();
 		initEngines();
 	}
     if (strcmp(function, "setCorrectionAngle") == 0) {
@@ -66,11 +67,12 @@ void switchCase(char* function) {
     }
     if (strcmp(function, "getDistance") == 0) {
     	//getDistance();
-    	CDC1_SendString(1);//eig getDistance
+    	LEDBlue_Off();LEDGreen_On();
+    	//CDC1_SendString();//eig getDistance
     }
     if (strcmp(function, "checkEnemy") == 0) {
     	//checkEnemy();
-    	CDC1_SendString(1);//checkEnemy
+    	CDC1_SendString((char*)1);//checkEnemy
     }
     if (strcmp(function, "unloadThrough") == 0) {
     	//unloadThrough();
@@ -96,9 +98,10 @@ void CDC_Run() {
 	char* word;
 	for (;;) {	//endless loop
 		while (CDC1_App_Task(cdc_buffer, sizeof(cdc_buffer)) == ERR_BUSOFF) {
+			LEDRed_On();
 			WAIT1_Waitms(10);
 		}
-		LEDGreen_On();
+		LEDRed_Off();LEDGreen_On();
 		if (CDC1_GetCharsInRxBuf() != 0) {
 			i = 0;
 			while (i < sizeof(in_buffer) - 1

@@ -33,8 +33,7 @@
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
-#include "ultrasonic.h"
-/*
+
 #include "LEDRed.h"
 #include "LEDpin1.h"
 #include "BitIoLdd1.h"
@@ -59,7 +58,7 @@
 #include "BitIoLdd4.h"
 #include "TrigUS.h"
 #include "TU2.h"
-*/
+
 
 #ifdef __cplusplus
 extern "C" {
