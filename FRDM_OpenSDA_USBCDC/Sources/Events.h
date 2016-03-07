@@ -56,7 +56,7 @@
 #include "PwmLdd2.h"
 #include "MotorBit.h"
 #include "BitIoLdd4.h"
-#include "TrigUS.h"
+#include "TRIG.h"
 #include "TU2.h"
 
 

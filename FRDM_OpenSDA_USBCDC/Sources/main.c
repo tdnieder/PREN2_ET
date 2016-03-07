@@ -52,7 +52,7 @@
 #include "PwmLdd2.h"
 #include "MotorBit.h"
 #include "BitIoLdd4.h"
-#include "TrigUS.h"
+#include "TRIG.h"
 #include "TU2.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
@@ -64,7 +64,8 @@
 #include "greifer.h"
 #include "mulde.h"
 #include "interface.h"
-#include <inttypes.h>
+#include "Ultrasonic.h"
+#include "inttypes.h"
 
 //---------------------------
 //Global variables
@@ -90,7 +91,11 @@ int main(void)
   /*** End of Processor Expert internal initialization.                    ***/
 
  //CDC_Run();
-
+  US_Init();
+  for(;;) {
+    Measure();
+    WAIT1_Waitms(50); /* wait at least for 50 ms until the next measurement to avoid echos */
+  }
 
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/

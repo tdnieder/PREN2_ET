@@ -3,7 +3,7 @@
   <Header>
     <Name>FRDM_OpenSDA_USBCDC</Name>
     <SavedBy>fa</SavedBy>
-    <ModificationStamp>13</ModificationStamp>
+    <ModificationStamp>15</ModificationStamp>
     <Date>2016-02-23</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.0.RT7_b1515-0427</PEversion>
@@ -14106,7 +14106,7 @@
     <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
     <ComponentUUID>com.freescale.processorexpert.ldd.bitio_ldd</ComponentUUID>
     <BeanType>BitIO_LDD</BeanType>
-    <Name>TrigUS</Name>
+    <Name>TRIG</Name>
     <CompNumb>28</CompNumb>
     <CompEnabled>true</CompEnabled>
     <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
@@ -14121,7 +14121,7 @@
         <ItemSymbol>DeviceName</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Value>TrigUS</Value>
+        <Value>TRIG</Value>
       </ItemState>
       <ItemState>
         <ItemSymbol>_Pin</ItemSymbol>

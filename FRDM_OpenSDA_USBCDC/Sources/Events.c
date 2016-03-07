@@ -35,7 +35,7 @@ extern "C" {
 
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
-
+#include "Ultrasonic.h"
 /*
 ** ===================================================================
 **     Event       :  Cpu_OnNMIINT (module Events)
@@ -141,7 +141,7 @@ void motor_links_OnEnd(void)
 /* ===================================================================*/
 void TU2_OnCounterRestart(LDD_TUserData *UserDataPtr)
 {
-
+	US_EventEchoCapture(UserDataPtr);
 }
 
 /*
@@ -165,7 +165,7 @@ void TU2_OnCounterRestart(LDD_TUserData *UserDataPtr)
 /* ===================================================================*/
 void TU2_OnChannel0(LDD_TUserData *UserDataPtr)
 {
-
+	US_EventEchoCapture(UserDataPtr);
 }
 
 /* END Events */
