@@ -73,7 +73,7 @@ uint16_t US_Measure_us(void) {
       return 0; /* no echo, error case */
     }
   }
-  us = (usDevice.capture*1000UL)/(TU1_CNT_INP_FREQ_U_0/1000);
+  us = (usDevice.capture*1000UL)/(TU2_CNT_INP_FREQ_U_0/1000);
   return us;
 }
 
@@ -87,6 +87,7 @@ uint16_t US_Measure_us(void) {
   //LCD1_WriteString((char*)buf);
 
   cm = US_usToCentimeters(us, 22);
+
   //UTIL1_Num16uToStrFormatted(buf, sizeof(buf), cm, ' ', 5);
   //LCD1_GotoXY(2,5);
   //LCD1_WriteString((char*)buf);

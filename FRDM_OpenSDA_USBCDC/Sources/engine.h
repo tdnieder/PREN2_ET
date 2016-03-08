@@ -40,8 +40,6 @@ void setVelocityright(int);
 
 void calcVelocityToNumber(int);
 
-void calcVelocityToNumber2(int,int);
-
 int calcStepsLeft(void);
 
 int calcStepsRight(void);
@@ -49,4 +47,10 @@ int calcStepsRight(void);
 int getValueRight(void);
 
 int getValueLeft(void);
+
+void EnginesBreak(void);
+
+void EnginesSlowDown(void);
+
+void setSpeed(int);
 #endif /* SOURCES_ENGINE_H_ */

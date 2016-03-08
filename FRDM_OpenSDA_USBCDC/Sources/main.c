@@ -54,6 +54,8 @@
 #include "BitIoLdd4.h"
 #include "TRIG.h"
 #include "TU2.h"
+#include "PWM1.h"
+#include "PwmLdd3.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -70,11 +72,7 @@
 //---------------------------
 //Global variables
 //---------------------------
-//static uint8_t cdc_buffer[USB1_DATA_BUFF_SIZE];
-//static uint8_t in_buffer[USB1_DATA_BUFF_SIZE];
-//static char* functionName;
-//static char* param1;
-//static char* param2;
+
 //---------------------------
 //Methods
 //---------------------------
@@ -89,13 +87,10 @@ int main(void)
   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
   PE_low_level_init();
   /*** End of Processor Expert internal initialization.                    ***/
-
- //CDC_Run();
   US_Init();
-  for(;;) {
-    Measure();
-    WAIT1_Waitms(50); /* wait at least for 50 ms until the next measurement to avoid echos */
-  }
+  CDC_Run();
+
+
 
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/

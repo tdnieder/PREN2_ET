@@ -31,6 +31,8 @@
 #include "MotorBit.h"
 #include "BitIoLdd4.h"
 
+#define RaumTemperatur 20
+
 static uint8_t cdc_buffer[USB1_DATA_BUFF_SIZE];
 static uint8_t in_buffer[USB1_DATA_BUFF_SIZE];
 char* functionName;
@@ -63,16 +65,13 @@ void switchCase(char* function) {
 		initEngines();
 	}
     if (strcmp(function, "setCorrectionAngle") == 0) {
-    	//setCorrectionAngle(param1);
+    	calcVelocityToNumber((int)param1);
     }
     if (strcmp(function, "getDistance") == 0) {
-    	//getDistance();
-    	LEDBlue_Off();LEDGreen_On();
-    	//CDC1_SendString();//eig getDistance
+    	CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
     }
     if (strcmp(function, "checkEnemy") == 0) {
-    	//checkEnemy();
-    	CDC1_SendString((char*)1);//checkEnemy
+    	//CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
     }
     if (strcmp(function, "unloadThrough") == 0) {
     	//unloadThrough();
@@ -81,7 +80,7 @@ void switchCase(char* function) {
     	//setGrabberPosition(param1,param2);
     }
     if (strcmp(function, "setSpeed") == 0) {
-    	//setSpeed(param1);
+    	setSpeed((int)param1);
     }
     if (strcmp(function, "takeContainer") == 0) {
     	//takeContainer();

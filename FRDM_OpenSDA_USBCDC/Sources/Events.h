@@ -58,6 +58,8 @@
 #include "BitIoLdd4.h"
 #include "TRIG.h"
 #include "TU2.h"
+#include "PWM1.h"
+#include "PwmLdd3.h"
 
 
 #ifdef __cplusplus
