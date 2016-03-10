@@ -1,5 +1,6 @@
 #example gitignore
 Debug/
 Power_Management/
+H-Bridge_Test/
 /*.txt
 !/readme.txt
