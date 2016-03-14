@@ -5,61 +5,65 @@
  *      Author: danie
  */
 #include "engine.h"
+#include "TU1.h"
 
-#define VelocityEngines 1000
+//#define VelocityEngines 1800
 
 extern int counterLeft;
 extern int counterRight;
 
+volatile int CValueNowLeft;
+volatile int CValueNowRight;
+
 typedef enum {
-  EngineDriving,
-  EnigneIdle,
-  EngineCorrecting,
-  EngineBreaking,
-  EngineSlowDown
+	EngineDriving, EnigneIdle, EngineCorrecting, EngineBreaking, EngineSlowDown
 } EngineState;
 
 //volatile = Kann verändert werden!
 volatile EngineState EngineLeft;
 volatile EngineState EngineRight;
 
-
 /**
- * Initialisiert den Motor mit 0.1Mhz und den Duty Cycle mit 50 %
- * ausserdem wurde das BIT noch gesetzt PTE2 auf 1
+ *
  */
 
-void initEngines(void){
+void initEngines(void) {
 	LEDBlue_On();
 	LEDGreen_Off();
 
-	MotorBit_SetVal();//PTE2
+	CValueNowLeft = TPM2_C0V;
+	CValueNowRight = TPM2_C1V;
 
-	//Setzt Periode 1/(10*10^-6)
-	motor_links_SetDutyUS(10);//PTE22
-	motor_rechts_SetDutyUS(10);//PTB3
+	motor_rechts_Enable();
+	motor_links_Enable();
+
+//setVelocityleft(VelocityEngines);//PTE22
+//setVelocityright(VelocityEngines);//PTB3
+
+	MotorBit_SetVal(); //PTE2
 
 	//setzt Duty Cycle
-	motor_links_SetRatio16(50);
+	motor_links_SetRatio16(50); //PTE22
 	motor_rechts_SetRatio16(50);
 
-	EngineLeft,EngineRight = EngineDriving;
+	EngineLeft, EngineRight = EngineDriving;
 }
 
 /*
  * Breite von 1
+ *
  */
-void setVelocityleft(int v){
-	motor_links_SetDutyUS(v);//PTE22
+void setVelocityleft(int v) {
+	TPM2_C0V = v;
 	EngineLeft = EngineCorrecting;
 }
 
-void setVelocityright(int v){
-	motor_rechts_SetDutyUS(v);//PTB3
+void setVelocityright(int v) {
+	TPM2_C1V = v;
 	EngineRight = EngineCorrecting;
 }
 
-void setSpeed(int VeloCityFromPi){
+void setSpeed(int VeloCityFromPi) {
 	setVelocityright(VeloCityFromPi);
 	setVelocityleft(VeloCityFromPi);
 }
@@ -67,47 +71,69 @@ void setSpeed(int VeloCityFromPi){
 /*
  * Korrigiert die geschwindigkeit damit der Winkel wieder Null wird!
  */
-void calcVelocityToNumber(int angleFromPi){
-	if(angleFromPi == 0){
+void calcVelocityToNumber(int angleFromPi) {
+	if (angleFromPi == 0) {
 		return;
 	}
-	if(angleFromPi>=0){
+	if (angleFromPi >= 0) {
 		//Aufwendige Rechnung
-		setVelocityleft(VelocityEngines+10);
-	}
-	else{
+		setVelocityleft(CValueNowLeft + 10);
+	} else {
 		//Aufwendige Rechnung
-		setVelocityright(VelocityEngines+10);
+		setVelocityright(CValueNowRight + 10);
 	}
 }
-
-
 
 /*
  * Gibt den Counter Wert des Rechten Rades zurück
  */
-int getValueRight(){
+int getValueRight() {
 	return counterRight;
 }
 /*
  * Gibt den Counter Wert des Linken Rades zurück
  */
-int getValueLeft(){
+int getValueLeft() {
 	return counterLeft;
 }
 
-
-void EnginesBreak(void){
-	EngineLeft,EngineRight = EngineBreaking;
+void EnginesBreak(void) {
+	EngineLeft, EngineRight = EngineBreaking;
 }
 
-void EnginesSlowDown(void){
-	int i = VelocityEngines;
-	EngineLeft,EngineRight = EngineSlowDown;
-	while(i != 0){
-		i--;
+
+/*
+ * int CValueNowLeft;
+int CValueNowRight;
+ */
+void EnginesSlowDown(void) {
+
+	int i = CValueNowLeft;
+
+	EngineLeft, EngineRight = EngineSlowDown;
+	while (i != 0) {
 		setVelocityright(i);
 		setVelocityleft(i);
+		i--;
 	}
 
+}
+//Setzt frequenzen im Rechten Timer
+/*
+ * Timer 1.5MHZ
+ * 1 Clock = 0.0000006666666667 s
+ * Value ist bei 1800 Scheinbar !!!!
+ *
+ *
+ *
+ *Nebengedanke,
+ *Höherer Value = Tiefe Frequenz!
+ *Tieferer Value = Höhere Frequenz!
+ */
+void setTimerFrequencyRight(int value) {
+	TPM2_C1V = value;
+}
+
+void setTimerFrequencyLeft(int value) {
+	TPM2_C0V = value;
 }

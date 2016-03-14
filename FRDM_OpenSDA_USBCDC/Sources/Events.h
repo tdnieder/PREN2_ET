@@ -49,17 +49,19 @@
 #include "CDC1.h"
 #include "Tx1.h"
 #include "Rx1.h"
-#include "motor_links.h"
-#include "PwmLdd1.h"
-#include "TU1.h"
-#include "motor_rechts.h"
-#include "PwmLdd2.h"
 #include "MotorBit.h"
 #include "BitIoLdd4.h"
 #include "TRIG.h"
 #include "TU2.h"
-#include "PWM1.h"
+#include "Greifen.h"
 #include "PwmLdd3.h"
+#include "Drehen.h"
+#include "PwmLdd4.h"
+#include "motor_rechts.h"
+#include "PwmLdd1.h"
+#include "TU1.h"
+#include "motor_links.h"
+#include "PwmLdd2.h"
 
 
 #ifdef __cplusplus
@@ -102,27 +104,6 @@ void Cpu_OnNMIINT(void);
 ** ===================================================================
 */
 void motor_rechts_OnEnd(void);
-
-/*
-** ===================================================================
-**     Event       :  TU1_OnChannel0 (module Events)
-**
-**     Component   :  TU1 [TimerUnit_LDD]
-*/
-/*!
-**     @brief
-**         Called if compare register match the counter registers or
-**         capture register has a new content. OnChannel0 event and
-**         Timer unit must be enabled. See [SetEventMask] and
-**         [GetEventMask] methods. This event is available only if a
-**         [Interrupt] is enabled.
-**     @param
-**         UserDataPtr     - Pointer to the user or
-**                           RTOS specific data. The pointer passed as
-**                           the parameter of Init method.
-*/
-/* ===================================================================*/
-void TU1_OnChannel0(LDD_TUserData *UserDataPtr);
 
 /*
 ** ===================================================================

@@ -21,11 +21,11 @@
 #include "CDC1.h"
 #include "Tx1.h"
 #include "Rx1.h"
-#include "motor_links.h"
-#include "PwmLdd1.h"
-#include "TU1.h"
+//#include "motor_links.h"
+//#include "PwmLdd1.h"
+//#include "TU1.h"
 #include "motor_rechts.h"
-#include "PwmLdd2.h"
+//#include "PwmLdd2.h"
 #include "MotorBit.h"
 #include "BitIoLdd4.h"
 
@@ -51,6 +51,10 @@ int getValueLeft(void);
 void EnginesBreak(void);
 
 void EnginesSlowDown(void);
+
+void setTimerFrequencyRight(int);
+
+void setTimerFrequencyLeft(int);
 
 void setSpeed(int);
 #endif /* SOURCES_ENGINE_H_ */

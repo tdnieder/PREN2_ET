@@ -45,17 +45,19 @@
 #include "CDC1.h"
 #include "Tx1.h"
 #include "Rx1.h"
-#include "motor_links.h"
-#include "PwmLdd1.h"
-#include "TU1.h"
-#include "motor_rechts.h"
-#include "PwmLdd2.h"
 #include "MotorBit.h"
 #include "BitIoLdd4.h"
 #include "TRIG.h"
 #include "TU2.h"
-#include "PWM1.h"
+#include "Greifen.h"
 #include "PwmLdd3.h"
+#include "Drehen.h"
+#include "PwmLdd4.h"
+#include "motor_rechts.h"
+#include "PwmLdd1.h"
+#include "TU1.h"
+#include "motor_links.h"
+#include "PwmLdd2.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -68,6 +70,7 @@
 #include "interface.h"
 #include "Ultrasonic.h"
 #include "inttypes.h"
+//#include "mbed.h"
 
 //---------------------------
 //Global variables
@@ -87,7 +90,9 @@ int main(void)
   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
   PE_low_level_init();
   /*** End of Processor Expert internal initialization.                    ***/
-  US_Init();
+  //US_Init();
+motor_rechts_Disable();
+motor_links_Disable();
   CDC_Run();
 
 

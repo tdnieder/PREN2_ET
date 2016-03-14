@@ -21,7 +21,7 @@ typedef struct {
   LDD_TDeviceData *trigDevice; /* device handle for the Trigger pin */
   LDD_TDeviceData *echoDevice; /* input capture device handle (echo pin) */
   volatile US_EchoState state; /* state */
-  TU1_TValueType capture; /* input capture value */
+  TU2_TValueType capture; /* input capture value */
 } US_DeviceType;
 
 static US_DeviceType usDevice; /* device handle for the ultrasonic device */
