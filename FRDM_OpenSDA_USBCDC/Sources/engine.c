@@ -50,7 +50,7 @@ void initEngines(void) {
 }
 
 /*
- * Breite von 1
+ * Geschwindigkeitsvariation Links
  *
  */
 void setVelocityleft(int v) {
@@ -58,11 +58,17 @@ void setVelocityleft(int v) {
 	EngineLeft = EngineCorrecting;
 }
 
+/*
+ * Geschwindikeitesvariation Rechts
+ */
 void setVelocityright(int v) {
 	TPM2_C1V = v;
 	EngineRight = EngineCorrecting;
 }
 
+/*
+ * Um beide Gleichzeitig einzustellen
+ */
 void setSpeed(int VeloCityFromPi) {
 	setVelocityright(VeloCityFromPi);
 	setVelocityleft(VeloCityFromPi);
@@ -107,8 +113,8 @@ void EnginesBreak(void) {
 int CValueNowRight;
  */
 void EnginesSlowDown(void) {
-
-	int i = CValueNowLeft;
+	int i;
+	i = CValueNowLeft;
 
 	EngineLeft, EngineRight = EngineSlowDown;
 	while (i != 0) {
@@ -116,7 +122,6 @@ void EnginesSlowDown(void) {
 		setVelocityleft(i);
 		i--;
 	}
-
 }
 //Setzt frequenzen im Rechten Timer
 /*

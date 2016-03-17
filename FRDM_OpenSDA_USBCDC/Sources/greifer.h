@@ -25,6 +25,11 @@ void grab(void);
 void turn(void);
 
 /*
+ * Dreht den greiferArm wieder zurück
+ */
+void turnBack(void);
+
+/*
  * Servo hat den Greifer zugepackt,
  * hät ihn gerade und fährt nun nach oben.
  */
@@ -44,6 +49,8 @@ void forward(void);
  * Bring den Greifer nach hinten.
  */
 void backward(void);
-
-
+/*
+ * Öffnet den Greifer Arm
+ */
+void openGreifer(void);
 #endif /* SOURCES_GREIFER_H_ */
