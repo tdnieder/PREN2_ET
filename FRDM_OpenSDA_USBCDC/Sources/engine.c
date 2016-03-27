@@ -14,6 +14,7 @@ extern int counterRight;
 
 volatile int CValueNowLeft;
 volatile int CValueNowRight;
+volatile int ModuloValueTimer;
 
 typedef enum {
 	EngineDriving, EnigneIdle, EngineCorrecting, EngineBreaking, EngineSlowDown
@@ -33,6 +34,7 @@ void initEngines(void) {
 
 	CValueNowLeft = TPM2_C0V;
 	CValueNowRight = TPM2_C1V;
+	ModuloValueTimer = TPM2_MOD;
 
 	motor_rechts_Enable();
 	motor_links_Enable();
@@ -40,8 +42,9 @@ void initEngines(void) {
 //setVelocityleft(VelocityEngines);//PTE22
 //setVelocityright(VelocityEngines);//PTB3
 
-	MotorBit_SetVal(); //PTE2
-
+	MS1_SetVal(); //PTE2
+	//MS2_ClrVal();
+	//MS3_ClrVal();
 	//setzt Duty Cycle
 	//motor_links_SetRatio16(50); //PTE22
 	//motor_rechts_SetRatio16(50);
@@ -55,6 +58,7 @@ void initEngines(void) {
  */
 void setVelocityleft(int v) {
 	TPM2_C0V = v;
+	LEDGreen_On();
 	EngineLeft = EngineCorrecting;
 }
 
@@ -63,6 +67,7 @@ void setVelocityleft(int v) {
  */
 void setVelocityright(int v) {
 	TPM2_C1V = v;
+	LEDGreen_On();
 	EngineRight = EngineCorrecting;
 }
 
@@ -81,12 +86,12 @@ void calcVelocityToNumber(int angleFromPi) {
 	if (angleFromPi == 0) {
 		return;
 	}
-	if (angleFromPi >= 0) {
+	if (angleFromPi > 0) {
 		//Aufwendige Rechnung
-		setVelocityleft(CValueNowLeft + 10);
+		TPM2_C0V = (100+CValueNowLeft);
 	} else {
 		//Aufwendige Rechnung
-		setVelocityright(CValueNowRight + 10);
+		TPM2_C1V = (100+CValueNowRight);
 	}
 }
 
@@ -103,7 +108,9 @@ int getValueLeft() {
 	return counterLeft;
 }
 
-void EnginesBreak(void) {
+void EnginesBreak() {
+	motor_rechts_Disable();
+	motor_links_Disable();
 	EngineLeft, EngineRight = EngineBreaking;
 }
 
@@ -112,15 +119,14 @@ void EnginesBreak(void) {
  * int CValueNowLeft;
 int CValueNowRight;
  */
-void EnginesSlowDown(void) {
+void EnginesSlowDown() {
 	int i;
 	i = CValueNowLeft;
-
 	EngineLeft, EngineRight = EngineSlowDown;
-	while (i != 0) {
+	while (i != 4000) {
 		setVelocityright(i);
 		setVelocityleft(i);
-		i--;
+		i+200;
 	}
 }
 //Setzt frequenzen im Rechten Timer
@@ -137,9 +143,9 @@ void EnginesSlowDown(void) {
  */
 
 void setTimerFrequencyRight(int value) {
-	TPM2_C1V = value;
+	TPM2_MOD = value;
 }
 
 void setTimerFrequencyLeft(int value) {
-	TPM2_C0V = value;
+	TPM2_MOD = value;
 }

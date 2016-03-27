@@ -28,7 +28,7 @@
 #include "TU1.h"
 #include "motor_rechts.h"
 #include "PwmLdd2.h"
-#include "MotorBit.h"
+#include "MS1.h"
 #include "BitIoLdd4.h"
 
 #define RaumTemperatur 20
@@ -65,24 +65,25 @@ void switchCase(char* function) {
 		initEngines();
 	}
     if (strcmp(function, "setCorrectionAngle") == 0) {
-    	//calcVelocityToNumber((int)param1);
-    	setTimerFrequencyLeft((int) param1);
+    	calcVelocityToNumber(atoi(param1));
+    	//setTimerFrequencyLeft(atoi(param1));
     }
     if (strcmp(function, "getDistance") == 0) {
     	CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
     }
     if (strcmp(function, "checkEnemy") == 0) {
     	//CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
+    	EnginesSlowDown();
     }
     if (strcmp(function, "unloadThrough") == 0) {
     	//unloadThrough();
-    	EnginesSlowDown();
+    	EnginesBreak();
     }
     if (strcmp(function, "setGrabberPosition") == 0) {
     	//setGrabberPosition(param1,param2);
     }
     if (strcmp(function, "setSpeed") == 0) {
-    	setSpeed((int)param1);
+    	setSpeed(atoi(param1));
     }
     if (strcmp(function, "takeContainer") == 0) {
     	//takeContainer();

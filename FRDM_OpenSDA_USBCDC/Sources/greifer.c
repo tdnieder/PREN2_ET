@@ -18,6 +18,8 @@ volatile ServoState ServoTurn;
 volatile DCState DcHorizontal;
 volatile DCState DcVertikal;
 
+
+//DC
 /*
  * Initialisiert die Servos
  */
