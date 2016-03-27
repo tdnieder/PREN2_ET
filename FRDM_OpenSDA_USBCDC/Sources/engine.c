@@ -43,8 +43,8 @@ void initEngines(void) {
 	MotorBit_SetVal(); //PTE2
 
 	//setzt Duty Cycle
-	motor_links_SetRatio16(50); //PTE22
-	motor_rechts_SetRatio16(50);
+	//motor_links_SetRatio16(50); //PTE22
+	//motor_rechts_SetRatio16(50);
 
 	EngineLeft, EngineRight = EngineDriving;
 }
@@ -129,12 +129,13 @@ void EnginesSlowDown(void) {
  * 1 Clock = 0.0000006666666667 s
  * Value ist bei 1800 Scheinbar !!!!
  *
- *
+ * 900 ist er!
  *
  *Nebengedanke,
  *Höherer Value = Tiefe Frequenz!
  *Tieferer Value = Höhere Frequenz!
  */
+
 void setTimerFrequencyRight(int value) {
 	TPM2_C1V = value;
 }

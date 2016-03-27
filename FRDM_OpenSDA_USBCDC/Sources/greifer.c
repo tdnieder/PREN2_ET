@@ -5,7 +5,7 @@
  *      Author: danie
  */
 typedef enum {
-	DCRunning, DCBraking,
+	DCRunning, DCBraking, DCWaiting,
 } DCState;
 
 typedef enum {

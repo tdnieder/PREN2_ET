@@ -65,7 +65,8 @@ void switchCase(char* function) {
 		initEngines();
 	}
     if (strcmp(function, "setCorrectionAngle") == 0) {
-    	calcVelocityToNumber((int)param1);
+    	//calcVelocityToNumber((int)param1);
+    	setTimerFrequencyLeft((int) param1);
     }
     if (strcmp(function, "getDistance") == 0) {
     	CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
