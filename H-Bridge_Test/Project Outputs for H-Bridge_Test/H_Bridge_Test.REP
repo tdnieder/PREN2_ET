@@ -1,0 +1,34 @@
+*************************************************************
+FileName = H-Bridge_Test.GBR
+AutoAperture = True
+*************************************************************
+Generating : Bottom Layer
+      File : H-Bridge_Test.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 1
+      File : H-Bridge_Test.GM1
+
+    Adding Layer      : Mechanical 1
+
+
+Used DCodes :
+    D12
+*************************************************************
+

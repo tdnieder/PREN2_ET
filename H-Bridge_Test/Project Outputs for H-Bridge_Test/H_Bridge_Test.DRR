@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: H-Bridge_Test.PcbDoc   28.03.2016  23:18:01
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : H-Bridge_Test.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        35mil (0.889mm)          Round          21               3.36 Inch (85.45 mm)
+---------------------------------------------------------------------------
+Totals                                            21               3.36 Inch (85.45 mm)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

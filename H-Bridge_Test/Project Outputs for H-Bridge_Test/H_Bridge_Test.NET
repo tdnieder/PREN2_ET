@@ -1,0 +1,89 @@
+{COMPONENT PROTEL.PCB
+  {ENVIRONMENT PROTEL.SCH}
+  {DETAIL
+    {SUBCOMP
+      {I PIN1.PRT 9
+        {CN
+        1 AOUT1
+        }
+      }
+      {I PCBComponent_1.PRT IC1
+        {CN
+        1 VCC
+        2 AOUT1
+        3 AOUT2
+        4 BOUT1
+        5 BOUT2
+        6 GND
+        7 BENABLE
+        8 BPHASE
+        9 AENABLE
+       10 APHASE
+       11 MODE
+       12 VCC
+       13 GND
+        }
+      }
+      {I PIN1.PRT J1
+        {CN
+        1 BENABLE
+        }
+      }
+      {I PIN1.PRT J2
+        {CN
+        1 BPHASE
+        }
+      }
+      {I PIN1.PRT J3
+        {CN
+        1 AENABLE
+        }
+      }
+      {I PIN1.PRT J4
+        {CN
+        1 NetJ4_1
+        }
+      }
+      {I PIN1.PRT J5
+        {CN
+        1 MODE
+        }
+      }
+      {I PIN1.PRT J6
+        {CN
+        1 BOUT2
+        }
+      }
+      {I PIN1.PRT J7
+        {CN
+        1 BOUT1
+        }
+      }
+      {I PIN1.PRT J8
+        {CN
+        1 AOUT2
+        }
+      }
+      {I MHDR1X6.PRT X1
+        {CN
+        1 BENABLE
+        2 BPHASE
+        3 AENABLE
+        4 APHASE
+        5 MODE
+        6 GND
+        }
+      }
+      {I MHDR1X6.PRT X2
+        {CN
+        1 VCC
+        2 BOUT2
+        3 BOUT1
+        4 AOUT2
+        5 AOUT1
+        6 GND
+        }
+      }
+    }
+  }
+}
