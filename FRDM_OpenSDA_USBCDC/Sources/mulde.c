@@ -4,21 +4,30 @@
  *  Created on: 01.03.2016
  *      Author: danie
  */
+#include "mulde.h"
 
-void init(void){
-	Mulde_Leeren_Enable();
-	Mulde_Leeren_SetRatio16(0);
-	Mulde_Leeren_Disable();
+
+
+void initMulde(){
+	Mulde_leeren_Enable();
+	Mulde_leeren_SetRatio16(0);
+	Mulde_leeren_Disable();
+	unloadThrough();
 }
 
-void turnempty(void){
-	Mulde_Leeren_Enable();
-	Mulde_Leeren_SetRatio16(100);
-	Mulde_Leeren_Disable();
+void turnempty(){
+	Mulde_leeren_Enable();
+	Mulde_leeren_SetRatio16(100);
+	Mulde_leeren_Disable();
 }
 
-void turnback(void){
-	Mulde_Leeren_Enable();
-	Mulde_Leeren_SetRatio16(0);
-	Mulde_Leeren_Disable();
+void turnback(){
+	Mulde_leeren_Enable();
+	Mulde_leeren_SetRatio16(0);
+	Mulde_leeren_Disable();
+}
+
+void unloadThrough(){
+	turnempty();
+	turnback();
 }

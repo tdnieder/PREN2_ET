@@ -8,6 +8,13 @@
 #ifndef SOURCES_GREIFER_H_
 #define SOURCES_GREIFER_H_
 
+#include "DC_Greifer_Schiene_Horizontal.h"//PTE23
+#include "DC_Greifer_Schiene_Vertikal.h"
+#include "ModeDC.h"
+#include "Greifen.h"
+#include "Drehen.h"
+#include "DCVertikalBit.h"
+#include "DCHorizontalBit.h"//PTE0
 /*
  * Initialisiert die Servos
  */
@@ -53,4 +60,22 @@ void backward(void);
  * Öffnet den Greifer Arm
  */
 void openGreifer(void);
+/*
+ * Setzt das Bit um Hochzufahren
+ */
+void up_bit(void);
+/*
+ * Setzt das Bit so um wieder runterzufahren
+ */
+void down_bit(void);
+/*
+ * Setzt das Bit um nach vorne zu fahren
+ */
+void forward_bit(void);
+/*
+ * Setzt das Bit um nach hinten zu fahren
+ */
+void backward_bit(void);
+
+
 #endif /* SOURCES_GREIFER_H_ */

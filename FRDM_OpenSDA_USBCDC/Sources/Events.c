@@ -28,6 +28,7 @@
 
 #include "Cpu.h"
 #include "Events.h"
+#include "stdbool.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -98,30 +99,6 @@ void motor_links_OnEnd(void)
 
 /*
 ** ===================================================================
-**     Event       :  TU2_OnCounterRestart (module Events)
-**
-**     Component   :  TU2 [TimerUnit_LDD]
-*/
-/*!
-**     @brief
-**         Called if counter overflow/underflow or counter is
-**         reinitialized by modulo or compare register matching.
-**         OnCounterRestart event and Timer unit must be enabled. See
-**         [SetEventMask] and [GetEventMask] methods. This event is
-**         available only if a [Interrupt] is enabled.
-**     @param
-**         UserDataPtr     - Pointer to the user or
-**                           RTOS specific data. The pointer passed as
-**                           the parameter of Init method.
-*/
-/* ===================================================================*/
-void TU2_OnCounterRestart(LDD_TUserData *UserDataPtr)
-{
-	US_EventEchoCapture(UserDataPtr);
-}
-
-/*
-** ===================================================================
 **     Event       :  TU2_OnChannel0 (module Events)
 **
 **     Component   :  TU2 [TimerUnit_LDD]
@@ -141,7 +118,198 @@ void TU2_OnCounterRestart(LDD_TUserData *UserDataPtr)
 /* ===================================================================*/
 void TU2_OnChannel0(LDD_TUserData *UserDataPtr)
 {
+}
+
+/*
+** ===================================================================
+**     Event       :  Battery_OnEnd (module Events)
+**
+**     Component   :  Battery [ADC]
+**     Description :
+**         This event is called after the measurement (which consists
+**         of <1 or more conversions>) is/are finished.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void Battery_OnEnd(void)
+{
+	 // extern volatile bool AD_finished;
+	  //AD_finished = false;;
+}
+
+/*
+** ===================================================================
+**     Event       :  Battery_OnCalibrationEnd (module Events)
+**
+**     Component   :  Battery [ADC]
+**     Description :
+**         This event is called when the calibration has been finished.
+**         User should check if the calibration pass or fail by
+**         Calibration status method./nThis event is enabled only if
+**         the <Interrupt service/event> property is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void Battery_OnCalibrationEnd(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  DC_Greifer_Schiene_Vertikal_OnEnd (module Events)
+**
+**     Component   :  DC_Greifer_Schiene_Vertikal [PWM]
+**     Description :
+**         This event is called when the specified number of cycles has
+**         been generated. (Only when the component is enabled -
+**         <Enable> and the events are enabled - <EnableEvent>). The
+**         event is available only when the <Interrupt service/event>
+**         property is enabled and selected peripheral supports
+**         appropriate interrupt.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void DC_Greifer_Schiene_Vertikal_OnEnd(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  Mulde_leeren_OnEnd (module Events)
+**
+**     Component   :  Mulde_leeren [PWM]
+**     Description :
+**         This event is called when the specified number of cycles has
+**         been generated. (Only when the component is enabled -
+**         <Enable> and the events are enabled - <EnableEvent>). The
+**         event is available only when the <Interrupt service/event>
+**         property is enabled and selected peripheral supports
+**         appropriate interrupt.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void Mulde_leeren_OnEnd(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  Drehen_OnEnd (module Events)
+**
+**     Component   :  Drehen [PWM]
+**     Description :
+**         This event is called when the specified number of cycles has
+**         been generated. (Only when the component is enabled -
+**         <Enable> and the events are enabled - <EnableEvent>). The
+**         event is available only when the <Interrupt service/event>
+**         property is enabled and selected peripheral supports
+**         appropriate interrupt.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void Drehen_OnEnd(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  Greifen_OnEnd (module Events)
+**
+**     Component   :  Greifen [PWM]
+**     Description :
+**         This event is called when the specified number of cycles has
+**         been generated. (Only when the component is enabled -
+**         <Enable> and the events are enabled - <EnableEvent>). The
+**         event is available only when the <Interrupt service/event>
+**         property is enabled and selected peripheral supports
+**         appropriate interrupt.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void Greifen_OnEnd(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  TU3_OnChannel1 (module Events)
+**
+**     Component   :  TU3 [TimerUnit_LDD]
+*/
+/*!
+**     @brief
+**         Called if compare register match the counter registers or
+**         capture register has a new content. OnChannel1 event and
+**         Timer unit must be enabled. See [SetEventMask] and
+**         [GetEventMask] methods. This event is available only if a
+**         [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
+*/
+/* ===================================================================*/
+void TU3_OnChannel1(LDD_TUserData *UserDataPtr)
+{
 	US_EventEchoCapture(UserDataPtr);
+}
+
+/*
+** ===================================================================
+**     Event       :  TU3_OnChannel0 (module Events)
+**
+**     Component   :  TU3 [TimerUnit_LDD]
+*/
+/*!
+**     @brief
+**         Called if compare register match the counter registers or
+**         capture register has a new content. OnChannel0 event and
+**         Timer unit must be enabled. See [SetEventMask] and
+**         [GetEventMask] methods. This event is available only if a
+**         [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
+*/
+/* ===================================================================*/
+void TU3_OnChannel0(LDD_TUserData *UserDataPtr)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  DC_Greifer_Schiene_Horizontal_OnEnd (module Events)
+**
+**     Component   :  DC_Greifer_Schiene_Horizontal [PWM]
+**     Description :
+**         This event is called when the specified number of cycles has
+**         been generated. (Only when the component is enabled -
+**         <Enable> and the events are enabled - <EnableEvent>). The
+**         event is available only when the <Interrupt service/event>
+**         property is enabled and selected peripheral supports
+**         appropriate interrupt.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void DC_Greifer_Schiene_Horizontal_OnEnd(void)
+{
+  /* Write your code here ... */
 }
 
 /* END Events */

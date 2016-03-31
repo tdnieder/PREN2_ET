@@ -8,10 +8,14 @@
 #ifndef SOURCES_MULDE_H_
 #define SOURCES_MULDE_H_
 
-void init(void);
+#include "Mulde_leeren.h"
+
+void initMulde(void);
 
 void turnempty(void);
 
 void turnback(void);
+
+void unloadThrough(void);
 
 #endif /* SOURCES_MULDE_H_ */

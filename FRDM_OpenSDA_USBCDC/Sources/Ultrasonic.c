@@ -6,8 +6,7 @@
  *      Driver for the HC-SR04 and FRDM-KL25Z board
  */
 #include "Ultrasonic.h"
-#include "TU2.h"
-#include "WAIT1.h"
+
 
 typedef enum {
   ECHO_IDLE, /* device not used */
@@ -21,7 +20,7 @@ typedef struct {
   LDD_TDeviceData *trigDevice; /* device handle for the Trigger pin */
   LDD_TDeviceData *echoDevice; /* input capture device handle (echo pin) */
   volatile US_EchoState state; /* state */
-  TU2_TValueType capture; /* input capture value */
+  TU3_TValueType capture; /* input capture value */
 } US_DeviceType;
 
 static US_DeviceType usDevice; /* device handle for the ultrasonic device */
@@ -39,7 +38,7 @@ void US_EventEchoCapture(LDD_TUserData *UserDataPtr) {
     TU2_ResetCounter(ptr->echoDevice);
     ptr->state = ECHO_MEASURE;
   } else if (ptr->state==ECHO_MEASURE) { /* 2nd edge, this is the falling edge: use measurement */
-    (void)TU2_GetCaptureValue(ptr->echoDevice, 0, &ptr->capture);
+    (void)TU3_GetCaptureValue(ptr->echoDevice, 0, &ptr->capture);
     ptr->state = ECHO_FINISHED;
   }
 }
@@ -102,5 +101,5 @@ void US_Init(void) {
   usDevice.state = ECHO_IDLE;
   usDevice.capture = 0;
   usDevice.trigDevice = TRIG_Init(NULL);
-  usDevice.echoDevice = TU2_Init(&usDevice);
+  usDevice.echoDevice = TU3_Init(&usDevice);
 }

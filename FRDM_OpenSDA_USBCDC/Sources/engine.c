@@ -4,17 +4,22 @@
  *  Created on: 01.03.2016
  *      Author: danie
  */
+
 #include "engine.h"
-#include "TU1.h"
 
-//#define VelocityEngines 1800
+const int radiusRad = 10;//cm
+const int stepperAngle = 7;//Grad
+const int PII = 3;
 
-extern int counterLeft;
-extern int counterRight;
+extern long counterLeft;
+extern long counterRight;
 
-volatile int CValueNowLeft;
-volatile int CValueNowRight;
-volatile int ModuloValueTimer;
+volatile int timerValue0;
+volatile int timerValue1;
+
+//wird gebraucht um den Timer in den Ursprung zurück zu versetzten!
+volatile int ModuloValueTimer0;
+volatile int ModuloValueTimer1;
 
 typedef enum {
 	EngineDriving, EnigneIdle, EngineCorrecting, EngineBreaking, EngineSlowDown
@@ -25,58 +30,49 @@ volatile EngineState EngineLeft;
 volatile EngineState EngineRight;
 
 /**
- *
+ *Initialisiert Motoren mit den Richtigen Bits
+ *Speichert die alten Modulowerte ab, für andere Files die 20 ms als Periodendauer brauchen -> Servos
  */
-
 void initEngines(void) {
+// Makros erstellen
+	//Bit Setzten für Treiber
+	MS1_PutVal(MSBIT1); //PTE2
+	MS2_PutVal(MSBIT2);
+	MS3_PutVal(MSBIT3);
+	Sleep_PutVal(SLEEP);
+	Enable_PutVal(ENABLE);
+
+	DIRLeft_PutVal(DIRLEFT); //Damit vorwärts fährt
+	DIRright_PutVal(DIRRIGHT);
+
 	LEDBlue_On();
 	LEDGreen_Off();
 
-	CValueNowLeft = TPM2_C0V;
-	CValueNowRight = TPM2_C1V;
-	ModuloValueTimer = TPM2_MOD;
+// Modulo Wert bei beginn 59999 bei T = 20 ms!!
+// Speichert Modulo Werte ab für Servos später!
+	ModuloValueTimer0 = TPM0_MOD;
+	ModuloValueTimer1 = TPM1_MOD;
 
+	//Richtet Modulo für Motoren ein.
+	//setTimerFrequencyRight(ModuloValueMotor);
+	//setTimerFrequencyLeft(ModuloValueMotor);
+
+	//Motoren beginnen drehen
 	motor_rechts_Enable();
 	motor_links_Enable();
 
-//setVelocityleft(VelocityEngines);//PTE22
-//setVelocityright(VelocityEngines);//PTB3
-
-	MS1_SetVal(); //PTE2
-	//MS2_ClrVal();
-	//MS3_ClrVal();
-	//setzt Duty Cycle
-	//motor_links_SetRatio16(50); //PTE22
-	//motor_rechts_SetRatio16(50);
+	//startet mit Rampe
+	ramp();
 
 	EngineLeft, EngineRight = EngineDriving;
-}
-
-/*
- * Geschwindigkeitsvariation Links
- *
- */
-void setVelocityleft(int v) {
-	TPM2_C0V = v;
-	LEDGreen_On();
-	EngineLeft = EngineCorrecting;
-}
-
-/*
- * Geschwindikeitesvariation Rechts
- */
-void setVelocityright(int v) {
-	TPM2_C1V = v;
-	LEDGreen_On();
-	EngineRight = EngineCorrecting;
 }
 
 /*
  * Um beide Gleichzeitig einzustellen
  */
 void setSpeed(int VeloCityFromPi) {
-	setVelocityright(VeloCityFromPi);
-	setVelocityleft(VeloCityFromPi);
+	setTimerFrequencyLeft(VeloCityFromPi);
+	setTimerFrequencyRight(VeloCityFromPi);
 }
 
 /*
@@ -86,12 +82,21 @@ void calcVelocityToNumber(int angleFromPi) {
 	if (angleFromPi == 0) {
 		return;
 	}
-	if (angleFromPi > 0) {
-		//Aufwendige Rechnung
-		TPM2_C0V = (100+CValueNowLeft);
-	} else {
-		//Aufwendige Rechnung
-		TPM2_C1V = (100+CValueNowRight);
+	if (angleFromPi == 1) {
+		//Motor links langsamer
+		TPM1_MOD += 500;
+	}
+	if (angleFromPi == 2) {
+		//Motor rechts langsamer
+		TPM0_MOD += 500;
+	}
+	if (angleFromPi == 3) {
+		//Motor links schneller
+		TPM1_MOD -= 500;
+	}
+	if (angleFromPi == 4) {
+		//Motor links schneller
+		TPM0_MOD -= 500;
 	}
 }
 
@@ -109,25 +114,22 @@ int getValueLeft() {
 }
 
 void EnginesBreak() {
-	motor_rechts_Disable();
-	motor_links_Disable();
 	EngineLeft, EngineRight = EngineBreaking;
+	motor_links_Disable();
+	motor_rechts_Disable();
 }
 
 
-/*
- * int CValueNowLeft;
-int CValueNowRight;
- */
 void EnginesSlowDown() {
-	int i;
-	i = CValueNowLeft;
+	int j = (TPM1_MOD + TPM0_MOD)/2;
 	EngineLeft, EngineRight = EngineSlowDown;
-	while (i != 4000) {
-		setVelocityright(i);
-		setVelocityleft(i);
-		i+200;
+	while (j != 0) {
+		setTimerFrequencyRight(j);
+		setTimerFrequencyLeft(j);
+		j -= 400;
 	}
+	motor_rechts_Disable();
+	motor_links_Disable();
 }
 //Setzt frequenzen im Rechten Timer
 /*
@@ -138,14 +140,36 @@ void EnginesSlowDown() {
  * 900 ist er!
  *
  *Nebengedanke,
- *Höherer Value = Tiefe Frequenz!
- *Tieferer Value = Höhere Frequenz!
+ *Höherer Modulo = Tiefe Frequenz!
+ *Tieferer Modulo = Höhere Frequenz!
  */
-
+//5000 ist ein guter Wert
 void setTimerFrequencyRight(int value) {
-	TPM2_MOD = value;
+	TPM0_MOD = value;
 }
 
 void setTimerFrequencyLeft(int value) {
-	TPM2_MOD = value;
+	TPM1_MOD = value;
+}
+
+void ramp(){
+	int steps = 10000;
+	while(steps != ModuloValueMotor){
+	setTimerFrequencyRight(steps);
+	setTimerFrequencyLeft(steps);
+	steps -= 200;
+	}
+}
+
+
+
+//Kann jemals so gross werden das int nicht mehr reicht?
+int calcDistance(){
+	int mean = (counterLeft + counterRight)/2;
+	int distance = 0;
+	//Weil wir im HalfStep Modus sind kann mit if's gelöst werden wenn MSB Bits automatisch geändert werden sollen
+	mean = (mean/2);
+
+	distance = mean * (int)(stepperAngle*(PII/180)) * radiusRad;
+	return distance;
 }

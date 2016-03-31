@@ -45,7 +45,7 @@ int returnValue;
  */
 void cutString(char* answer) {
 	//Danach wird getrennt
-	char delimiter[2] = ",";
+	char delimiter[2] = ";";
 	functionName = (char*) strtok(answer, delimiter);
 	if (functionName != NULL) {
 		param1 = (char*) strtok(NULL, delimiter);
@@ -60,24 +60,28 @@ void cutString(char* answer) {
  * Parameter fehlt noch
  */
 void switchCase(char* function) {
-	if (strcmp(function, "init") == 0) {
+	if (strcmp(function, "initEngines") == 0) {
 		LEDGreen_Off();
 		initEngines();
+		CDC1_SendString("go;");
 	}
     if (strcmp(function, "setCorrectionAngle") == 0) {
     	calcVelocityToNumber(atoi(param1));
-    	//setTimerFrequencyLeft(atoi(param1));
     }
-    if (strcmp(function, "getDistance") == 0) {
+    if (strcmp(function, "setSpeedLeft") == 0) {
+    	setTimerFrequencyLeft(atoi(param1));
+    }
+    if (strcmp(function, "setSpeedRight") == 0) {
+    	setTimerFrequencyRight(atoi(param1));
+    }
+    if (strcmp(function, "getDistanceEnemy") == 0) {
     	CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
     }
     if (strcmp(function, "checkEnemy") == 0) {
-    	//CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
-    	EnginesSlowDown();
+    	CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
     }
     if (strcmp(function, "unloadThrough") == 0) {
-    	//unloadThrough();
-    	EnginesBreak();
+    	initMulde();
     }
     if (strcmp(function, "setGrabberPosition") == 0) {
     	//setGrabberPosition(param1,param2);
@@ -86,8 +90,15 @@ void switchCase(char* function) {
     	setSpeed(atoi(param1));
     }
     if (strcmp(function, "takeContainer") == 0) {
-    	//takeContainer();
+    	grab();
     }
+    if(strcmp(function, "battery")){
+    	CDC1_SendString((char*)measureBattery());
+    }
+    if(strcmp(function, "getDistance")){
+    	CDC1_SendString((char*)calcDistance());//in cm
+    }
+
 	//clear Variablen!!
 	functionName = "NULL";
 	param1 = "NULL";

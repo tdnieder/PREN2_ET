@@ -58,15 +58,17 @@
 #include "Mulde_leeren.h"
 #include "PwmLdd4.h"
 #include "TU2.h"
-#include "ultraschall.h"
-#include "PwmLdd7.h"
-#include "TU3.h"
-#include "DC_Greifer_Schiene_Horizontal.h"
-#include "PwmLdd8.h"
-#include "motor_links.h"
-#include "PwmLdd5.h"
+#include "DC_Greifer_Schiene_Vertikal.h"
+#include "PwmLdd6.h"
+#include "Battery.h"
+#include "AdcLdd1.h"
 #include "DCHorizontalBit.h"
 #include "BitIoLdd5.h"
+#include "TU3.h"
+#include "DC_Greifer_Schiene_Horizontal.h"
+#include "PwmLdd7.h"
+#include "motor_links.h"
+#include "PwmLdd5.h"
 #include "DCVertikalBit.h"
 #include "BitIoLdd6.h"
 #include "MS2.h"
@@ -115,9 +117,13 @@ int main(void)
   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
   PE_low_level_init();
   /*** End of Processor Expert internal initialization.                    ***/
-  //US_Init();
-motor_rechts_Disable();
-motor_links_Disable();
+
+  //Motoren an
+  motor_rechts_Disable();
+  motor_links_Disable();
+
+
+
   CDC_Run();
 
 

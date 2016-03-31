@@ -10,7 +10,8 @@
 #define ULTRASONIC_H_
 
 #include "PE_LDD.h"
-
+#include "TU3.h"
+#include "WAIT1.h"
 /* 
  * \brief Called in case of an overflow during input capture. This function is called from an interrupt!
  * \param UserDataPtr Pointer to user structure

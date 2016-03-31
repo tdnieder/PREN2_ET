@@ -28,33 +28,80 @@
 #include "PwmLdd2.h"
 #include "MS1.h"
 #include "BitIoLdd4.h"
+#include "TU1.h"
+#include "TU2.h"
+
 
 #ifndef SOURCES_ENGINE_H_
 #define SOURCES_ENGINE_H_
 
+//Grundwert der Motoren
+#define ModuloValueMotor 5000
+#define MSBIT1 1
+#define MSBIT2 0
+#define MSBIT3 0
+#define SLEEP 1
+#define ENABLE 0
+#define DIRLEFT 1
+#define DIRRIGHT 0
+
+
+
+/*
+ * Initialisiert Bits für die Motoren
+ * führt eine Rampe aus
+ */
 void initEngines(void);
-
-void setVelocityleft(int);
-
-void setVelocityright(int);
-
+/*
+ * Steuert die Linken und Rechten Motoren je nach bedarf
+ * des Pis über die Schnittstelle
+ * "Regelung"
+ */
 void calcVelocityToNumber(int);
-
+/*
+ * Zählt die Distanz die zurückgelegt wird Links
+ */
 int calcStepsLeft(void);
-
+/*
+ * Zählt die Distanz die zurückgelegt wird Links
+ */
 int calcStepsRight(void);
-
+/*
+ * Wird gebraucht um die Ticks irgendwohin zu bringen
+ */
 int getValueRight(void);
-
+/*
+ * Wird gebraucht um die Ticks irgendwohin zu bringen
+ */
 int getValueLeft(void);
-
+/*
+ * Sofort anhalten
+ */
 void EnginesBreak(void);
-
+/*
+ * Langsam abbremsen
+ */
 void EnginesSlowDown(void);
-
+/*
+ * Frequenz Rechts ändern
+ */
 void setTimerFrequencyRight(int);
-
+/*
+ * Frequenz Links ändern
+ */
 void setTimerFrequencyLeft(int);
-
+/*
+ * Setzt die Geschwindigkeit bei beiden Motoren
+ */
 void setSpeed(int);
+/*
+ * Fährt eine Rampe hoch
+ */
+void ramp();
+/*
+ * Sollte die Strecke Ausmessen, welche bereits zurückgelegt wurde.
+ */
+int calcDistance();
+
+
 #endif /* SOURCES_ENGINE_H_ */
