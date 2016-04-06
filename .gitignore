@@ -1,5 +1,4 @@
 #example gitignore
 Debug/
-Power_Management/
 /*.txt
 !/readme.txt

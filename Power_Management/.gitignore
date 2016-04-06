@@ -1,0 +1,5 @@
+#gitignore
+_Previews/
+History/
+/*.txt
+!/readme.txt
