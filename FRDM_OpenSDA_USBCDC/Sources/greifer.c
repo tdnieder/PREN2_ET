@@ -44,7 +44,8 @@ void initAllServos() {
 void grab() {
 	ServoGrab = ServoClosing;
 	Greifen_Enable();
-	Greifen_SetRatio16(100);
+	Greifen_SetRatio16(10);
+
 }
 
 /*
@@ -63,7 +64,7 @@ void openGreifer(void) {
 void turn(void) {
 	ServoTurn = ServoOpening;
 	Drehen_Enable();
-	Drehen_SetRatio16(100);
+	Drehen_SetRatio16(10);
 	//Vll ein Wait
 }
 
@@ -75,6 +76,16 @@ void turnBack(void) {
 	Drehen_Enable();
 	Drehen_SetRatio16(0);
 	//Vll ein Wait
+}
+
+void testServo(int inn){
+	Drehen_Enable();
+Drehen_SetRatio16(inn);
+}
+
+void testGrab(int kinn){
+	Greifen_Enable();
+	Greifen_SetRatio16(kinn);
 }
 
 /*
@@ -146,6 +157,51 @@ void forward_bit(){
  */
 void backward_bit(){
 	DCHorizontalBit_ClrVal();
+}
+
+void setGrabber(int Hor, int Vert){
+	if(Hor == 1){
+		forward();
+	}
+	else if(Hor == 2){
+		backward();
+	}
+	if(Vert == 1){
+		up();
+	}
+	else if(Vert == 2){
+		down();
+	}
+}
+
+void setGrabberBack(){
+	int vert = timeVertical/10;
+	int hor = timeHorizontal/10;
+	int counter = 0;
+
+	if(vert >= 0){
+		for(counter;counter > vert; counter ++){
+			down();
+		}
+	}
+	else{
+		for(counter;counter > vert; counter ++){
+			up();
+		}
+	}
+
+	counter = 0;
+
+	if(hor >= 0){
+		for(counter;counter > vert; counter ++){
+			backward();
+		}
+	}
+	else{
+		for(counter;counter > vert; counter ++){
+			forward();
+		}
+	}
 }
 
 

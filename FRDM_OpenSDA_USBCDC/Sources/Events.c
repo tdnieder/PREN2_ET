@@ -29,7 +29,9 @@
 #include "Cpu.h"
 #include "Events.h"
 #include "stdbool.h"
-
+#include "CDC1.h"
+#include "Tx1.h"
+#include "Rx1.h"
 #ifdef __cplusplus
 extern "C" {
 #endif 
@@ -310,6 +312,44 @@ void TU3_OnChannel0(LDD_TUserData *UserDataPtr)
 void DC_Greifer_Schiene_Horizontal_OnEnd(void)
 {
   /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  CDC1_OnError (module Events)
+**
+**     Component   :  CDC1 [FSL_USB_CDC_Device]
+**     Description :
+**         Hook called in case of an error
+**     Parameters  :
+**         NAME            - DESCRIPTION
+**         error           - Error code
+**     Returns     : Nothing
+** ===================================================================
+*/
+void CDC1_OnError(byte error)
+{
+	while(Tx1_NofFreeElements() != 0){
+  Tx1_Get("NULL");
+	}
+}
+
+/*
+** ===================================================================
+**     Event       :  USB1_OnError (module Events)
+**
+**     Component   :  USB1 [FSL_USB_Stack]
+**     Description :
+**         Hook called in case of an error
+**     Parameters  :
+**         NAME            - DESCRIPTION
+**         error           - Error code
+**     Returns     : Nothing
+** ===================================================================
+*/
+void USB1_OnError(uint8_t error)
+{
+
 }
 
 /* END Events */

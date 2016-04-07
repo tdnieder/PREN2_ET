@@ -38,8 +38,8 @@
 //Grundwert der Motoren
 #define ModuloValueMotor 5000
 #define MSBIT1 1
-#define MSBIT2 0
-#define MSBIT3 0
+#define MSBIT2 1
+#define MSBIT3 1
 #define SLEEP 1
 #define ENABLE 0
 #define DIRLEFT 1

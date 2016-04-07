@@ -39,13 +39,14 @@ char* functionName;
 char* param1;
 char* param2;
 int returnValue;
+int pk = 0;
 
 /*
  * Sollte den String in_buffer in Stücke zerteilen und einzelne Stücke zurückgeben
  */
 void cutString(char* answer) {
-	//Danach wird getrennt
-	char delimiter[2] = ";";
+	//Danach wird getrennt crc
+	char delimiter[] = ";";
 	functionName = (char*) strtok(answer, delimiter);
 	if (functionName != NULL) {
 		param1 = (char*) strtok(NULL, delimiter);
@@ -61,72 +62,96 @@ void cutString(char* answer) {
  */
 void switchCase(char* function) {
 	if (strcmp(function, "initEngines") == 0) {
-		LEDGreen_Off();
 		initEngines();
-		CDC1_SendString("go;");
+		CDC1_SendString((char*)"go\n");
 	}
-    if (strcmp(function, "setCorrectionAngle") == 0) {
+    if (strcmp(function, "driveCurve") == 0) {
     	calcVelocityToNumber(atoi(param1));
+    	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "setSpeedLeft") == 0) {
     	setTimerFrequencyLeft(atoi(param1));
+    	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "setSpeedRight") == 0) {
     	setTimerFrequencyRight(atoi(param1));
+    	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "getDistanceEnemy") == 0) {
-    	CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
+    	//CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
+    	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "checkEnemy") == 0) {
-    	CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
+    	//CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
+    	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "unloadThrough") == 0) {
     	initMulde();
+    	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "setGrabberPosition") == 0) {
     	//setGrabberPosition(param1,param2);
+    	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "setSpeed") == 0) {
-    	setSpeed(atoi(param1));
+    	//setSpeed(atoi(param1));
+    	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "takeContainer") == 0) {
     	grab();
+    	CDC1_SendString((char*)"go\n");
     }
-    if(strcmp(function, "battery")){
+    if(strcmp(function, "battery") == 0){
     	CDC1_SendString((char*)measureBattery());
+    	CDC1_SendString((char*)"go\n");
     }
-    if(strcmp(function, "getDistance")){
+    if(strcmp(function, "getDistance")==0){
     	CDC1_SendString((char*)calcDistance());//in cm
+    	CDC1_SendString((char*)"go\n");
     }
+    //testzwecke
+    if(strcmp(function, "grab")==0){
+    	LEDBlue_On();
+    	LEDRed_Off();
+    	initAllServos();
+     	turn();
+     }
+    if(strcmp(function, "open")==0){
+     	turnback();
+     }
 
+    if(strcmp(function, "test")==0){
+       	LEDBlue_On();
+       	LEDRed_Off();
+     	testServo(atoi(param1));
+     }
 	//clear Variablen!!
-	functionName = "NULL";
-	param1 = "NULL";
-	param2 = "NULL";
+	functionName = 0;
+	param1 = 0;
+	param2 = 0;
 }
 
 void CDC_Run() {
 	int i;
-	int k;
-	char* word;
 	for (;;) {	//endless loop
 		while (CDC1_App_Task(cdc_buffer, sizeof(cdc_buffer)) == ERR_BUSOFF) {
 			LEDRed_On();
 			WAIT1_Waitms(10);
 		}
-		LEDRed_Off();LEDGreen_On();
 		if (CDC1_GetCharsInRxBuf() != 0) {
 			i = 0;
-			while (i < sizeof(in_buffer) - 1
-					&& CDC1_GetChar(&in_buffer[i]) == ERR_OK) {
+			while ((i < (sizeof(in_buffer) - 1)) && (CDC1_GetChar(&in_buffer[i]) == ERR_OK)) {
 				i++;
 			}
 			in_buffer[i] = '\0';
-			cutString((char*) in_buffer);
+			cutString((char*)in_buffer);
 			switchCase(functionName);
+
 		} else {
 			WAIT1_Waitms(10);
 		}
 	}
+
+
 }
 

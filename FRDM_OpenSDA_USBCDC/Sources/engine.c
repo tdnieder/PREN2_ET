@@ -7,9 +7,9 @@
 
 #include "engine.h"
 
-const int radiusRad = 10;//cm
-const int stepperAngle = 7;//Grad
-const int PII = 3;
+const float radiusRad = 3.5;//cm
+const float stepperAngle = 0.9;//Grad
+const float PII = 3.14;
 
 extern long counterLeft;
 extern long counterRight;
@@ -46,7 +46,6 @@ void initEngines(void) {
 	DIRright_PutVal(DIRRIGHT);
 
 	LEDBlue_On();
-	LEDGreen_Off();
 
 // Modulo Wert bei beginn 59999 bei T = 20 ms!!
 // Speichert Modulo Werte ab für Servos später!
@@ -57,12 +56,16 @@ void initEngines(void) {
 	//setTimerFrequencyRight(ModuloValueMotor);
 	//setTimerFrequencyLeft(ModuloValueMotor);
 
+
+	setTimerFrequencyRight(ModuloValueMotor);
+	setTimerFrequencyLeft(ModuloValueMotor);
 	//Motoren beginnen drehen
 	motor_rechts_Enable();
 	motor_links_Enable();
 
+
 	//startet mit Rampe
-	ramp();
+	//ramp();
 
 	EngineLeft, EngineRight = EngineDriving;
 }
@@ -79,24 +82,39 @@ void setSpeed(int VeloCityFromPi) {
  * Korrigiert die geschwindigkeit damit der Winkel wieder Null wird!
  */
 void calcVelocityToNumber(int angleFromPi) {
+	LEDRed_Off();
+	LEDGreen_Off();
+	LEDBlue_Off();
+
 	if (angleFromPi == 0) {
 		return;
 	}
-	if (angleFromPi == 1) {
-		//Motor links langsamer
-		TPM1_MOD += 500;
+	else if (angleFromPi == 1) {
+		TPM1_MOD += 1000;
+		TPM0_MOD =  ModuloValueMotor;
+		LEDRed_On();LEDGreen_On();
+		//CDC1_SendString((char*)"r;");
 	}
-	if (angleFromPi == 2) {
+	else if (angleFromPi == 2) {
 		//Motor rechts langsamer
-		TPM0_MOD += 500;
+		TPM0_MOD += 1000;
+		TPM1_MOD =  ModuloValueMotor;
+		LEDGreen_On();
+		//CDC1_SendString((char*)"g;");
 	}
-	if (angleFromPi == 3) {
+	else if (angleFromPi == 3) {
 		//Motor links schneller
 		TPM1_MOD -= 500;
+		TPM0_MOD =  ModuloValueMotor;
+		LEDBlue_On();
+		//CDC1_SendString((char*)"b;");
 	}
-	if (angleFromPi == 4) {
-		//Motor links schneller
+	else if (angleFromPi == 4) {
+		//Motor links langsamer
 		TPM0_MOD -= 500;
+		TPM1_MOD =  ModuloValueMotor;
+		LEDBlue_On();LEDRed_On();
+		//CDC1_SendString((char*)"v;");
 	}
 }
 
@@ -112,14 +130,14 @@ int getValueRight() {
 int getValueLeft() {
 	return counterLeft;
 }
-
+//Braucht es nicht
 void EnginesBreak() {
 	EngineLeft, EngineRight = EngineBreaking;
 	motor_links_Disable();
 	motor_rechts_Disable();
 }
 
-
+//Braucht es nicht
 void EnginesSlowDown() {
 	int j = (TPM1_MOD + TPM0_MOD)/2;
 	EngineLeft, EngineRight = EngineSlowDown;
@@ -157,11 +175,9 @@ void ramp(){
 	while(steps != ModuloValueMotor){
 	setTimerFrequencyRight(steps);
 	setTimerFrequencyLeft(steps);
-	steps -= 200;
+	steps -= 600;
 	}
 }
-
-
 
 //Kann jemals so gross werden das int nicht mehr reicht?
 int calcDistance(){
@@ -169,7 +185,6 @@ int calcDistance(){
 	int distance = 0;
 	//Weil wir im HalfStep Modus sind kann mit if's gelöst werden wenn MSB Bits automatisch geändert werden sollen
 	mean = (mean/2);
-
-	distance = mean * (int)(stepperAngle*(PII/180)) * radiusRad;
+	distance = (int)(mean * (stepperAngle*(PII/180)) * radiusRad);
 	return distance;
 }

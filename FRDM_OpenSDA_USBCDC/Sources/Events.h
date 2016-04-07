@@ -49,6 +49,8 @@
 #include "CDC1.h"
 #include "Tx1.h"
 #include "Rx1.h"
+#include "CS1.h"
+#include "TMOUT1.h"
 #include "MS1.h"
 #include "BitIoLdd4.h"
 #include "TRIG.h"
@@ -334,6 +336,36 @@ void TU3_OnChannel0(LDD_TUserData *UserDataPtr);
 ** ===================================================================
 */
 void DC_Greifer_Schiene_Horizontal_OnEnd(void);
+
+void CDC1_OnError(byte error);
+/*
+** ===================================================================
+**     Event       :  CDC1_OnError (module Events)
+**
+**     Component   :  CDC1 [FSL_USB_CDC_Device]
+**     Description :
+**         Hook called in case of an error
+**     Parameters  :
+**         NAME            - DESCRIPTION
+**         error           - Error code
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void USB1_OnError(uint8_t error);
+/*
+** ===================================================================
+**     Event       :  USB1_OnError (module Events)
+**
+**     Component   :  USB1 [FSL_USB_Stack]
+**     Description :
+**         Hook called in case of an error
+**     Parameters  :
+**         NAME            - DESCRIPTION
+**         error           - Error code
+**     Returns     : Nothing
+** ===================================================================
+*/
 
 /* END Events */
 

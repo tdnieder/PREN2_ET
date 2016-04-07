@@ -80,20 +80,16 @@ uint16_t US_Measure_us(void) {
   uint16_t us, cm;
   uint8_t buf[8];
 
-  us = US_Measure_us();
-  //UTIL1_Num16uToStrFormatted(buf, sizeof(buf), us, ' ', 5);
-  //LCD1_GotoXY(1,5);
-  //LCD1_WriteString((char*)buf);
+  us = US_Measure_us();//mikro Meter
 
-  cm = US_usToCentimeters(us, 22);
+  cm = US_usToCentimeters(us, 22);//Zenti Meter
 
-  //UTIL1_Num16uToStrFormatted(buf, sizeof(buf), cm, ' ', 5);
-  //LCD1_GotoXY(2,5);
-  //LCD1_WriteString((char*)buf);
-
+//Test
   LEDRed_Put(cm<10); /* red LED if object closer than 10 cm */
   LEDBlue_Put(cm>=10&&cm<=100); /* blue LED if object is in 10..100 cm range */
   LEDGreen_Put(cm>100); /* blue LED if object is in 10..100 cm range */
+
+  return cm;
 }
 
 

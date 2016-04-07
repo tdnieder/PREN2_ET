@@ -76,6 +76,17 @@ void forward_bit(void);
  * Setzt das Bit um nach hinten zu fahren
  */
 void backward_bit(void);
+/*
+ * Greifer steuerung
+ */
+void setGrabber(int, int);
+/*
+ *
+ */
+void setGrabberBack(void);
 
+void testServo(int);
+
+void testGrab(int);
 
 #endif /* SOURCES_GREIFER_H_ */

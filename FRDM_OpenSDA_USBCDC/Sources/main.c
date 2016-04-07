@@ -45,6 +45,8 @@
 #include "CDC1.h"
 #include "Tx1.h"
 #include "Rx1.h"
+#include "CS1.h"
+#include "TMOUT1.h"
 #include "MS1.h"
 #include "BitIoLdd4.h"
 #include "TRIG.h"
@@ -115,7 +117,7 @@ int main(void)
   /* Write your local variable definition here */
 
   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
-  PE_low_level_init();
+   PE_low_level_init();
   /*** End of Processor Expert internal initialization.                    ***/
 
   //Motoren an
