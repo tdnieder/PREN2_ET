@@ -68,7 +68,7 @@
 #include "BitIoLdd5.h"
 #include "TU3.h"
 #include "DC_Greifer_Schiene_Horizontal.h"
-#include "PwmLdd7.h"
+#include "PwmLdd8.h"
 #include "motor_links.h"
 #include "PwmLdd5.h"
 #include "DCVertikalBit.h"

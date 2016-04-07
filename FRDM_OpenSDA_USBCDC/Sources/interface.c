@@ -82,7 +82,7 @@ void switchCase(char* function) {
     	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "checkEnemy") == 0) {
-    	//CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
+    	CDC1_SendString((char*) Measure());//checkEnemy
     	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "unloadThrough") == 0) {
@@ -124,7 +124,19 @@ void switchCase(char* function) {
        	LEDBlue_On();
        	LEDRed_Off();
      	testServo(atoi(param1));
+     	testGrab(atoi(param1));
      }
+
+    if(strcmp(function, "measure")==0){
+    	LEDBlue_On();
+    	LEDRed_Off();
+    	US_Init();
+for(;;){
+    		 Measure();
+    	    WAIT1_Waitms(1000); /* wait at least for 50 ms until the next measurement to avoid echos */
+
+     }
+    }
 	//clear Variablen!!
 	functionName = 0;
 	param1 = 0;

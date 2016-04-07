@@ -39,6 +39,6 @@ uint16_t US_Measure_us(void);
 void US_Init(void);
 
 
-void Measure(void);
+int Measure(void);
 
 #endif /* ULTRASONIC_H_ */

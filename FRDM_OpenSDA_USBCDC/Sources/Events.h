@@ -72,7 +72,7 @@
 #include "BitIoLdd5.h"
 #include "TU3.h"
 #include "DC_Greifer_Schiene_Horizontal.h"
-#include "PwmLdd7.h"
+#include "PwmLdd8.h"
 #include "motor_links.h"
 #include "PwmLdd5.h"
 #include "DCVertikalBit.h"
@@ -319,24 +319,6 @@ void TU3_OnChannel1(LDD_TUserData *UserDataPtr);
 /* ===================================================================*/
 void TU3_OnChannel0(LDD_TUserData *UserDataPtr);
 
-/*
-** ===================================================================
-**     Event       :  DC_Greifer_Schiene_Horizontal_OnEnd (module Events)
-**
-**     Component   :  DC_Greifer_Schiene_Horizontal [PWM]
-**     Description :
-**         This event is called when the specified number of cycles has
-**         been generated. (Only when the component is enabled -
-**         <Enable> and the events are enabled - <EnableEvent>). The
-**         event is available only when the <Interrupt service/event>
-**         property is enabled and selected peripheral supports
-**         appropriate interrupt.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void DC_Greifer_Schiene_Horizontal_OnEnd(void);
-
 void CDC1_OnError(byte error);
 /*
 ** ===================================================================
@@ -366,6 +348,45 @@ void USB1_OnError(uint8_t error);
 **     Returns     : Nothing
 ** ===================================================================
 */
+
+/*
+** ===================================================================
+**     Event       :  TU3_OnCounterRestart (module Events)
+**
+**     Component   :  TU3 [TimerUnit_LDD]
+*/
+/*!
+**     @brief
+**         Called if counter overflow/underflow or counter is
+**         reinitialized by modulo or compare register matching.
+**         OnCounterRestart event and Timer unit must be enabled. See
+**         [SetEventMask] and [GetEventMask] methods. This event is
+**         available only if a [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
+*/
+/* ===================================================================*/
+void TU3_OnCounterRestart(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  DC_Greifer_Schiene_Horizontal_OnEnd (module Events)
+**
+**     Component   :  DC_Greifer_Schiene_Horizontal [PWM]
+**     Description :
+**         This event is called when the specified number of cycles has
+**         been generated. (Only when the component is enabled -
+**         <Enable> and the events are enabled - <EnableEvent>). The
+**         event is available only when the <Interrupt service/event>
+**         property is enabled and selected peripheral supports
+**         appropriate interrupt.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void DC_Greifer_Schiene_Horizontal_OnEnd(void);
 
 /* END Events */
 
