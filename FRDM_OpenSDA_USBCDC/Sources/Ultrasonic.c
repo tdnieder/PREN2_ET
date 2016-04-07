@@ -35,7 +35,7 @@ void US_EventEchoCapture(LDD_TUserData *UserDataPtr) {
   US_DeviceType *ptr = (US_DeviceType*)UserDataPtr;
 
   if (ptr->state==ECHO_TRIGGERED) { /* 1st edge, this is the raising edge, start measurement */
-    TU2_ResetCounter(ptr->echoDevice);
+    TU3_ResetCounter(ptr->echoDevice);
     ptr->state = ECHO_MEASURE;
   } else if (ptr->state==ECHO_MEASURE) { /* 2nd edge, this is the falling edge: use measurement */
     (void)TU3_GetCaptureValue(ptr->echoDevice, 0, &ptr->capture);
@@ -67,22 +67,25 @@ uint16_t US_Measure_us(void) {
   TRIG_ClrVal(usDevice.trigDevice);
   while(usDevice.state!=ECHO_FINISHED) {
     /* measure echo pulse */
-    if (usDevice.state==ECHO_OVERFLOW) { /* measurement took too long? */
-      usDevice.state = ECHO_IDLE;
-      return 0; /* no echo, error case */
-    }
+    //if (usDevice.state==ECHO_OVERFLOW) { /* measurement took too long? */
+      //usDevice.state = ECHO_IDLE;
+      //return 0; /* no echo, error case */
+    //}
   }
   us = (usDevice.capture*1000UL)/(TU2_CNT_INP_FREQ_U_0/1000);
   return us;
 }
 
- void Measure() {
-  uint16_t us, cm;
+ int Measure() {
+	 LEDBlue_Off();
+  int us, cm;
   uint8_t buf[8];
 
   us = US_Measure_us();//mikro Meter
 
-  cm = US_usToCentimeters(us, 22);//Zenti Meter
+  cm = US_usToCentimeters(us, 20);//Zenti Meter
+
+
 
 //Test
   LEDRed_Put(cm<10); /* red LED if object closer than 10 cm */

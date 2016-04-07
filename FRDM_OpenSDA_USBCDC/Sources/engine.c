@@ -90,28 +90,28 @@ void calcVelocityToNumber(int angleFromPi) {
 		return;
 	}
 	else if (angleFromPi == 1) {
-		TPM1_MOD += 1000;
+		TPM1_MOD += 200;
 		TPM0_MOD =  ModuloValueMotor;
 		LEDRed_On();LEDGreen_On();
 		//CDC1_SendString((char*)"r;");
 	}
 	else if (angleFromPi == 2) {
 		//Motor rechts langsamer
-		TPM0_MOD += 1000;
+		TPM0_MOD += 200;
 		TPM1_MOD =  ModuloValueMotor;
 		LEDGreen_On();
 		//CDC1_SendString((char*)"g;");
 	}
 	else if (angleFromPi == 3) {
 		//Motor links schneller
-		TPM1_MOD -= 500;
+		TPM1_MOD -= 200;
 		TPM0_MOD =  ModuloValueMotor;
 		LEDBlue_On();
 		//CDC1_SendString((char*)"b;");
 	}
 	else if (angleFromPi == 4) {
 		//Motor links langsamer
-		TPM0_MOD -= 500;
+		TPM0_MOD -= 200;
 		TPM1_MOD =  ModuloValueMotor;
 		LEDBlue_On();LEDRed_On();
 		//CDC1_SendString((char*)"v;");
