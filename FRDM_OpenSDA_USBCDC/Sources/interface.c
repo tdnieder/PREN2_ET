@@ -78,7 +78,7 @@ void switchCase(char* function) {
     	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "getDistanceEnemy") == 0) {
-    	//CDC1_SendString((char*) US_usToCentimeters(US_Measure_us(), RaumTemperatur));//checkEnemy
+    	CDC1_SendString((char*) measureALot());
     	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "checkEnemy") == 0) {
@@ -90,34 +90,71 @@ void switchCase(char* function) {
     	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "setGrabberPosition") == 0) {
-    	//setGrabberPosition(param1,param2);
+    	setGrabber(param1,param2);
     	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "setSpeed") == 0) {
-    	//setSpeed(atoi(param1));
+    	setSpeed(atoi(param1));
     	CDC1_SendString((char*)"go\n");
     }
-    if (strcmp(function, "takeContainer") == 0) {
-    	grab();
+    if (strcmp(function, "emptyContainer") == 0) {
+    	if(param1 == 0){
+    		turn();
+    	}
+    	else{
+    		turnempty();
+    	}
+    	CDC1_SendString((char*)"go\n");
+    }
+    if (strcmp(function, "openCloseThrough") == 0) {
+    	if(param1 == 0){
+    		turnbackThrough();
+    	}
+    	else{
+    		turnempty();
+    	}
     	CDC1_SendString((char*)"go\n");
     }
     if(strcmp(function, "battery") == 0){
-    	CDC1_SendString((char*)measureBattery());
+    	CDC1_SendString((char*)measureBattery());//1 = leer
     	CDC1_SendString((char*)"go\n");
     }
     if(strcmp(function, "getDistance")==0){
     	CDC1_SendString((char*)calcDistance());//in cm
     	CDC1_SendString((char*)"go\n");
     }
+    if(strcmp(function, "shutdown")==0){
+    	motor_rechts_Disable();
+    	motor_links_Disable();
+    	Mulde_leeren_Disable();
+    	DC_Greifer_Schiene_Horizontal_Disable();
+    	DC_Greifer_Schiene_Vertikal_Disable();
+    	CDC1_SendString((char*)"go\n");
+    }
+    if(strcmp(function, "	openCloseGrabber")==0){
+        	initAllServos();
+        	if(param1 == 0){
+        		grab();
+        	}
+        	else{
+        		openGreifer();
+        	}
+        	CDC1_SendString((char*)"go\n");
+         }
+
+
+
     //testzwecke
-    if(strcmp(function, "grab")==0){
+/*    if(strcmp(function, "	openCloseGrabber")==0){
     	LEDBlue_On();
     	LEDRed_Off();
     	initAllServos();
-     	turn();
+    	grab();
+    	turn();
      }
     if(strcmp(function, "open")==0){
-     	turnback();
+     	turnBack();
+     	openGreifer();
      }
 
     if(strcmp(function, "test")==0){
@@ -133,10 +170,10 @@ void switchCase(char* function) {
     	US_Init();
 for(;;){
     		 Measure();
-    	    WAIT1_Waitms(1000); /* wait at least for 50 ms until the next measurement to avoid echos */
+    	    WAIT1_Waitms(1000);  wait at least for 50 ms until the next measurement to avoid echos
 
      }
-    }
+    }*/
 	//clear Variablen!!
 	functionName = 0;
 	param1 = 0;

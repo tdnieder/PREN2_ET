@@ -41,4 +41,7 @@ void US_Init(void);
 
 int Measure(void);
 
+
+int measureALot(void);
+
 #endif /* ULTRASONIC_H_ */

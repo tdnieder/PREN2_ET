@@ -44,8 +44,7 @@ void initAllServos() {
 void grab() {
 	ServoGrab = ServoClosing;
 	Greifen_Enable();
-	Greifen_SetRatio16(60000);
-
+	Greifen_SetRatio16(62500);
 }
 
 /*
@@ -54,7 +53,7 @@ void grab() {
 void openGreifer(void) {
 	ServoGrab = ServoOpening;
 	Greifen_Enable();
-	Greifen_SetRatio16(62000);
+	Greifen_SetRatio16(59000);
 }
 
 /*
@@ -64,7 +63,7 @@ void openGreifer(void) {
 void turn(void) {
 	ServoTurn = ServoOpening;
 	Drehen_Enable();
-	Drehen_SetRatio16(60000);
+	Drehen_SetRatio16(59000);
 	//Vll ein Wait
 }
 
@@ -162,6 +161,7 @@ void backward_bit(){
 }
 
 void setGrabber(int Hor, int Vert){
+
 	if(Hor == 1){
 		forward();
 	}

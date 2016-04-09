@@ -10,24 +10,24 @@
 
 void initMulde(){
 	Mulde_leeren_Enable();
-	Mulde_leeren_SetRatio16(0);
-	Mulde_leeren_Disable();
+	//Mulde_leeren_SetRatio16(65000);
 	unloadThrough();
 }
 
 void turnempty(){
 	Mulde_leeren_Enable();
-	Mulde_leeren_SetRatio16(100);
-	Mulde_leeren_Disable();
+	Mulde_leeren_SetRatio16(59000);
+
 }
 
-void turnback(){
+void turnbackThrough(){
 	Mulde_leeren_Enable();
-	Mulde_leeren_SetRatio16(0);
-	Mulde_leeren_Disable();
+	Mulde_leeren_SetRatio16(62500);
+
 }
 
 void unloadThrough(){
 	turnempty();
-	turnback();
+	WAIT1_Waitms(3000);
+	turnempty();
 }

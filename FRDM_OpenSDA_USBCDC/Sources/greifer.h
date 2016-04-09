@@ -18,7 +18,7 @@
 /*
  * Initialisiert die Servos
  */
-void initAllServos(void);
+void initAllServos();
 
 /*
  * Greift nach dem Objekt, Servos sollte sich schliessen

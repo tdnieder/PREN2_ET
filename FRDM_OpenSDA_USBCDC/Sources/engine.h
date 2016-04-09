@@ -57,7 +57,7 @@ void initEngines(void);
  * des Pis über die Schnittstelle
  * "Regelung"
  */
-void calcVelocityToNumber(int);
+void calcVelocityToNumber(int,int);
 /*
  * Zählt die Distanz die zurückgelegt wird Links
  */

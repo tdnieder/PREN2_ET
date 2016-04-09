@@ -81,7 +81,7 @@ void setSpeed(int VeloCityFromPi) {
 /*
  * Korrigiert die geschwindigkeit damit der Winkel wieder Null wird!
  */
-void calcVelocityToNumber(int angleFromPi) {
+void calcVelocityToNumber(int angleFromPi, int velocityFromPi) {
 	LEDRed_Off();
 	LEDGreen_Off();
 	LEDBlue_Off();
@@ -90,31 +90,25 @@ void calcVelocityToNumber(int angleFromPi) {
 		return;
 	}
 	else if (angleFromPi == 1) {
-		TPM1_MOD += 200;
-		TPM0_MOD =  ModuloValueMotor;
+		//Motor links langsam
+		TPM1_MOD += velocityFromPi;
 		LEDRed_On();LEDGreen_On();
-		//CDC1_SendString((char*)"r;");
 	}
 	else if (angleFromPi == 2) {
 		//Motor rechts langsamer
-		TPM0_MOD += 200;
-		TPM1_MOD =  ModuloValueMotor;
+		TPM0_MOD += velocityFromPi;
 		LEDGreen_On();
-		//CDC1_SendString((char*)"g;");
 	}
 	else if (angleFromPi == 3) {
 		//Motor links schneller
-		TPM1_MOD -= 200;
-		TPM0_MOD =  ModuloValueMotor;
+		TPM1_MOD -= velocityFromPi;
 		LEDBlue_On();
-		//CDC1_SendString((char*)"b;");
 	}
 	else if (angleFromPi == 4) {
-		//Motor links langsamer
-		TPM0_MOD -= 200;
-		TPM1_MOD =  ModuloValueMotor;
+		//Motor rechts schnell
+		TPM0_MOD -= velocityFromPi;
 		LEDBlue_On();LEDRed_On();
-		//CDC1_SendString((char*)"v;");
+
 	}
 }
 

@@ -102,3 +102,13 @@ void US_Init(void) {
   usDevice.trigDevice = TRIG_Init(NULL);
   usDevice.echoDevice = TU3_Init(&usDevice);
 }
+
+
+int measureALot(){
+	int temp;
+	int l = 0;
+	for(l;l<9;l++){
+		temp += Measure();
+	}
+	return temp/10;
+}
