@@ -1,0 +1,15 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of Project [Power_Management.PrjPcb]
+   Generated File[PowerManagement_uC.GTL]
+   Generated File[PowerManagement_uC.GBL]
+   Generated File[PowerManagement_uC.GM1]
+   Generated File[PowerManagement_uC.RUL]
+   Generated File[PowerManagement_uC.EXTREP]
+   Generated File[PowerManagement_uC.REP]
+
+
+Files Generated   : 6
+Documents Printed : 0
+
+Finished Output Generation At 14:33:44 On 19.04.2016

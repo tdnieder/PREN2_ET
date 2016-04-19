@@ -1,0 +1,54 @@
+*************************************************************
+FileName = PowerManagement_Driver.GBR
+AutoAperture = True
+*************************************************************
+Generating : Top Layer
+      File : PowerManagement_Driver.GTL
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+*************************************************************
+
+*************************************************************
+Generating : Bottom Layer
+      File : PowerManagement_Driver.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D14
+    D15
+    D16
+    D17
+    D18
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 1
+      File : PowerManagement_Driver.GM1
+
+    Adding Layer      : Mechanical 1
+
+
+Used DCodes :
+    D18
+*************************************************************
+

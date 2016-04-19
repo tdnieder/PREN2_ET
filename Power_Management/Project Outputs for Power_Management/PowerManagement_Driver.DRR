@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: PowerManagement_Driver.PcbDoc   19.04.2016  14:22:41
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : PowerManagement_Driver.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        31mil (0.7874mm)         Round          12               4.21 Inch (107.00 mm)
+T2        35mil (0.889mm)          Round          33               6.10 Inch (155.02 mm)
+---------------------------------------------------------------------------
+Totals                                            45               10.32 Inch (262.02 mm)
+
+Total Processing Time (hh:mm:ss) : 00:00:00
