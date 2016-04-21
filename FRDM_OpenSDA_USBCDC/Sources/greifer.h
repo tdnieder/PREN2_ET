@@ -15,14 +15,14 @@
 #include "Drehen.h"
 #include "DCVertikalBit.h"
 #include "DCHorizontalBit.h"//PTE0
+#include "interface.h"
 
 extern int Duty1ms;
 extern int Duty2ms;
 
-/*
- * Initialisiert die Servos
- */
-void initAllServos();
+
+
+
 
 /*
  * Greift nach dem Objekt, Servos sollte sich schliessen
@@ -33,12 +33,12 @@ void grab(void);
  * Nachdem der Greifer hochgefahren ist, sollte er den
  * Greifer sammt Tonne drehen und ausleeren
  */
-void turnGrabber(int);
+void turnGrabber(void);
 
 /*
  * Dreht den greiferArm wieder zurück
  */
-void turnBackGrabber(int);
+void turnBackGrabber(void);
 
 /*
  * Servo hat den Greifer zugepackt,
@@ -88,7 +88,9 @@ void setGrabber(int, int);
  *Setzt den Greifer zurück
  */
 void setGrabberBack(void);
-
-
+/*
+ * Setzt DC Mode Bit
+ */
+void setModeBitDc();
 
 #endif /* SOURCES_GREIFER_H_ */

@@ -9,6 +9,7 @@
 #define SOURCES_MULDE_H_
 
 #include "Mulde_leeren.h"
+#include "interface.h"
 
 extern int Duty1ms;
 extern int Duty2ms;

@@ -11,7 +11,6 @@ extern int Duty2ms;
 
 void initMulde(){
 	Mulde_leeren_Enable();
-	//Mulde_leeren_SetRatio16(65000);
 	unloadThrough();
 }
 
@@ -28,7 +27,9 @@ void turnbackThrough(){
 }
 
 void unloadThrough(){
+	Status.Timer0 == TIMER_USED;
 	turnempty();
 	WAIT1_Waitms(3000);
 	turnbackThrough();
+	Status.Timer0 == TIMER_IDLE;
 }

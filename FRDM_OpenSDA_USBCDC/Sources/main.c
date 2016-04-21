@@ -79,6 +79,8 @@
 #include "BitIoLdd17.h"
 #include "AnschlagHorizontalHinten.h"
 #include "BitIoLdd18.h"
+#include "PWM1.h"
+#include "PwmLdd7.h"
 #include "motor_links.h"
 #include "PwmLdd5.h"
 #include "DCVertikalBit.h"
@@ -114,8 +116,8 @@
 //---------------------------
 //Global variables
 //---------------------------
-int Duty1ms = 59500;
-int Duty2ms = 60500;
+int Duty1ms = 58500;
+int Duty2ms = 61500;
 //---------------------------
 //Methods
 //---------------------------
@@ -130,12 +132,6 @@ int main(void)
   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
    PE_low_level_init();
   /*** End of Processor Expert internal initialization.                    ***/
-
-  //Motoren an
-  motor_rechts_Disable();
-  motor_links_Disable();
-
-
 
   CDC_Run();
 
