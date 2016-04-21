@@ -18,6 +18,7 @@ typedef enum {
 //Zeit um Reset Wert
 int timeVertical;
 int timeHorizontal;
+int timeToTurn = 0;
 
 //Servo Status
 volatile ServoState ServoGrab;
@@ -34,6 +35,7 @@ void initAllServos() {
 	ServoGrab, ServoTurn = ServoWaiting;
 	Greifen_Disable();
 	Drehen_Disable();
+	ModeDC_PutVal(TRUE);
 	DC_Greifer_Schiene_Horizontal_Disable();
 	DC_Greifer_Schiene_Vertikal_Disable();
 }
@@ -44,59 +46,49 @@ void initAllServos() {
 void grab() {
 	ServoGrab = ServoClosing;
 	Greifen_Enable();
-	Greifen_SetRatio16(62500);
+	Greifen_SetRatio16(Duty2ms);
 }
 
 /*
  * Öffnet den Greifer Arm
  */
-void openGreifer(void) {
+void openGreifer() {
 	ServoGrab = ServoOpening;
 	Greifen_Enable();
-	Greifen_SetRatio16(59000);
+	Greifen_SetRatio16(Duty1ms);
 }
 
 /*
  * Nachdem der Greifer hochgefahren ist, sollte er den
  * Greifer sammt Tonne drehen und ausleeren
  */
-void turn(void) {
+void turnGrabber(int DutyC) {
 	ServoTurn = ServoOpening;
 	Drehen_Enable();
-	Drehen_SetRatio16(59000);
+	Drehen_SetRatio16(DutyC);
 	//Vll ein Wait
 }
 
 /*
  * Dreht den Greiferarm wieder zurück
  */
-void turnBack(void) {
+void turnBackGrabber(int DutyC) {
 	ServoTurn = ServoClosing;
 	Drehen_Enable();
-	Drehen_SetRatio16(62000);
-	//Vll ein Wait
+	Drehen_SetRatio16(DutyC);
+	//Vll ein Waitq
 }
 
-void testServo(int inn){
-	Drehen_Enable();
-//Drehen_SetRatio16(inn);
-Drehen_SetDutyMS(inn);
-}
-
-void testGrab(int kinn){
-	Greifen_Enable();
-	//Greifen_SetRatio16(kinn);
-	Greifen_SetDutyMS(kinn);
-}
 
 /*
  * Servo hat den Greifer zugepackt,
  * hät ihn gerade und fährt nun nach oben.
  */
-void up(void) {
+void up() {
 	up_bit();
+	DC_Greifer_Schiene_Horizontal_SetRatio16(20000);
 	DC_Greifer_Schiene_Vertikal_Enable();
-	WAIT1_Waitms(10);
+	WAIT1_Waitms(100);
 	DC_Greifer_Schiene_Vertikal_Disable();
 	timeVertical += 10;
 }
@@ -105,10 +97,10 @@ void up(void) {
  * Fahrzeug ist an der Richtigen Stelle und fährt
  * den Greifer nun herunter
  */
-void down(void) {
+void down() {
 	down_bit();
 	DC_Greifer_Schiene_Vertikal_Enable();
-	WAIT1_Waitms(10);
+	WAIT1_Waitms(100);
 	DC_Greifer_Schiene_Vertikal_Disable();
 	timeVertical -= 10;
 }
@@ -116,20 +108,20 @@ void down(void) {
 /*
  * Bringt den ganzen Greifer nach vorne
  */
-void forward(void) {
+void forward() {
 	forward_bit();
 	DC_Greifer_Schiene_Horizontal_Enable();
-	WAIT1_Waitms(10);
+	WAIT1_Waitms(100);
 	DC_Greifer_Schiene_Horizontal_Disable();
 	timeHorizontal += 10;
 }
 /*
  * Bring den Greifer nach hinten.
  */
-void backward(void) {
+void backward() {
 	backward_bit();
 	DC_Greifer_Schiene_Horizontal_Enable();
-	WAIT1_Waitms(10);
+	WAIT1_Waitms(100);
 	DC_Greifer_Schiene_Horizontal_Disable();
 	timeHorizontal -=10;
 }
@@ -163,7 +155,7 @@ void backward_bit(){
 void setGrabber(int Hor, int Vert){
 
 	if(Hor == 1){
-		forward();
+		forward();//Richtung container
 	}
 	else if(Hor == 2){
 		backward();

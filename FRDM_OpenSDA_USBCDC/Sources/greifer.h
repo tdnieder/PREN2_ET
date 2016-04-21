@@ -15,6 +15,10 @@
 #include "Drehen.h"
 #include "DCVertikalBit.h"
 #include "DCHorizontalBit.h"//PTE0
+
+extern int Duty1ms;
+extern int Duty2ms;
+
 /*
  * Initialisiert die Servos
  */
@@ -29,12 +33,12 @@ void grab(void);
  * Nachdem der Greifer hochgefahren ist, sollte er den
  * Greifer sammt Tonne drehen und ausleeren
  */
-void turn(void);
+void turnGrabber(int);
 
 /*
  * Dreht den greiferArm wieder zurück
  */
-void turnBack(void);
+void turnBackGrabber(int);
 
 /*
  * Servo hat den Greifer zugepackt,
@@ -81,12 +85,10 @@ void backward_bit(void);
  */
 void setGrabber(int, int);
 /*
- *
+ *Setzt den Greifer zurück
  */
 void setGrabberBack(void);
 
-void testServo(int);
 
-void testGrab(int);
 
 #endif /* SOURCES_GREIFER_H_ */

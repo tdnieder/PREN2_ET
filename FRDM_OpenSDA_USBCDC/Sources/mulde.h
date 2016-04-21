@@ -10,6 +10,9 @@
 
 #include "Mulde_leeren.h"
 
+extern int Duty1ms;
+extern int Duty2ms;
+
 void initMulde(void);
 
 void turnempty(void);

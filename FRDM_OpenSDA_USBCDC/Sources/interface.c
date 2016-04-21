@@ -30,11 +30,16 @@
 #include "PwmLdd2.h"
 #include "MS1.h"
 #include "BitIoLdd4.h"
+#include "mulde.h"
+#include "greifer.h"
+#include "engine.h"
 
 #define RaumTemperatur 20
 
 static uint8_t cdc_buffer[USB1_DATA_BUFF_SIZE];
 static uint8_t in_buffer[USB1_DATA_BUFF_SIZE];
+extern int Duty1ms;
+extern int Duty2ms;
 char* functionName;
 char* param1;
 char* param2;
@@ -65,32 +70,23 @@ void switchCase(char* function) {
 		initEngines();
 		CDC1_SendString((char*)"go\n");
 	}
-    if (strcmp(function, "driveCurve") == 0) {
-    	calcVelocityToNumber(atoi(param1));
-    	CDC1_SendString((char*)"go\n");
-    }
     if (strcmp(function, "setSpeedLeft") == 0) {
     	setTimerFrequencyLeft(atoi(param1));
     	CDC1_SendString((char*)"go\n");
     }
-    if (strcmp(function, "setSpeedRight") == 0) {
+    if (strcmp(function, "setSpeedLeft") == 0) {
     	setTimerFrequencyRight(atoi(param1));
     	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "getDistanceEnemy") == 0) {
-    	CDC1_SendString((char*) measureALot());
-    	CDC1_SendString((char*)"go\n");
-    }
-    if (strcmp(function, "checkEnemy") == 0) {
-    	CDC1_SendString((char*) Measure());//checkEnemy
-    	CDC1_SendString((char*)"go\n");
+    	CDC1_SendString((char*)Measure());
     }
     if (strcmp(function, "unloadThrough") == 0) {
     	initMulde();
     	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "setGrabberPosition") == 0) {
-    	setGrabber(param1,param2);
+    	setGrabber(atoi(param1),atoi(param2));
     	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "setSpeed") == 0) {
@@ -98,22 +94,17 @@ void switchCase(char* function) {
     	CDC1_SendString((char*)"go\n");
     }
     if (strcmp(function, "emptyContainer") == 0) {
-    	if(param1 == 0){
-    		turn();
-    	}
-    	else{
-    		turnempty();
-    	}
-    	CDC1_SendString((char*)"go\n");
-    }
-    if (strcmp(function, "openCloseThrough") == 0) {
-    	if(param1 == 0){
-    		turnbackThrough();
-    	}
-    	else{
-    		turnempty();
-    	}
-    	CDC1_SendString((char*)"go\n");
+    		initAllServos();
+    		int Duty1msTurn = 59500;
+    		int Duty2msTurn = 60500;
+    		while(Duty1msTurn == Duty2msTurn){
+    		turnGrabber(Duty1msTurn+100);
+    		}
+    		WAIT1_Waitms(4000);
+    		while(Duty2msTurn == Duty1msTurn){
+    			turnBackGrabber(Duty2msTurn-100);
+    		}
+    		CDC1_SendString((char*)"go\n");
     }
     if(strcmp(function, "battery") == 0){
     	CDC1_SendString((char*)measureBattery());//1 = leer
@@ -121,7 +112,6 @@ void switchCase(char* function) {
     }
     if(strcmp(function, "getDistance")==0){
     	CDC1_SendString((char*)calcDistance());//in cm
-    	CDC1_SendString((char*)"go\n");
     }
     if(strcmp(function, "shutdown")==0){
     	motor_rechts_Disable();
@@ -131,49 +121,16 @@ void switchCase(char* function) {
     	DC_Greifer_Schiene_Vertikal_Disable();
     	CDC1_SendString((char*)"go\n");
     }
-    if(strcmp(function, "	openCloseGrabber")==0){
+    if(strcmp(function, "openCloseGrabber")==0){
         	initAllServos();
-        	if(param1 == 0){
+        	if(atoi(param1) == 1){
         		grab();
         	}
-        	else{
+        	if(atoi(param1) == 2){
         		openGreifer();
         	}
         	CDC1_SendString((char*)"go\n");
          }
-
-
-
-    //testzwecke
-/*    if(strcmp(function, "	openCloseGrabber")==0){
-    	LEDBlue_On();
-    	LEDRed_Off();
-    	initAllServos();
-    	grab();
-    	turn();
-     }
-    if(strcmp(function, "open")==0){
-     	turnBack();
-     	openGreifer();
-     }
-
-    if(strcmp(function, "test")==0){
-       	LEDBlue_On();
-       	LEDRed_Off();
-     	testServo(atoi(param1));
-     	testGrab(atoi(param1));
-     }
-
-    if(strcmp(function, "measure")==0){
-    	LEDBlue_On();
-    	LEDRed_Off();
-    	US_Init();
-for(;;){
-    		 Measure();
-    	    WAIT1_Waitms(1000);  wait at least for 50 ms until the next measurement to avoid echos
-
-     }
-    }*/
 	//clear Variablen!!
 	functionName = 0;
 	param1 = 0;
@@ -200,7 +157,5 @@ void CDC_Run() {
 			WAIT1_Waitms(10);
 		}
 	}
-
-
 }
 

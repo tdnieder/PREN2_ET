@@ -69,6 +69,16 @@
 #include "TU3.h"
 #include "DC_Greifer_Schiene_Horizontal.h"
 #include "PwmLdd8.h"
+#include "DCVib.h"
+#include "BitIoLdd14.h"
+#include "SwitchGreen.h"
+#include "BitIoLdd15.h"
+#include "SwitchBlue.h"
+#include "BitIoLdd16.h"
+#include "AnschlagVertikalOben.h"
+#include "BitIoLdd17.h"
+#include "AnschlagHorizontalHinten.h"
+#include "BitIoLdd18.h"
 #include "motor_links.h"
 #include "PwmLdd5.h"
 #include "DCVertikalBit.h"
@@ -104,7 +114,8 @@
 //---------------------------
 //Global variables
 //---------------------------
-
+int Duty1ms = 59500;
+int Duty2ms = 60500;
 //---------------------------
 //Methods
 //---------------------------

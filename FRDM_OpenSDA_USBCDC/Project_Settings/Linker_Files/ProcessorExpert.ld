@@ -4,13 +4,13 @@
 /*##                                   */
 /*##     Filename  : ProcessorExpert.ld */
 /*##                                   */
-/*##     Project   : FRDM_OpenSDA_USBCDC */
+/*##     Project   : FRDM_REAL         */
 /*##                                   */
 /*##     Processor : MKL25Z128VLK4     */
 /*##                                   */
 /*##     Compiler  : GNU C Compiler    */
 /*##                                   */
-/*##     Date/Time : 2016-02-23, 19:12, # CodeGen: 0 */
+/*##     Date/Time : 2016-04-14, 18:29, # CodeGen: 0 */
 /*##                                   */
 /*##     Abstract  :                   */
 /*##                                   */
