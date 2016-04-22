@@ -206,67 +206,35 @@ DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument5]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.GBL
-DItemRevisionGUID=
-
-[GeneratedDocument6]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.GM1
-DItemRevisionGUID=
-
-[GeneratedDocument7]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.GTL
-DItemRevisionGUID=
-
-[GeneratedDocument8]
 DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.LDP
 DItemRevisionGUID=
 
-[GeneratedDocument9]
+[GeneratedDocument6]
 DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.REP
 DItemRevisionGUID=
 
-[GeneratedDocument10]
+[GeneratedDocument7]
 DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.RUL
 DItemRevisionGUID=
 
-[GeneratedDocument11]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.TXT
-DItemRevisionGUID=
-
-[GeneratedDocument12]
+[GeneratedDocument8]
 DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.DRR
 DItemRevisionGUID=
 
-[GeneratedDocument13]
+[GeneratedDocument9]
 DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.EXTREP
 DItemRevisionGUID=
 
-[GeneratedDocument14]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.GBL
-DItemRevisionGUID=
-
-[GeneratedDocument15]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.GM1
-DItemRevisionGUID=
-
-[GeneratedDocument16]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.GTL
-DItemRevisionGUID=
-
-[GeneratedDocument17]
+[GeneratedDocument10]
 DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.LDP
 DItemRevisionGUID=
 
-[GeneratedDocument18]
+[GeneratedDocument11]
 DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.REP
 DItemRevisionGUID=
 
-[GeneratedDocument19]
+[GeneratedDocument12]
 DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.RUL
-DItemRevisionGUID=
-
-[GeneratedDocument20]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.TXT
 DItemRevisionGUID=
 
 [SearchPath1]
