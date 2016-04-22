@@ -23,6 +23,7 @@ void grab() {
 	if (Status.Timer0 == TIMER_IDLE) {
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
+
 	}
 	else{
 		shitDown();
@@ -35,13 +36,14 @@ void grab() {
 	 */
 	void openGreifer() {
 		if (Status.Timer0 == TIMER_IDLE) {
-		Greifen_Enable();
+			Greifen_Enable();
 		Greifen_SetRatio16(Duty1ms);
 		}
 		else{
 			shitDown();
 			Greifen_Enable();
 			Greifen_SetRatio16(Duty1ms);
+
 		}
 	}
 
@@ -51,7 +53,7 @@ void grab() {
 	 */
 	void turnGrabber(void) {
 		if (Status.Timer0 == TIMER_IDLE) {
-		Drehen_Enable();
+			Drehen_Enable();
 		Drehen_SetRatio16(Duty1ms);
 		}
 		else{
@@ -84,17 +86,17 @@ void grab() {
 	void up() {
 		if (Status.Timer1 == TIMER_IDLE) {
 		up_bit();
-		DC_Greifer_Schiene_Vertikal_Enable();
+		DC_Greifer_Schiene_Vertikal_SetRatio16(30000);
 		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Vertikal_Disable();
+		DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
 		timeVertical += 10;
 		}
 		else{
 			shitDown();
 			up_bit();
-			DC_Greifer_Schiene_Vertikal_Enable();
+			DC_Greifer_Schiene_Vertikal_SetRatio16(30000);
 			WAIT1_Waitms(100);
-			DC_Greifer_Schiene_Vertikal_Disable();
+			DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
 			timeVertical += 10;
 		}
 	}
@@ -106,17 +108,17 @@ void grab() {
 	void down() {
 		if (Status.Timer1 == TIMER_IDLE) {
 		down_bit();
-		DC_Greifer_Schiene_Vertikal_Enable();
+		DC_Greifer_Schiene_Vertikal_SetRatio16(30000);
 		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Vertikal_Disable();
+		DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
 		timeVertical -= 10;
 		}
 		else{
 			shitDown();
 			down_bit();
-			DC_Greifer_Schiene_Vertikal_Enable();
+			DC_Greifer_Schiene_Vertikal_SetRatio16(30000);
 			WAIT1_Waitms(100);
-			DC_Greifer_Schiene_Vertikal_Disable();
+			DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
 			timeVertical -= 10;
 		}
 	}
@@ -127,17 +129,17 @@ void grab() {
 	void forward() {
 		if (Status.Timer0 == TIMER_IDLE) {
 		forward_bit();
-		DC_Greifer_Schiene_Horizontal_Enable();
+		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
 		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Horizontal_Disable();
+		DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 		timeHorizontal += 10;
 		}
 		else{
 			shitDown();
 			forward_bit();
-				DC_Greifer_Schiene_Horizontal_Enable();
+				DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
 				WAIT1_Waitms(100);
-				DC_Greifer_Schiene_Horizontal_Disable();
+				DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 				timeHorizontal += 10;
 		}
 	}
@@ -147,7 +149,7 @@ void grab() {
 	void backward() {
 		if (Status.Timer0 == TIMER_IDLE) {
 		backward_bit();
-		DC_Greifer_Schiene_Horizontal_Enable();
+		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
 		WAIT1_Waitms(100);
 		DC_Greifer_Schiene_Horizontal_Disable();
 		timeHorizontal -= 10;
@@ -155,9 +157,9 @@ void grab() {
 		else{
 			shitDown();
 			backward_bit();
-			DC_Greifer_Schiene_Horizontal_Enable();
+			DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
 			WAIT1_Waitms(100);
-			DC_Greifer_Schiene_Horizontal_Disable();
+			DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 			timeHorizontal -= 10;
 		}
 	}

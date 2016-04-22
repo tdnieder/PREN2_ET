@@ -23,10 +23,6 @@ volatile int timerValue1;
 volatile int ModuloValueTimer0;
 volatile int ModuloValueTimer1;
 
-typedef enum {
-	EngineDriving, EnigneIdle, EngineCorrecting, EngineBreaking, EngineSlowDown
-} EngineState;
-
 //volatile = Kann verändert werden!
 volatile EngineState EngineLeft;
 volatile EngineState EngineRight;
@@ -52,12 +48,15 @@ void initEngines(void) {
 		ModuloValueTimer0 = TPM0_MOD;
 		ModuloValueTimer1 = TPM1_MOD;
 
+
 		setTimerFrequencyRight(ModuloValueMotor);
 		setTimerFrequencyLeft(ModuloValueMotor);
 		//Motoren beginnen drehen
 		motor_rechts_Enable();
 		motor_links_Enable();
 
+		motor_rechts_SetRatio16(30000);
+		motor_links_SetRatio16(30000);
 		//startet mit Rampe
 		//ramp();
 

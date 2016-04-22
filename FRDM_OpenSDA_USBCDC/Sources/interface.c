@@ -180,6 +180,15 @@ void switchCase(char* function) {
 		shitDown();
 		CDC1_SendString((char*) "go\n");
 	}
+ else if (strcmp(function, "1") == 0) {
+	DCVertikalBit_ClrVal();
+	CDC1_SendString((char*) "go\n");
+
+} else if (strcmp(function, "2") == 0) {
+	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
+	CDC1_SendString((char*) "go\n");
+}
+
 	/*
 	 * ENDE SONTIGES
 	 */
@@ -212,14 +221,13 @@ void CDC_Run() {
 }
 
 void shitDown() {
-	motor_rechts_Disable();
-	motor_links_Disable();
-	Mulde_leeren_Disable();
-	DC_Greifer_Schiene_Horizontal_Disable();
-	DC_Greifer_Schiene_Vertikal_Disable();
-	Greifen_Disable();
-	Drehen_Disable();
-
+motor_rechts_SetRatio16(0xFFFF);
+motor_links_SetRatio16(0xFFFF);
+Mulde_leeren_SetRatio16(0xFFFF);
+	Drehen_SetRatio16(0xFFFF);
+	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
+	Greifen_SetRatio16(0xFFFF);
+	DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 	Status.Timer0 = TIMER_IDLE;
 	Status.Timer1 = TIMER_IDLE;
 }
