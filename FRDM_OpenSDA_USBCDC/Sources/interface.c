@@ -73,6 +73,7 @@ void switchCase(char* function) {
 	 * FAHREN
 	 */
 	if (strcmp(function, "initEngines") == 0) {
+		Enable_ClrVal();
 		if ((Status.Timer0 == TIMER_IDLE) && (Status.Timer1 == TIMER_IDLE)) {
 			initEngines();
 		} else {
@@ -106,7 +107,8 @@ void switchCase(char* function) {
 	 * GREIFER / MULDE
 	 */
 	else if (strcmp(function, "setGrabberPosition") == 0) {
-		if ((Status.Timer0 == TIMER_IDLE)&&(Status.Timer1 == TIMER_IDLE)) {
+		if ((Status.Timer0 == TIMER_IDLE) && (Status.Timer1 == TIMER_IDLE)) {
+			//Enable_SetVal();
 			setGrabber(atoi(param1), atoi(param2));
 		} else {
 			shitDown();
@@ -114,7 +116,8 @@ void switchCase(char* function) {
 		}
 		CDC1_SendString((char*) "go\n");
 	} else if (strcmp(function, "emptyContainer") == 0) {
-		if (Status.Timer0 == TIMER_USED) {
+		//Enable_SetVal();
+		if (Status.Timer0 == TIMER_IDLE) {
 			turnBackGrabber();
 			WAIT1_Waitms(2000);
 			turnGrabber();
@@ -128,7 +131,8 @@ void switchCase(char* function) {
 	}
 
 	else if (strcmp(function, "openCloseGrabber") == 0) {
-		if (Status.Timer0 == TIMER_USED) {
+		//Enable_SetVal();
+		if (Status.Timer0 == TIMER_IDLE) {
 			if (atoi(param1) == 1) {
 				grab();
 			}
@@ -180,17 +184,23 @@ void switchCase(char* function) {
 		shitDown();
 		CDC1_SendString((char*) "go\n");
 	}
- else if (strcmp(function, "1") == 0) {
-	DCVertikalBit_ClrVal();
-	CDC1_SendString((char*) "go\n");
-
-} else if (strcmp(function, "2") == 0) {
-	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
-	CDC1_SendString((char*) "go\n");
-}
-
 	/*
 	 * ENDE SONTIGES
+	 */
+
+	/*
+	 * TEST
+	 */
+	else if (strcmp(function, "1") == 0) {
+		DCVertikalBit_ClrVal();
+		CDC1_SendString((char*) "go\n");
+
+	} else if (strcmp(function, "2") == 0) {
+		DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
+		CDC1_SendString((char*) "go\n");
+	}
+	/*
+	 * TEST
 	 */
 	functionName = 0;
 	param1 = 0;
@@ -221,9 +231,14 @@ void CDC_Run() {
 }
 
 void shitDown() {
-motor_rechts_SetRatio16(0xFFFF);
-motor_links_SetRatio16(0xFFFF);
-Mulde_leeren_SetRatio16(0xFFFF);
+	TPM0_MOD = 59999;
+	TPM1_MOD = 59999;
+	Enable_SetVal();//Stellt Motoren ab
+	Greifen_Enable();
+	Drehen_Enable();
+	DC_Greifer_Schiene_Vertikal_Enable();
+	DC_Greifer_Schiene_Horizontal_Enable();
+	Mulde_leeren_SetRatio16(0xFFFF);
 	Drehen_SetRatio16(0xFFFF);
 	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
 	Greifen_SetRatio16(0xFFFF);

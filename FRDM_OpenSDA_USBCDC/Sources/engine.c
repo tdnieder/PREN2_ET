@@ -23,10 +23,6 @@ volatile int timerValue1;
 volatile int ModuloValueTimer0;
 volatile int ModuloValueTimer1;
 
-//volatile = Kann verändert werden!
-volatile EngineState EngineLeft;
-volatile EngineState EngineRight;
-
 /**
  *Initialisiert Motoren mit den Richtigen Bits
  *Speichert die alten Modulowerte ab, für andere Files die 20 ms als Periodendauer brauchen -> Servos
@@ -117,7 +113,6 @@ int getValueLeft() {
 }
 //Braucht es nicht
 void EnginesBreak() {
-	EngineLeft, EngineRight = EngineBreaking;
 	motor_links_Disable();
 	motor_rechts_Disable();
 }
@@ -125,7 +120,6 @@ void EnginesBreak() {
 //Braucht es nicht
 void EnginesSlowDown() {
 	int j = (TPM1_MOD + TPM0_MOD) / 2;
-	EngineLeft, EngineRight = EngineSlowDown;
 	while (j != 0) {
 		setTimerFrequencyRight(j);
 		setTimerFrequencyLeft(j);
