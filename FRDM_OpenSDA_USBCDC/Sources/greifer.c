@@ -23,12 +23,14 @@ void grab() {
 	if (Status.Timer0 == TIMER_IDLE) {
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
+		//Greifen_SetDutyMS(2);
 		Status.Timer0 == TIMER_USED;
 
 	} else {
 		shitDown();
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
+		//Greifen_SetDutyMS(2);
 		Status.Timer0 == TIMER_USED;
 	}
 }
@@ -39,10 +41,12 @@ void openGreifer() {
 	if (Status.Timer0 == TIMER_IDLE) {
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty1ms);
+		//Greifen_SetDutyMS(1);
 		Status.Timer0 == TIMER_USED;
 	} else {
 		shitDown();
 		Greifen_SetRatio16(Duty1ms);
+		//Greifen_SetDutyMS(1);
 		Status.Timer0 == TIMER_USED;
 
 	}
@@ -56,11 +60,13 @@ void turnGrabber(void) {
 	if (Status.Timer0 == TIMER_IDLE) {
 		Drehen_Enable();
 		Drehen_SetRatio16(Duty1ms);
+		//Drehen_SetDutyMS(1);
 		Status.Timer0 == TIMER_USED;
 	} else {
 		shitDown();
 		Drehen_Enable();
 		Drehen_SetRatio16(Duty1ms);
+		//Drehen_SetDutyMS(1);
 		Status.Timer0 == TIMER_USED;
 	}
 
@@ -74,11 +80,13 @@ void turnBackGrabber(void) {
 	if (Status.Timer0 == TIMER_IDLE) {
 		Drehen_Enable();
 		Drehen_SetRatio16(Duty2ms);
+		//Drehen_SetDutyMS(1);
 		Status.Timer0 == TIMER_USED;
 	} else {
 		shitDown();
 		Drehen_Enable();
 		Drehen_SetRatio16(Duty2ms);
+		//Drehen_SetDutyMS(1);
 		Status.Timer0 == TIMER_USED;
 	}
 }
@@ -217,11 +225,11 @@ void setGrabberBack() {
 	int counter = 0;
 
 	if (vert >= 0) {
-		for (counter; counter > vert; counter++) {
+		for (counter; counter < vert; counter++) {
 			down();
 		}
 	} else {
-		for (counter; counter > vert; counter++) {
+		for (counter; counter < (-1)*vert; counter++) {
 			up();
 		}
 	}
@@ -229,11 +237,11 @@ void setGrabberBack() {
 	counter = 0;
 
 	if (hor >= 0) {
-		for (counter; counter > vert; counter++) {
+		for (counter; counter < vert; counter++) {
 			backward();
 		}
 	} else {
-		for (counter; counter > vert; counter++) {
+		for (counter; counter < (-1)*vert; counter++) {
 			forward();
 		}
 	}

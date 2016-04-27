@@ -33,6 +33,7 @@
 #include "mulde.h"
 #include "greifer.h"
 #include "engine.h"
+#include "Color.h"
 
 #define RaumTemperatur 20
 
@@ -184,6 +185,10 @@ void switchCase(char* function) {
 		shitDown();
 		CDC1_SendString((char*) "go\n");
 	}
+	else if(strcmp(function,"color") == 0){
+		CDC1_SendString((char*) buttonPressed());
+		CDC1_SendString((char*) "go\n");
+	}
 	/*
 	 * ENDE SONTIGES
 	 */
@@ -231,9 +236,12 @@ void CDC_Run() {
 }
 
 void shitDown() {
+	//Funktioniert irgendwie!!
 	TPM0_MOD = 59999;
 	TPM1_MOD = 59999;
+	//Modulo wieder zurücksetzen
 	Enable_SetVal();//Stellt Motoren ab
+	//@Todo schauen ob Signal weiter läuft! Sollte mit Enable aufhören -> für Counter der Strecke.
 	Greifen_Enable();
 	Drehen_Enable();
 	DC_Greifer_Schiene_Vertikal_Enable();

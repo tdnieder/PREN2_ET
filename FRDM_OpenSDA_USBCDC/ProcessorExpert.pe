@@ -3,7 +3,7 @@
   <Header>
     <Name>FRDM_REAL</Name>
     <SavedBy>fa</SavedBy>
-    <ModificationStamp>92</ModificationStamp>
+    <ModificationStamp>93</ModificationStamp>
     <Date>2016-02-23</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.0.RT7_b1515-0427</PEversion>
@@ -35425,11 +35425,11 @@
             </ItemState>
             <ItemState>
               <ItemSymbol>SetInput</ItemSymbol>
-              <ReadOnly>false</ReadOnly>
+              <ReadOnly>true</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
               <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-              <Index>1</Index>
-              <Value>false</Value>
+              <Index>0</Index>
+              <Value>true</Value>
               <LastSelection>false</LastSelection>
               <LastUserSel>no</LastUserSel>
               <UsrMethodName>SetInput</UsrMethodName>
@@ -35523,11 +35523,11 @@
             </ItemState>
             <ItemState>
               <ItemSymbol>GetRawVal</ItemSymbol>
-              <ReadOnly>false</ReadOnly>
+              <ReadOnly>true</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
               <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-              <Index>1</Index>
-              <Value>false</Value>
+              <Index>0</Index>
+              <Value>true</Value>
               <LastSelection>false</LastSelection>
               <LastUserSel>no</LastUserSel>
               <UsrMethodName>GetRawVal</UsrMethodName>
@@ -35656,10 +35656,10 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Index>1</Index>
-        <Value>false</Value>
+        <Index>0</Index>
+        <Value>true</Value>
         <LastSelection>true</LastSelection>
-        <LastUserSel>no</LastUserSel>
+        <LastUserSel>yes</LastUserSel>
         <UsrMethodName>SetInput</UsrMethodName>
       </ItemState>
       <ItemState>
@@ -35754,10 +35754,10 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Index>1</Index>
-        <Value>false</Value>
+        <Index>0</Index>
+        <Value>true</Value>
         <LastSelection>true</LastSelection>
-        <LastUserSel>no</LastUserSel>
+        <LastUserSel>yes</LastUserSel>
         <UsrMethodName>GetRawVal</UsrMethodName>
       </ItemState>
     </Methods>
@@ -36015,11 +36015,11 @@
             </ItemState>
             <ItemState>
               <ItemSymbol>SetInput</ItemSymbol>
-              <ReadOnly>false</ReadOnly>
+              <ReadOnly>true</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
               <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-              <Index>1</Index>
-              <Value>false</Value>
+              <Index>0</Index>
+              <Value>true</Value>
               <LastSelection>false</LastSelection>
               <LastUserSel>no</LastUserSel>
               <UsrMethodName>SetInput</UsrMethodName>
@@ -36113,11 +36113,11 @@
             </ItemState>
             <ItemState>
               <ItemSymbol>GetRawVal</ItemSymbol>
-              <ReadOnly>false</ReadOnly>
+              <ReadOnly>true</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
               <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-              <Index>1</Index>
-              <Value>false</Value>
+              <Index>0</Index>
+              <Value>true</Value>
               <LastSelection>false</LastSelection>
               <LastUserSel>no</LastUserSel>
               <UsrMethodName>GetRawVal</UsrMethodName>
@@ -36246,10 +36246,10 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Index>1</Index>
-        <Value>false</Value>
+        <Index>0</Index>
+        <Value>true</Value>
         <LastSelection>true</LastSelection>
-        <LastUserSel>no</LastUserSel>
+        <LastUserSel>yes</LastUserSel>
         <UsrMethodName>SetInput</UsrMethodName>
       </ItemState>
       <ItemState>
@@ -36344,10 +36344,10 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Index>1</Index>
-        <Value>false</Value>
+        <Index>0</Index>
+        <Value>true</Value>
         <LastSelection>true</LastSelection>
-        <LastUserSel>no</LastUserSel>
+        <LastUserSel>yes</LastUserSel>
         <UsrMethodName>GetRawVal</UsrMethodName>
       </ItemState>
     </Methods>
