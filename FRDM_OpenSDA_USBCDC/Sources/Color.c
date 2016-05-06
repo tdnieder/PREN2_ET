@@ -4,6 +4,9 @@
  *  Created on: 27.04.2016
  *      Author: Daniel Klauser
  */
+#include "SwitchGreen.h"
+#include "SwitchBlue.h"
+
 
 int buttonPressed(){
 	int blue = 0;

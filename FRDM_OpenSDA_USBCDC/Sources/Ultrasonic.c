@@ -67,30 +67,26 @@ uint16_t US_Measure_us(void) {
   TRIG_ClrVal(usDevice.trigDevice);
   while(usDevice.state!=ECHO_FINISHED) {
     /* measure echo pulse */
-    //if (usDevice.state==ECHO_OVERFLOW) { /* measurement took too long? */
-      //usDevice.state = ECHO_IDLE;
-      //return 0; /* no echo, error case */
-    //}
+    if (usDevice.state==ECHO_OVERFLOW) { /* measurement took too long? */
+      usDevice.state = ECHO_IDLE;
+      return 0; /* no echo, error case */
+    }
   }
-  us = (usDevice.capture*1000UL)/(TU2_CNT_INP_FREQ_U_0/1000);
+  us = (usDevice.capture*1000UL)/(TU3_CNT_INP_FREQ_U_0/1000);
   return us;
 }
 
  int Measure() {
-	 LEDBlue_Off();
   int us, cm;
-  uint8_t buf[8];
+  //uint8_t buf[8];
 
   us = US_Measure_us();//mikro Meter
-
   cm = US_usToCentimeters(us, 20);//Zenti Meter
 
-
-
 //Test
-  LEDRed_Put(cm<10); /* red LED if object closer than 10 cm */
-  LEDBlue_Put(cm>=10&&cm<=100); /* blue LED if object is in 10..100 cm range */
-  LEDGreen_Put(cm>100); /* blue LED if object is in 10..100 cm range */
+//  LEDRed_Put(cm<10); /* red LED if object closer than 10 cm */
+//  LEDBlue_Put(cm>=10&&cm<=100); /* blue LED if object is in 10..100 cm range */
+//  LEDGreen_Put(cm>100); /* blue LED if object is in 10..100 cm range */
 
   return cm;
 }

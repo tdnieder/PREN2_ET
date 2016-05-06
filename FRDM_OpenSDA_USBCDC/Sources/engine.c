@@ -10,6 +10,7 @@
 const float radiusRad = 3.5; //cm
 const float stepperAngle = 0.9; //Grad
 const float PII = 3.14;
+long distance;
 
 extern long counterLeft;
 extern long counterRight;
@@ -159,11 +160,10 @@ void ramp() {
 }
 
 //Kann jemals so gross werden das int nicht mehr reicht?
-int calcDistance() {
-	int mean = (counterLeft + counterRight) / 2;
-	int distance = 0;
+long calcDistance() {
+	long mean = (counterLeft + counterRight) / 2;
 	//Weil wir im HalfStep Modus sind kann mit if's gelöst werden wenn MSB Bits automatisch geändert werden sollen
 	mean = (mean / 2);
-	distance = (int) (mean * (stepperAngle * (PII / 180)) * radiusRad);
+	distance = (long) (mean * (stepperAngle * (PII / 180)) * radiusRad)+distance;
 	return distance;
 }

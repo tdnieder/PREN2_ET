@@ -16,6 +16,9 @@
 #include "DCVertikalBit.h"
 #include "DCHorizontalBit.h"//PTE0
 #include "interface.h"
+#include "AnschlagHorizontalVorne.h"
+#include "AnschlagVertikalOben.h"
+#include "AnschlagHorizontalHinten.h"
 
 extern int Duty1ms;
 extern int Duty2ms;

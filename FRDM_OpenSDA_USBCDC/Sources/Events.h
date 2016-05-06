@@ -85,6 +85,8 @@
 #include "BitIoLdd18.h"
 #include "PWM1.h"
 #include "PwmLdd7.h"
+#include "AnschlagHorizontalVorne.h"
+#include "BitIoLdd19.h"
 #include "motor_links.h"
 #include "PwmLdd5.h"
 #include "DCVertikalBit.h"

@@ -58,12 +58,16 @@ void openGreifer() {
  */
 void turnGrabber(void) {
 	if (Status.Timer0 == TIMER_IDLE) {
+		Greifen_Enable();
+		Greifen_SetRatio16(Duty2ms);
 		Drehen_Enable();
 		Drehen_SetRatio16(Duty1ms);
 		//Drehen_SetDutyMS(1);
 		Status.Timer0 == TIMER_USED;
 	} else {
 		shitDown();
+		Greifen_Enable();
+		Greifen_SetRatio16(Duty2ms);
 		Drehen_Enable();
 		Drehen_SetRatio16(Duty1ms);
 		//Drehen_SetDutyMS(1);
@@ -78,12 +82,16 @@ void turnGrabber(void) {
 void turnBackGrabber(void) {
 
 	if (Status.Timer0 == TIMER_IDLE) {
+		Greifen_Enable();
+		Greifen_SetRatio16(Duty2ms);
 		Drehen_Enable();
 		Drehen_SetRatio16(Duty2ms);
 		//Drehen_SetDutyMS(1);
 		Status.Timer0 == TIMER_USED;
 	} else {
 		shitDown();
+		Greifen_Enable();
+		Greifen_SetRatio16(Duty2ms);
 		Drehen_Enable();
 		Drehen_SetRatio16(Duty2ms);
 		//Drehen_SetDutyMS(1);
@@ -99,6 +107,7 @@ void up() {
 	if (Status.Timer1 == TIMER_IDLE) {
 		up_bit();
 		DC_Greifer_Schiene_Vertikal_Enable();
+
 		DC_Greifer_Schiene_Vertikal_SetRatio16(30000);
 		WAIT1_Waitms(100);
 		DC_Greifer_Schiene_Vertikal_Disable();
@@ -220,7 +229,8 @@ void setGrabber(int Hor, int Vert) {
 }
 
 void setGrabberBack() {
-	int vert = timeVertical / 10;
+	int dummy = 0;
+/*	int vert = timeVertical / 10;
 	int hor = timeHorizontal / 10;
 	int counter = 0;
 
@@ -244,6 +254,23 @@ void setGrabberBack() {
 		for (counter; counter < (-1)*vert; counter++) {
 			forward();
 		}
+	}*/
+	while(!AnschlagVertikalOben_GetRawVal()){
+		up();
+	}
+	WAIT1_Waitms(100);
+	while(!AnschlagHorizontalVorne_GetRawVal()){
+		forward();
+	}
+	WAIT1_Waitms(100);
+	for(dummy; dummy < 10;dummy++){
+		down();
+	}
+	WAIT1_Waitms(100);
+	openGreifer();
+	WAIT1_Waitms(500);
+	while(!AnschlagHorizontalHinten_GetRawVal()){
+		backward();
 	}
 }
 

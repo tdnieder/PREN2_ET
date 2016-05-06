@@ -46,6 +46,9 @@
 #define DIRLEFT 0
 #define DIRRIGHT 1
 
+extern long counterLeft;
+extern long counterRight;
+
 
 /*
  * Initialisiert Bits für die Motoren
@@ -101,7 +104,7 @@ void ramp();
 /*
  * Sollte die Strecke Ausmessen, welche bereits zurückgelegt wurde.
  */
-int calcDistance();
+long calcDistance();
 
 
 #endif /* SOURCES_ENGINE_H_ */

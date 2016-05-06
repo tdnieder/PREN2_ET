@@ -119,11 +119,15 @@ void switchCase(char* function) {
 	} else if (strcmp(function, "emptyContainer") == 0) {
 		//Enable_SetVal();
 		if (Status.Timer0 == TIMER_IDLE) {
+			Greifen_Enable(); //test
+
 			turnBackGrabber();
 			WAIT1_Waitms(2000);
 			turnGrabber();
 		} else {
 			shitDown();
+			Greifen_Enable(); //test
+
 			turnBackGrabber();
 			WAIT1_Waitms(2000);
 			turnGrabber();
@@ -147,6 +151,14 @@ void switchCase(char* function) {
 			} else if (atoi(param1) == 2) {
 				openGreifer();
 			}
+		}
+		CDC1_SendString((char*) "go\n");
+	} else if (strcmp(function, "setGrabberBack()") == 0) {
+		//Enable_SetVal();
+		if (Status.Timer0 == TIMER_IDLE) {
+			setGrabberBack();
+		} else {
+			setGrabberBack();
 		}
 		CDC1_SendString((char*) "go\n");
 	}
@@ -184,8 +196,7 @@ void switchCase(char* function) {
 	} else if (strcmp(function, "shutdown") == 0) {
 		shitDown();
 		CDC1_SendString((char*) "go\n");
-	}
-	else if(strcmp(function,"color") == 0){
+	} else if (strcmp(function, "color") == 0) {
 		CDC1_SendString((char*) buttonPressed());
 		CDC1_SendString((char*) "go\n");
 	}
@@ -240,7 +251,7 @@ void shitDown() {
 	TPM0_MOD = 59999;
 	TPM1_MOD = 59999;
 	//Modulo wieder zurücksetzen
-	Enable_SetVal();//Stellt Motoren ab
+	Enable_SetVal();	//Stellt Motoren ab
 	//@Todo schauen ob Signal weiter läuft! Sollte mit Enable aufhören -> für Counter der Strecke.
 	Greifen_Enable();
 	Drehen_Enable();
