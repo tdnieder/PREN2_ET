@@ -190,50 +190,74 @@ GenerateClassCluster=0
 DocumentUniqueId=OBPWHYXR
 
 [GeneratedDocument1]
-DocumentPath=Project Outputs for Power_Management\Design Rule Check - PowerManagement_Driver.html
+DocumentPath=Project Outputs for Power_Management\Design Rule Check - PowerManagement_Base.html
 DItemRevisionGUID=
 
 [GeneratedDocument2]
-DocumentPath=Project Outputs for Power_Management\Design Rule Check - PowerManagement_uC.html
+DocumentPath=Project Outputs for Power_Management\Design Rule Check - PowerManagement_Driver.html
 DItemRevisionGUID=
 
 [GeneratedDocument3]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.DRR
+DocumentPath=Project Outputs for Power_Management\Design Rule Check - PowerManagement_uC.html
 DItemRevisionGUID=
 
 [GeneratedDocument4]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.EXTREP
+DocumentPath=Project Outputs for Power_Management\PowerManagement_Base.DRR
 DItemRevisionGUID=
 
 [GeneratedDocument5]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.LDP
+DocumentPath=Project Outputs for Power_Management\PowerManagement_Base.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument6]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.REP
+DocumentPath=Project Outputs for Power_Management\PowerManagement_Base.LDP
 DItemRevisionGUID=
 
 [GeneratedDocument7]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.RUL
+DocumentPath=Project Outputs for Power_Management\PowerManagement_Base.REP
 DItemRevisionGUID=
 
 [GeneratedDocument8]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.DRR
+DocumentPath=Project Outputs for Power_Management\PowerManagement_Base.RUL
 DItemRevisionGUID=
 
 [GeneratedDocument9]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.EXTREP
+DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.DRR
 DItemRevisionGUID=
 
 [GeneratedDocument10]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.LDP
+DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument11]
-DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.REP
+DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.LDP
 DItemRevisionGUID=
 
 [GeneratedDocument12]
+DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.REP
+DItemRevisionGUID=
+
+[GeneratedDocument13]
+DocumentPath=Project Outputs for Power_Management\PowerManagement_Driver.RUL
+DItemRevisionGUID=
+
+[GeneratedDocument14]
+DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument15]
+DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument16]
+DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument17]
+DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.REP
+DItemRevisionGUID=
+
+[GeneratedDocument18]
 DocumentPath=Project Outputs for Power_Management\PowerManagement_uC.RUL
 DItemRevisionGUID=
 

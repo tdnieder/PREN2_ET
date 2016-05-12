@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: PowerManagement_Base.PcbDoc   29.04.2016  01:50:34
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : PowerManagement_Base.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        28mil (0.7112mm)         Round          1                0.00 Inch (0.00 mm)
+T2        31mil (0.7874mm)         Round          43               19.51 Inch (495.52 mm)
+T3        32mil (0.8128mm)         Round          3                0.34 Inch (8.67 mm)
+T4        35mil (0.889mm)          Round          71               19.01 Inch (482.87 mm)
+T5        39mil (0.9906mm)         Round          6                0.60 Inch (15.32 mm)
+T6        40mil (1.016mm)          Round          8                1.93 Inch (49.02 mm)
+T7        59mil (1.4986mm)         Round          5                0.95 Inch (24.04 mm)
+T8        91mil (2.3114mm)         Round          9                11.35 Inch (288.40 mm)
+T9        51mil (1.2954mm)         Round          1         NPTH   0.00 Inch (0.00 mm)
+T10       91mil (2.3114mm)         Round          5         NPTH   3.30 Inch (83.81 mm)
+---------------------------------------------------------------------------
+Totals                                            152              56.99 Inch (1447.65 mm)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

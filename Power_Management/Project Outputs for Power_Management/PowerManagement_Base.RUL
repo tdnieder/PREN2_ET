@@ -1,0 +1,5 @@
+DRC Rules Export File for PCB: D:\Documents\Elektronik\PREN2_ET\Power_Management\PowerManagement_Base.PcbDoc
+RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0
+RuleKind=Clearance|RuleName=2|Scope=Board|Minimum=20.00
+RuleKind=Width|RuleName=Width|Scope=Board|Minimum=20.00
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=4.00
