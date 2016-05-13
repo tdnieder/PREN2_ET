@@ -83,8 +83,6 @@
 #include "BitIoLdd17.h"
 #include "AnschlagHorizontalHinten.h"
 #include "BitIoLdd18.h"
-#include "PWM1.h"
-#include "PwmLdd7.h"
 #include "AnschlagHorizontalVorne.h"
 #include "BitIoLdd19.h"
 #include "motor_links.h"
@@ -105,14 +103,13 @@
 #include "BitIoLdd12.h"
 #include "ModeDC.h"
 #include "BitIoLdd13.h"
-
+#include "engine.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif 
 
-static long counterLeft;
-static long counterRight;
+
 
 /*
 ** ===================================================================
@@ -401,24 +398,6 @@ void TU3_OnCounterRestart(LDD_TUserData *UserDataPtr);
 ** ===================================================================
 */
 void DC_Greifer_Schiene_Horizontal_OnEnd(void);
-
-/*
-** ===================================================================
-**     Event       :  PWM1_OnEnd (module Events)
-**
-**     Component   :  PWM1 [PWM]
-**     Description :
-**         This event is called when the specified number of cycles has
-**         been generated. (Only when the component is enabled -
-**         <Enable> and the events are enabled - <EnableEvent>). The
-**         event is available only when the <Interrupt service/event>
-**         property is enabled and selected peripheral supports
-**         appropriate interrupt.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void PWM1_OnEnd(void);
 
 /* END Events */
 

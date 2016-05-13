@@ -34,6 +34,8 @@
 #include "greifer.h"
 #include "engine.h"
 #include "Color.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #define RaumTemperatur 20
 
@@ -42,6 +44,8 @@ static uint8_t in_buffer[USB1_DATA_BUFF_SIZE];
 
 extern int Duty1ms;
 extern int Duty2ms;
+
+char distanceArray[8];
 
 char* functionName;
 char* param1;
@@ -75,6 +79,8 @@ void switchCase(char* function) {
 	 */
 	if (strcmp(function, "initEngines") == 0) {
 		Enable_ClrVal();
+		motor_rechts_EnableEvent();
+		motor_links_EnableEvent();
 		if ((Status.Timer0 == TIMER_IDLE) && (Status.Timer1 == TIMER_IDLE)) {
 			initEngines();
 		} else {
@@ -98,7 +104,14 @@ void switchCase(char* function) {
 			CDC1_SendString((char*) "go\n");
 		}
 	} else if (strcmp(function, "getDistance") == 0) {
-		CDC1_SendString((char*) calcDistance()); //in cm
+		int j = 0;
+		sprintf(distanceArray, "%i", calcDistance());
+		CDC1_SendString(distanceArray);
+		CDC1_SendString((char*) "\n go\n");
+		while (j != 7) {
+			distanceArray[j] = 0;
+			j++;
+		}
 	}
 	/*
 	 * FAHREN ENDE
@@ -190,6 +203,7 @@ void switchCase(char* function) {
 		Status.Timer2 = TIMER_USED;
 		CDC1_SendString((char*) Measure());
 		Status.Timer2 = TIMER_IDLE;
+		CDC1_SendString((char*) "go\n");
 	} else if (strcmp(function, "battery") == 0) {
 		CDC1_SendString((char*) measureBattery()); //1 = leer
 		CDC1_SendString((char*) "go\n");
@@ -214,7 +228,28 @@ void switchCase(char* function) {
 	} else if (strcmp(function, "2") == 0) {
 		DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
 		CDC1_SendString((char*) "go\n");
+	} else if (strcmp(function, "LED") == 0) {
+		if(param1 == 1){
+		LEDRed_On();
+		}
+		else if(param1 == 2){
+		LEDGreen_On();
+		}
+		else if(param1 == 3){
+		LEDBlue_On();
+		}
+		else if(param1 == 4){
+		LEDRed_Off();
+		}
+		else if(param1 == 5){
+		LEDGreen_Off();
+		}
+		else if(param1 == 6){
+		LEDBlue_Off();
+		}
+		CDC1_SendString((char*) "go\n");
 	}
+
 	/*
 	 * TEST
 	 */
@@ -247,6 +282,8 @@ void CDC_Run() {
 }
 
 void shitDown() {
+	motor_links_DisableEvent();
+	motor_rechts_DisableEvent();
 	//Funktioniert irgendwie!!
 	TPM0_MOD = 59999;
 	TPM1_MOD = 59999;
@@ -264,5 +301,58 @@ void shitDown() {
 	DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 	Status.Timer0 = TIMER_IDLE;
 	Status.Timer1 = TIMER_IDLE;
+}
+
+char* itoa(int num, char* str, int base) {
+	int i = 0;
+	int isNegative = 0;
+
+	/* Handle 0 explicitely, otherwise empty string is printed for 0 */
+	if (num == 0) {
+		str[i++] = '0';
+		str[i] = '\0';
+		return str;
+	}
+
+	// In standard itoa(), negative numbers are handled only with
+	// base 10. Otherwise numbers are considered unsigned.
+	if (num < 0 && base == 10) {
+		isNegative = 1;
+		num = -num;
+	}
+
+	// Process individual digits
+	while (num != 0) {
+		int rem = num % base;
+		str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+		num = num / base;
+	}
+
+	// If number is negative, append '-'
+	if (isNegative)
+		str[i++] = '-';
+
+	str[i] = '\0'; // Append string terminator
+
+	// Reverse the string
+	//reverse(str, i);
+
+	return str;
+}
+
+void reverse(char str[], int length) {
+	int start = 0;
+	int end = length - 1;
+	while (start < end) {
+		swap(*(str + start), *(str + end));
+		start++;
+		end--;
+	}
+}
+
+void swap(int* x, int* y) {
+	int tmp = *x;
+	*x = *y;
+	*y = tmp;
 }
 

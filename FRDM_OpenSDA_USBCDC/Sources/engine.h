@@ -46,8 +46,6 @@
 #define DIRLEFT 0
 #define DIRRIGHT 1
 
-extern long counterLeft;
-extern long counterRight;
 
 
 /*
@@ -104,7 +102,9 @@ void ramp();
 /*
  * Sollte die Strecke Ausmessen, welche bereits zurückgelegt wurde.
  */
-long calcDistance();
+int calcDistance();
 
+void countLeftStep();
 
+void countRightStep();
 #endif /* SOURCES_ENGINE_H_ */

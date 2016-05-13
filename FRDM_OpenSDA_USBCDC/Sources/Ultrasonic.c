@@ -67,10 +67,10 @@ uint16_t US_Measure_us(void) {
   TRIG_ClrVal(usDevice.trigDevice);
   while(usDevice.state!=ECHO_FINISHED) {
     /* measure echo pulse */
-    if (usDevice.state==ECHO_OVERFLOW) { /* measurement took too long? */
-      usDevice.state = ECHO_IDLE;
-      return 0; /* no echo, error case */
-    }
+   // if (usDevice.state==ECHO_OVERFLOW) { /* measurement took too long? */
+   //   usDevice.state = ECHO_IDLE;
+   //   return 0; /* no echo, error case */
+   // }
   }
   us = (usDevice.capture*1000UL)/(TU3_CNT_INP_FREQ_U_0/1000);
   return us;

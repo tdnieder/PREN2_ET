@@ -78,8 +78,6 @@
 #include "BitIoLdd17.h"
 #include "AnschlagHorizontalHinten.h"
 #include "BitIoLdd18.h"
-#include "PWM1.h"
-#include "PwmLdd7.h"
 #include "AnschlagHorizontalVorne.h"
 #include "BitIoLdd19.h"
 #include "motor_links.h"
@@ -133,6 +131,7 @@ int main(void)
 	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
 	shitDown();
+	//motor_links_DisableEvent();motor_rechts_DisableEvent();
 	CDC_Run();
 
 

@@ -7,15 +7,17 @@
 
 #include "engine.h"
 
-const float radiusRad = 3.5; //cm
-const float stepperAngle = 0.9; //Grad
+const float radiusRad = (7.7)/2; //cm
+const float stepperAngle = 1.8; //Grad
 const float PII = 3.14;
-long distance;
-
-extern long counterLeft;
-extern long counterRight;
+int distance;
 
 
+int counterLeft;
+int counterRight;
+
+int counterOverflowLeft;
+int counterOverflowRight;
 
 volatile int timerValue0;
 volatile int timerValue1;
@@ -44,7 +46,6 @@ void initEngines(void) {
 // Speichert Modulo Werte ab für Servos später!
 		ModuloValueTimer0 = TPM0_MOD;
 		ModuloValueTimer1 = TPM1_MOD;
-
 
 		setTimerFrequencyRight(ModuloValueMotor);
 		setTimerFrequencyLeft(ModuloValueMotor);
@@ -160,10 +161,19 @@ void ramp() {
 }
 
 //Kann jemals so gross werden das int nicht mehr reicht?
-long calcDistance() {
-	long mean = (counterLeft + counterRight) / 2;
+int calcDistance() {
+	int mean = (counterLeft + counterRight) / 2;
 	//Weil wir im HalfStep Modus sind kann mit if's gelöst werden wenn MSB Bits automatisch geändert werden sollen
-	mean = (mean / 2);
-	distance = (long) (mean * (stepperAngle * (PII / 180)) * radiusRad)+distance;
+	mean = (mean / 4);
+	distance = (int) (mean * (stepperAngle * (PII / 180)) * radiusRad);//distance;
 	return distance;
+}
+
+void countLeftStep(){
+	counterLeft++;
+
+}
+
+void countRightStep(){
+	counterRight++;
 }

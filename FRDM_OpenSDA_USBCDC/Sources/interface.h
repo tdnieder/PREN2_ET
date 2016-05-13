@@ -31,4 +31,9 @@ void switchCase(char*);
 
 void shitDown(void);
 
+char* itoa(int,char*,int);
+
+void reverse(char[], int);
+
+void swap(int*,int*);
 #endif /* SOURCES_INTERFACE_H_ */
