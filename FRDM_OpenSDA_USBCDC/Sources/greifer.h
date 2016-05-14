@@ -22,7 +22,8 @@
 
 extern int Duty1ms;
 extern int Duty2ms;
-
+extern int Duty360Deg1;
+extern int Duty360Deg2;
 
 
 

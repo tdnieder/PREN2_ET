@@ -7,27 +7,24 @@
 #include "SwitchGreen.h"
 #include "SwitchBlue.h"
 
-
-int buttonPressed(){
-	int blue = 0;
-	int green = 0;
+char* buttonPressed() {
+	bool blue = 1;
+	bool green = 1;
 
 	int loop = 1;
-	SwitchGreen_SetInput();
-	SwitchBlue_SetInput();
 
-	while(1){
+	while (loop) {
 		blue = SwitchBlue_GetRawVal();
 		green = SwitchGreen_GetRawVal();
 
-		if((blue ==1)||(green==1)){
+		if ((blue == 0) || (green == 0)) {
 			loop = 0;
 		}
 	}
-	if(green == 1){
-		return 1;
+	if (green == 1) {
+		return "green";
 	}
-	if(blue == 1){
-		return 2;
+	if (blue == 1) {
+		return "blue";
 	}
 }

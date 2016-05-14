@@ -122,7 +122,6 @@ void switchCase(char* function) {
 	 */
 	else if (strcmp(function, "setGrabberPosition") == 0) {
 		if ((Status.Timer0 == TIMER_IDLE) && (Status.Timer1 == TIMER_IDLE)) {
-			//Enable_SetVal();
 			setGrabber(atoi(param1), atoi(param2));
 		} else {
 			shitDown();
@@ -130,7 +129,6 @@ void switchCase(char* function) {
 		}
 		CDC1_SendString((char*) "go\n");
 	} else if (strcmp(function, "emptyContainer") == 0) {
-		//Enable_SetVal();
 		if (Status.Timer0 == TIMER_IDLE) {
 			Greifen_Enable(); //test
 
@@ -149,7 +147,6 @@ void switchCase(char* function) {
 	}
 
 	else if (strcmp(function, "openCloseGrabber") == 0) {
-		//Enable_SetVal();
 		if (Status.Timer0 == TIMER_IDLE) {
 			if (atoi(param1) == 1) {
 				grab();
@@ -167,7 +164,6 @@ void switchCase(char* function) {
 		}
 		CDC1_SendString((char*) "go\n");
 	} else if (strcmp(function, "setGrabberBack()") == 0) {
-		//Enable_SetVal();
 		if (Status.Timer0 == TIMER_IDLE) {
 			setGrabberBack();
 		} else {
@@ -221,34 +217,23 @@ void switchCase(char* function) {
 	/*
 	 * TEST
 	 */
-	else if (strcmp(function, "1") == 0) {
-		DCVertikalBit_ClrVal();
-		CDC1_SendString((char*) "go\n");
-
-	} else if (strcmp(function, "2") == 0) {
-		DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
-		CDC1_SendString((char*) "go\n");
-	} else if (strcmp(function, "LED") == 0) {
-		if(param1 == 1){
-		LEDRed_On();
-		}
-		else if(param1 == 2){
-		LEDGreen_On();
-		}
-		else if(param1 == 3){
-		LEDBlue_On();
-		}
-		else if(param1 == 4){
-		LEDRed_Off();
-		}
-		else if(param1 == 5){
-		LEDGreen_Off();
-		}
-		else if(param1 == 6){
-		LEDBlue_Off();
+ else if (strcmp(function, "LED") == 0) {
+		if (atoi(param1) == 1) {
+			LEDRed_On();
+		} else if (atoi(param1) == 2) {
+			LEDGreen_On();
+		} else if (atoi(param1) == 3) {
+			LEDBlue_On();
+		} else if (atoi(param1) == 4) {
+			LEDRed_Off();
+		} else if (atoi(param1) == 5) {
+			LEDGreen_Off();
+		} else if (atoi(param1) == 6) {
+			LEDBlue_Off();
 		}
 		CDC1_SendString((char*) "go\n");
 	}
+
 
 	/*
 	 * TEST
@@ -262,7 +247,7 @@ void CDC_Run() {
 	int i;
 	for (;;) {	//endless loop
 		while (CDC1_App_Task(cdc_buffer, sizeof(cdc_buffer)) == ERR_BUSOFF) {
-			LEDRed_On();
+			//LEDRed_On();
 			WAIT1_Waitms(10);
 		}
 		if (CDC1_GetCharsInRxBuf() != 0) {
@@ -280,7 +265,9 @@ void CDC_Run() {
 		}
 	}
 }
-
+/*
+ * Gilt als Reset aller Signale
+ */
 void shitDown() {
 	motor_links_DisableEvent();
 	motor_rechts_DisableEvent();
@@ -294,6 +281,7 @@ void shitDown() {
 	Drehen_Enable();
 	DC_Greifer_Schiene_Vertikal_Enable();
 	DC_Greifer_Schiene_Horizontal_Enable();
+	//Signale auf 0 setzen
 	Mulde_leeren_SetRatio16(0xFFFF);
 	Drehen_SetRatio16(0xFFFF);
 	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
@@ -302,57 +290,3 @@ void shitDown() {
 	Status.Timer0 = TIMER_IDLE;
 	Status.Timer1 = TIMER_IDLE;
 }
-
-char* itoa(int num, char* str, int base) {
-	int i = 0;
-	int isNegative = 0;
-
-	/* Handle 0 explicitely, otherwise empty string is printed for 0 */
-	if (num == 0) {
-		str[i++] = '0';
-		str[i] = '\0';
-		return str;
-	}
-
-	// In standard itoa(), negative numbers are handled only with
-	// base 10. Otherwise numbers are considered unsigned.
-	if (num < 0 && base == 10) {
-		isNegative = 1;
-		num = -num;
-	}
-
-	// Process individual digits
-	while (num != 0) {
-		int rem = num % base;
-		str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
-		num = num / base;
-	}
-
-	// If number is negative, append '-'
-	if (isNegative)
-		str[i++] = '-';
-
-	str[i] = '\0'; // Append string terminator
-
-	// Reverse the string
-	//reverse(str, i);
-
-	return str;
-}
-
-void reverse(char str[], int length) {
-	int start = 0;
-	int end = length - 1;
-	while (start < end) {
-		swap(*(str + start), *(str + end));
-		start++;
-		end--;
-	}
-}
-
-void swap(int* x, int* y) {
-	int tmp = *x;
-	*x = *y;
-	*y = tmp;
-}
-

@@ -11,6 +11,6 @@
 /*
  * Bekommt die Farbe vom Startknopf
  */
-int buttonPressed();
+char* buttonPressed();
 
 #endif /* SOURCES_COLOR_H_ */

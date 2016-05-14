@@ -23,14 +23,12 @@ void grab() {
 	if (Status.Timer0 == TIMER_IDLE) {
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
-		//Greifen_SetDutyMS(2);
 		Status.Timer0 == TIMER_USED;
 
 	} else {
 		shitDown();
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
-		//Greifen_SetDutyMS(2);
 		Status.Timer0 == TIMER_USED;
 	}
 }
@@ -41,12 +39,10 @@ void openGreifer() {
 	if (Status.Timer0 == TIMER_IDLE) {
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty1ms);
-		//Greifen_SetDutyMS(1);
 		Status.Timer0 == TIMER_USED;
 	} else {
 		shitDown();
 		Greifen_SetRatio16(Duty1ms);
-		//Greifen_SetDutyMS(1);
 		Status.Timer0 == TIMER_USED;
 
 	}
@@ -61,16 +57,14 @@ void turnGrabber(void) {
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
 		Drehen_Enable();
-		Drehen_SetRatio16(Duty1ms);
-		//Drehen_SetDutyMS(1);
+		Drehen_SetRatio16(Duty360Deg2);
 		Status.Timer0 == TIMER_USED;
 	} else {
 		shitDown();
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
 		Drehen_Enable();
-		Drehen_SetRatio16(Duty1ms);
-		//Drehen_SetDutyMS(1);
+		Drehen_SetRatio16(Duty360Deg2);
 		Status.Timer0 == TIMER_USED;
 	}
 
@@ -85,16 +79,14 @@ void turnBackGrabber(void) {
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
 		Drehen_Enable();
-		Drehen_SetRatio16(Duty2ms);
-		//Drehen_SetDutyMS(1);
+		Drehen_SetRatio16(Duty360Deg1);
 		Status.Timer0 == TIMER_USED;
 	} else {
 		shitDown();
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
 		Drehen_Enable();
-		Drehen_SetRatio16(Duty2ms);
-		//Drehen_SetDutyMS(1);
+		Drehen_SetRatio16(Duty360Deg1);
 		Status.Timer0 == TIMER_USED;
 	}
 }
@@ -193,13 +185,13 @@ void backward() {
  * Setzt das Bit um Hochzufahren
  */
 void up_bit() {
-	DCVertikalBit_SetVal();
+	DCVertikalBit_ClrVal();
 }
 /*
  * Setzt das Bit so um wieder runterzufahren
  */
 void down_bit() {
-	DCVertikalBit_ClrVal();
+	DCVertikalBit_SetVal();
 }
 /*
  * Setzt das Bit um nach vorne zu fahren
@@ -213,7 +205,9 @@ void forward_bit() {
 void backward_bit() {
 	DCHorizontalBit_ClrVal();
 }
-
+/*
+ * Setzt den greifer an der Schiene hoch/runter usw.
+ */
 void setGrabber(int Hor, int Vert) {
 	ModeDC_SetVal();
 	if (Hor == 1) {
@@ -228,38 +222,20 @@ void setGrabber(int Hor, int Vert) {
 	}
 }
 
+/*
+ * Setzt den Greifer zuerst ganz Hoch mit dem leeren Kübel,
+ * danach geht er ganz nach vorne
+ * dann setzt er ihn mit dem Paramtere ganz ab.
+ * Dann wird der Greifer geöffnet und der Kübel wird abgesetzt.
+ *
+ */
 void setGrabberBack() {
 	int dummy = 0;
-/*	int vert = timeVertical / 10;
-	int hor = timeHorizontal / 10;
-	int counter = 0;
-
-	if (vert >= 0) {
-		for (counter; counter < vert; counter++) {
-			down();
-		}
-	} else {
-		for (counter; counter < (-1)*vert; counter++) {
-			up();
-		}
-	}
-
-	counter = 0;
-
-	if (hor >= 0) {
-		for (counter; counter < vert; counter++) {
-			backward();
-		}
-	} else {
-		for (counter; counter < (-1)*vert; counter++) {
-			forward();
-		}
-	}*/
-	while(!AnschlagVertikalOben_GetRawVal()){
+	while(AnschlagVertikalOben_GetRawVal()){
 		up();
 	}
 	WAIT1_Waitms(100);
-	while(!AnschlagHorizontalVorne_GetRawVal()){
+	while(AnschlagHorizontalVorne_GetRawVal()){
 		forward();
 	}
 	WAIT1_Waitms(100);
@@ -269,7 +245,7 @@ void setGrabberBack() {
 	WAIT1_Waitms(100);
 	openGreifer();
 	WAIT1_Waitms(500);
-	while(!AnschlagHorizontalHinten_GetRawVal()){
+	while(AnschlagHorizontalHinten_GetRawVal()){
 		backward();
 	}
 }

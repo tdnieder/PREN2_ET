@@ -164,8 +164,9 @@ void ramp() {
 int calcDistance() {
 	int mean = (counterLeft + counterRight) / 2;
 	//Weil wir im HalfStep Modus sind kann mit if's gelöst werden wenn MSB Bits automatisch geändert werden sollen
-	mean = (mean / 4);
+	mean = (mean / 8);
 	distance = (int) (mean * (stepperAngle * (PII / 180)) * radiusRad);//distance;
+	distance = distance + 3;
 	return distance;
 }
 
