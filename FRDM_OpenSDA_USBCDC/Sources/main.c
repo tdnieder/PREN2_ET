@@ -110,7 +110,8 @@
 #include "interface.h"
 #include "Ultrasonic.h"
 #include "inttypes.h"
-//#include "mbed.h"
+#include "PORT_PDD.h"
+
 
 //---------------------------
 //Global variables
@@ -132,8 +133,23 @@ int main(void)
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
 	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
+	//DAMIT ALLE SIGNALE NULL SIND
 	shitDown();
-	//motor_links_DisableEvent();motor_rechts_DisableEvent();
+	//PULL UP PTC11 -> Switch GREEN
+	PORT_PDD_SetPinPullSelect(PORTC_BASE_PTR, 11,PORT_PDD_PULL_UP);
+	PORT_PDD_SetPinPullEnable(PORTC_BASE_PTR, 11,PORT_PDD_PULL_ENABLE);
+	//PULL UP PTC16 -> Switch BLUE
+	PORT_PDD_SetPinPullSelect(PORTC_BASE_PTR, 16,PORT_PDD_PULL_UP);
+	PORT_PDD_SetPinPullEnable(PORTC_BASE_PTR, 16,PORT_PDD_PULL_ENABLE);
+	//PULL UP PTC12 -> Anschlag Vertikal
+	PORT_PDD_SetPinPullSelect(PORTC_BASE_PTR, 12,PORT_PDD_PULL_UP);
+	PORT_PDD_SetPinPullEnable(PORTC_BASE_PTR, 12,PORT_PDD_PULL_ENABLE);
+	//PULL UP PTC17 -> Anschlag HorizontalHinten
+	PORT_PDD_SetPinPullSelect(PORTC_BASE_PTR, 17,PORT_PDD_PULL_UP);
+	PORT_PDD_SetPinPullEnable(PORTC_BASE_PTR, 17,PORT_PDD_PULL_ENABLE);
+	//PULL UP PTD7 -> Anschlag Horizontal Vorne
+	PORT_PDD_SetPinPullSelect(PORTD_BASE_PTR, 7,PORT_PDD_PULL_UP);
+	PORT_PDD_SetPinPullEnable(PORTD_BASE_PTR, 7,PORT_PDD_PULL_ENABLE);
 	CDC_Run();
 
 

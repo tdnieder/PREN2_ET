@@ -10,7 +10,6 @@
 //Zeit um Reset Wert
 int timeVertical;
 int timeHorizontal;
-int timeToTurn = 0;
 
 /*
  * Initialisiert die Servos
@@ -20,99 +19,52 @@ int timeToTurn = 0;
  * Greift nach dem Objekt, Servos sollte sich schliessen
  */
 void grab() {
-	if (Status.Timer0 == TIMER_IDLE) {
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
 		Status.Timer0 == TIMER_USED;
-
-	} else {
-		shitDown();
-		Greifen_Enable();
-		Greifen_SetRatio16(Duty2ms);
-		Status.Timer0 == TIMER_USED;
-	}
 }
 /*
  * Öffnet den Greifer Arm
  */
 void openGreifer() {
-	if (Status.Timer0 == TIMER_IDLE) {
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty1ms);
 		Status.Timer0 == TIMER_USED;
-	} else {
-		shitDown();
-		Greifen_SetRatio16(Duty1ms);
-		Status.Timer0 == TIMER_USED;
-
 	}
-}
 
 /*
  * Nachdem der Greifer hochgefahren ist, sollte er den
  * Greifer sammt Tonne drehen und ausleeren
  */
 void turnGrabber(void) {
-	if (Status.Timer0 == TIMER_IDLE) {
-		Greifen_Enable();
-		Greifen_SetRatio16(Duty2ms);
-		Drehen_Enable();
-		Drehen_SetRatio16(Duty360Deg2);
-		Status.Timer0 == TIMER_USED;
-	} else {
-		shitDown();
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
 		Drehen_Enable();
 		Drehen_SetRatio16(Duty360Deg2);
 		Status.Timer0 == TIMER_USED;
 	}
-
-}
 
 /*
  * Dreht den Greiferarm wieder zurück
  */
 void turnBackGrabber(void) {
-
-	if (Status.Timer0 == TIMER_IDLE) {
 		Greifen_Enable();
 		Greifen_SetRatio16(Duty2ms);
 		Drehen_Enable();
 		Drehen_SetRatio16(Duty360Deg1);
-		Status.Timer0 == TIMER_USED;
-	} else {
-		shitDown();
-		Greifen_Enable();
-		Greifen_SetRatio16(Duty2ms);
-		Drehen_Enable();
-		Drehen_SetRatio16(Duty360Deg1);
-		Status.Timer0 == TIMER_USED;
 	}
-}
 
 /*
  * Servo hat den Greifer zugepackt,
  * hät ihn gerade und fährt nun nach oben.
  */
 void up() {
-	if (Status.Timer1 == TIMER_IDLE) {
 		up_bit();
 		DC_Greifer_Schiene_Vertikal_Enable();
-
-		DC_Greifer_Schiene_Vertikal_SetRatio16(30000);
+		DC_Greifer_Schiene_Vertikal_SetRatio16(100);
 		WAIT1_Waitms(100);
 		DC_Greifer_Schiene_Vertikal_Disable();
 		timeVertical += 10;
-	} else {
-		shitDown();
-		up_bit();
-		DC_Greifer_Schiene_Vertikal_Enable();
-		DC_Greifer_Schiene_Vertikal_SetRatio16(30000);
-		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Vertikal_Disable();
-		timeVertical += 10;
-	}
 }
 
 /*
@@ -120,37 +72,18 @@ void up() {
  * den Greifer nun herunter
  */
 void down() {
-	if (Status.Timer1 == TIMER_IDLE) {
 		down_bit();
 		DC_Greifer_Schiene_Vertikal_Enable();
-		DC_Greifer_Schiene_Vertikal_SetRatio16(30000);
-		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Vertikal_Disable();
-		timeVertical -= 10;
-	} else {
-		shitDown();
-		down_bit();
-		DC_Greifer_Schiene_Vertikal_Enable();
-		DC_Greifer_Schiene_Vertikal_SetRatio16(30000);
+		DC_Greifer_Schiene_Vertikal_SetRatio16(100);
 		WAIT1_Waitms(100);
 		DC_Greifer_Schiene_Vertikal_Disable();
 		timeVertical -= 10;
 	}
-}
 
 /*
  * Bringt den ganzen Greifer nach vorne
  */
 void forward() {
-	if (Status.Timer0 == TIMER_IDLE) {
-		forward_bit();
-		DC_Greifer_Schiene_Horizontal_Enable();
-		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
-		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Horizontal_Disable();
-		timeHorizontal += 10;
-	} else {
-		shitDown();
 		forward_bit();
 		DC_Greifer_Schiene_Horizontal_Enable();
 		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
@@ -158,20 +91,10 @@ void forward() {
 		DC_Greifer_Schiene_Horizontal_Disable();
 		timeHorizontal += 10;
 	}
-}
 /*
  * Bring den Greifer nach hinten.
  */
 void backward() {
-	if (Status.Timer0 == TIMER_IDLE) {
-		backward_bit();
-		DC_Greifer_Schiene_Horizontal_Enable();
-		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
-		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Horizontal_Disable();
-		timeHorizontal -= 10;
-	} else {
-		shitDown();
 		backward_bit();
 		DC_Greifer_Schiene_Horizontal_Enable();
 		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
@@ -179,8 +102,6 @@ void backward() {
 		DC_Greifer_Schiene_Horizontal_Disable();
 		timeHorizontal -= 10;
 	}
-}
-
 /*
  * Setzt das Bit um Hochzufahren
  */
@@ -223,10 +144,10 @@ void setGrabber(int Hor, int Vert) {
 }
 
 /*
- * Setzt den Greifer zuerst ganz Hoch mit dem leeren Kübel,
+ * Setzt den Greifer zuerst ganz hoch mit dem leeren Eimer,
  * danach geht er ganz nach vorne
  * dann setzt er ihn mit dem Paramtere ganz ab.
- * Dann wird der Greifer geöffnet und der Kübel wird abgesetzt.
+ * Dann wird der Greifer geöffnet und der Eimer wird abgesetzt.
  *
  */
 void setGrabberBack() {

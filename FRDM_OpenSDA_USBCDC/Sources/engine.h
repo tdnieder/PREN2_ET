@@ -37,7 +37,7 @@
 #define SOURCES_ENGINE_H_
 
 //Grundwert der Motoren
-#define ModuloValueMotor 5000
+#define ModuloValueMotor 20000
 #define MSBIT1 1
 #define MSBIT2 1
 #define MSBIT3 0

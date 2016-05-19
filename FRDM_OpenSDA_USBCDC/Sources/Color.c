@@ -16,15 +16,14 @@ char* buttonPressed() {
 	while (loop) {
 		blue = SwitchBlue_GetRawVal();
 		green = SwitchGreen_GetRawVal();
-
 		if ((blue == 0) || (green == 0)) {
 			loop = 0;
 		}
 	}
-	if (green == 1) {
+	if (green == 0) {
 		return "green";
 	}
-	if (blue == 1) {
+	else if (blue == 0) {
 		return "blue";
 	}
 }
