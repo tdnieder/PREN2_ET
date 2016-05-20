@@ -7,9 +7,9 @@
 
 #include "engine.h"
 
-const float radiusRad = (77) / 2; //cm
+const float radiusRad = (7.7) / 2; //cm
 const float stepperAngle = 1.8; //Grad
-const float PII = 31.4;
+const float PII = 3.14;
 int distance;
 
 int counterLeft;
@@ -69,8 +69,6 @@ void initEngines(void) {
  * Um beide Gleichzeitig einzustellen
  */
 void setSpeed(int VeloCityFromPi) {
-	motor_rechts_Enable();
-	motor_links_Enable();
 	setTimerFrequencyLeft(VeloCityFromPi);
 	setTimerFrequencyRight(VeloCityFromPi);
 }
@@ -145,7 +143,7 @@ int calcDistance() {
 	int mean = (counterLeft + counterRight) / 2;
 	//Weil wir im HalfStep Modus sind kann mit if's gelöst werden wenn MSB Bits automatisch geändert werden sollen
 	mean = (mean / 8);
-	distance = (int) (mean * (stepperAngle * (PII / 180)) * radiusRad);	//distance;
+	distance = (int)((mean * (stepperAngle * (PII / 180)) * radiusRad)*10);	//distance;
 	//distance = distance+ 3;
 	return distance;
 }

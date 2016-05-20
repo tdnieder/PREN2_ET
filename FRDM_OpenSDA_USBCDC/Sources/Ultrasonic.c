@@ -67,9 +67,9 @@ uint16_t US_Measure_us(void) {
 	while (usDevice.state != ECHO_FINISHED) {
 		/* measure echo pulse */
 		//Wenn nicht funktioniert dashier ausklammern
-		if (usDevice.state == ECHO_OVERFLOW) { /* measurement took too long? */
+		if (usDevice.state == ECHO_OVERFLOW) {
 			usDevice.state = ECHO_IDLE;
-			return 0; /* no echo, error case */
+			return 0;
 		}
 	}
 	us = (usDevice.capture * 1000UL) / (TU3_CNT_INP_FREQ_U_0 / 1000);
@@ -77,11 +77,11 @@ uint16_t US_Measure_us(void) {
 }
 
 int Measure() {
-	int us, cm;
+	uint16_t us, cm;
 	//uint8_t buf[8];
 
 	us = US_Measure_us(); //mikro Meter
-	cm = US_usToCentimeters(us, 20); //Zenti Meter
+	cm = US_usToCentimeters(us, 22); //Zenti Meter
 
 //Test
 //  LEDRed_Put(cm<10); /* red LED if object closer than 10 cm */

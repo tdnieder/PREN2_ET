@@ -47,6 +47,7 @@ extern int Duty2ms;
 
 char distanceArray[8];
 char distanceEnemyArray[8];
+char colorArray[8];
 
 char* functionName;
 char* param1;
@@ -134,6 +135,15 @@ void switchCase(char* function) {
 		CDC1_SendString((char*) "go\n");
 	}
 
+	else if (strcmp(function, "backToEnd") == 0) {
+			backToEnd();
+			CDC1_SendString((char*) "go\n");
+		}
+	else if (strcmp(function, "upToEnd") == 0) {
+			upToEnd();
+			CDC1_SendString((char*) "go\n");
+		}
+
 	/*
 	 * ENDE GREIFER
 	 */
@@ -153,17 +163,18 @@ void switchCase(char* function) {
 	 * SONTIGES
 	 */
 	else if (strcmp(function, "getDistanceEnemy") == 0) {
-		printf(distanceEnemyArray, "%i\n", Measure());
-		CDC1_SendString((char*) distanceEnemyArray);
+		US_Init();
+		sprintf(distanceEnemyArray, "%i\n", Measure());
+		CDC1_SendString(distanceEnemyArray);
 	} else if (strcmp(function, "battery") == 0) {
 		CDC1_SendString((char*) measureBattery()); //1 = leer
 		CDC1_SendString((char*) "go\n");
 	} else if (strcmp(function, "shutdown") == 0) {
 		shitDown();
 		CDC1_SendString((char*) "go\n");
-	} else if (strcmp(function, "color") == 0) {
-		CDC1_SendString((char*) buttonPressed());
-		CDC1_SendString((char*) "go\n");
+	} else if (strcmp(function, "getColor") == 0) {
+		sprintf(colorArray, "%i\n", buttonPressed());
+		CDC1_SendString(colorArray);
 	}
 	/*
 	 * ENDE SONTIGES
@@ -187,6 +198,42 @@ void switchCase(char* function) {
 			LEDBlue_Off();
 		}
 		CDC1_SendString((char*) "go\n");
+	}
+
+	else if (strcmp(function, "testServo") == 0) {
+		Drehen_Enable();
+		Drehen_SetRatio16(atoi(param1));
+		CDC1_SendString((char*) "go\n");
+	}
+
+	else if (strcmp(function, "testEndchalter") == 0) {
+		int loop = 1;
+		while (loop) {
+			if (!AnschlagVertikalOben_GetRawVal()) {
+				CDC1_SendString((char*) "Oben gedrückt");
+				loop = 0;
+			} else if (!AnschlagHorizontalVorne_GetRawVal()) {
+				CDC1_SendString((char*) "Vorne gedrückt");
+				loop = 0;
+
+			} else if (!AnschlagHorizontalHinten_GetRawVal()) {
+				CDC1_SendString((char*) "Hinten gedrückt");
+				loop = 0;
+			}
+		}
+	}
+
+	else if (strcmp(function, "testSwitch") == 0) {
+		int loop = 1;
+		while (loop) {
+			if (!SwitchBlue_GetRawVal()) {
+				CDC1_SendString((char*) "Blau");
+				loop = 0;
+			} else if (!SwitchGreen_GetRawVal()) {
+				CDC1_SendString((char*) "Green");
+				loop = 0;
+			}
+		}
 	}
 
 	/*
@@ -223,22 +270,22 @@ void CDC_Run() {
  * Gilt als Reset aller Signale
  */
 void shitDown() {
-	//Damit der Counter der Strecke stoppt!
+//Damit der Counter der Strecke stoppt!
 	motor_links_DisableEvent();
 	motor_rechts_DisableEvent();
-	//Funktioniert irgendwie!!
-	//Modulo wieder zurücksetzen
+//Funktioniert irgendwie!!
+//Modulo wieder zurücksetzen
 	TPM0_MOD = 59999;
 	TPM1_MOD = 59999;
 
-	//Stellt Motoren ab
+//Stellt Motoren ab
 	Enable_SetVal();
 
-	//Mal sehen!
-	//DC_Greifer_Schiene_Vertikal_Enable();
-	//DC_Greifer_Schiene_Horizontal_Enable();
+//Mal sehen!
+//DC_Greifer_Schiene_Vertikal_Enable();
+//DC_Greifer_Schiene_Horizontal_Enable();
 
-	//Signale auf 0 setzen
+//Signale auf 0 setzen
 	Mulde_leeren_SetRatio16(0xFFFF);
 	Drehen_SetRatio16(0xFFFF);
 	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);

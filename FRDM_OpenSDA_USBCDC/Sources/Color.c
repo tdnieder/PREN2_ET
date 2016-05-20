@@ -6,24 +6,20 @@
  */
 #include "SwitchGreen.h"
 #include "SwitchBlue.h"
+#include "LEDBlue.h"
+#include "LEDGreen.h"
 
-char* buttonPressed() {
-	bool blue = 1;
-	bool green = 1;
-
-	int loop = 1;
-
-	while (loop) {
-		blue = SwitchBlue_GetRawVal();
-		green = SwitchGreen_GetRawVal();
-		if ((blue == 0) || (green == 0)) {
-			loop = 0;
+int buttonPressed() {
+	while (1) {
+		if (!SwitchGreen_GetRawVal()) {
+			LEDGreen_On();
+			LEDBlue_Off();
+			return 1;
 		}
-	}
-	if (green == 0) {
-		return "green";
-	}
-	else if (blue == 0) {
-		return "blue";
+		else if (!SwitchBlue_GetRawVal()) {
+			LEDBlue_On();
+			LEDGreen_Off();
+			return 2;
+		}
 	}
 }

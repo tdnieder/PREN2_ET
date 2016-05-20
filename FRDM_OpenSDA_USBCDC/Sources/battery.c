@@ -15,7 +15,7 @@
 
 
 //Wert den die Batterie nicht unterschreiten darf.
-#define BatValue 45700
+#define BatValue 45700 //2.30V bei unterschreiten Akku unten.
 
 uint16_t value;
 

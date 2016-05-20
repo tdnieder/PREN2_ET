@@ -19,52 +19,53 @@ int timeHorizontal;
  * Greift nach dem Objekt, Servos sollte sich schliessen
  */
 void grab() {
-		Greifen_Enable();
-		Greifen_SetRatio16(Duty2ms);
-		Status.Timer0 == TIMER_USED;
+	Greifen_Enable();
+	Greifen_SetRatio16(Duty2ms);
+	Status.Timer0 == TIMER_USED;
 }
 /*
  * Öffnet den Greifer Arm
  */
 void openGreifer() {
-		Greifen_Enable();
-		Greifen_SetRatio16(Duty1ms);
-		Status.Timer0 == TIMER_USED;
-	}
+	Greifen_Enable();
+	Greifen_SetRatio16(Duty1ms);
+	Status.Timer0 == TIMER_USED;
+}
 
 /*
  * Nachdem der Greifer hochgefahren ist, sollte er den
  * Greifer sammt Tonne drehen und ausleeren
  */
 void turnGrabber(void) {
-		Greifen_Enable();
-		Greifen_SetRatio16(Duty2ms);
-		Drehen_Enable();
-		Drehen_SetRatio16(Duty360Deg2);
-		Status.Timer0 == TIMER_USED;
-	}
+	Greifen_Enable();
+	Greifen_SetRatio16(Duty2ms);
+	Drehen_Enable();
+	Drehen_SetRatio16(Duty360Deg2);
+	Status.Timer0 == TIMER_USED;
+}
 
 /*
  * Dreht den Greiferarm wieder zurück
  */
 void turnBackGrabber(void) {
-		Greifen_Enable();
-		Greifen_SetRatio16(Duty2ms);
-		Drehen_Enable();
-		Drehen_SetRatio16(Duty360Deg1);
-	}
+	Greifen_Enable();
+	Greifen_SetRatio16(Duty2ms);
+	Drehen_Enable();
+	Drehen_SetRatio16(Duty360Deg1);
+}
 
 /*
  * Servo hat den Greifer zugepackt,
  * hät ihn gerade und fährt nun nach oben.
  */
 void up() {
-		up_bit();
-		DC_Greifer_Schiene_Vertikal_Enable();
-		DC_Greifer_Schiene_Vertikal_SetRatio16(100);
-		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Vertikal_Disable();
-		timeVertical += 10;
+	up_bit();
+	Greifen_Enable();
+	DC_Greifer_Schiene_Vertikal_Enable();
+	DC_Greifer_Schiene_Vertikal_SetRatio16(100);
+	WAIT1_Waitms(100);
+	DC_Greifer_Schiene_Vertikal_Disable();
+	timeVertical += 10;
 }
 
 /*
@@ -72,36 +73,39 @@ void up() {
  * den Greifer nun herunter
  */
 void down() {
-		down_bit();
-		DC_Greifer_Schiene_Vertikal_Enable();
-		DC_Greifer_Schiene_Vertikal_SetRatio16(100);
-		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Vertikal_Disable();
-		timeVertical -= 10;
-	}
+	down_bit();
+	//Greifen_Enable();
+	DC_Greifer_Schiene_Vertikal_Enable();
+	DC_Greifer_Schiene_Vertikal_SetRatio16(100);
+	WAIT1_Waitms(100);
+	DC_Greifer_Schiene_Vertikal_Disable();
+	timeVertical -= 10;
+}
 
 /*
  * Bringt den ganzen Greifer nach vorne
  */
 void forward() {
-		forward_bit();
-		DC_Greifer_Schiene_Horizontal_Enable();
-		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
-		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Horizontal_Disable();
-		timeHorizontal += 10;
-	}
+	forward_bit();
+	Greifen_Enable();
+	DC_Greifer_Schiene_Horizontal_Enable();
+	DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+	WAIT1_Waitms(100);
+	DC_Greifer_Schiene_Horizontal_Disable();
+	timeHorizontal += 10;
+}
 /*
  * Bring den Greifer nach hinten.
  */
 void backward() {
-		backward_bit();
-		DC_Greifer_Schiene_Horizontal_Enable();
-		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
-		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Horizontal_Disable();
-		timeHorizontal -= 10;
-	}
+	backward_bit();
+	Greifen_Enable();
+	DC_Greifer_Schiene_Horizontal_Enable();
+	DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+	WAIT1_Waitms(100);
+	DC_Greifer_Schiene_Horizontal_Disable();
+	timeHorizontal -= 10;
+}
 /*
  * Setzt das Bit um Hochzufahren
  */
@@ -152,26 +156,43 @@ void setGrabber(int Hor, int Vert) {
  */
 void setGrabberBack() {
 	int dummy = 0;
-	while(AnschlagVertikalOben_GetRawVal()){
+	while (!AnschlagVertikalOben_GetRawVal()) {
 		up();
 	}
 	WAIT1_Waitms(100);
-	while(AnschlagHorizontalVorne_GetRawVal()){
+	while (!AnschlagHorizontalVorne_GetRawVal()) {
 		forward();
 	}
 	WAIT1_Waitms(100);
-	for(dummy; dummy < 10;dummy++){
+	for (dummy; dummy < 10; dummy++) {
 		down();
 	}
 	WAIT1_Waitms(100);
 	openGreifer();
 	WAIT1_Waitms(500);
-	while(AnschlagHorizontalHinten_GetRawVal()){
+	while (AnschlagHorizontalHinten_GetRawVal()) {
 		backward();
 	}
 }
 
 void setModeBitDc(void) {
 	ModeDC_PutVal(TRUE);
+}
+
+void backToEnd(void) {
+	while (AnschlagHorizontalHinten_GetRawVal()) {
+		backward();
+	}
+}
+
+void upToEnd(void) {
+	while (AnschlagVertikalOben_GetRawVal()) {
+			up();
+	}
+}
+void FrontToEnd(void) {
+	while (AnschlagHorizontalVorne_GetRawVal()) {
+		forward();
+	}
 }
 

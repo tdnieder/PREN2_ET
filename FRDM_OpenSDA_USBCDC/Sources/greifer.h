@@ -98,4 +98,16 @@ void setGrabberBack(void);
  */
 void setModeBitDc();
 
+/*
+ * Greifer geht bis zum Anschlagschalter hinten.
+ */
+void backToEnd(void);
+/*
+ * Greifer geht bis zum Anschlagschalter oben.
+ */
+void upToEnd(void);
+/*
+ * Greifer geht bis zum Anschlagschalter vorne.
+ */
+void FrontToEnd(void);
 #endif /* SOURCES_GREIFER_H_ */
