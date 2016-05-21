@@ -54,15 +54,10 @@ void initEngines(void) {
 	setTimerFrequencyLeft(ModuloValueMotor);
 
 	Enable_PutVal(ENABLE);
-	//Motoren beginnen zu drehen
-	motor_rechts_Enable();
-	motor_links_Enable();
 
 	motor_rechts_SetRatio16(30000);
 	motor_links_SetRatio16(30000);
 
-	//Status.Timer0 = TIMER_USED;
-	//Status.Timer1 = TIMER_USED;
 }
 
 /*

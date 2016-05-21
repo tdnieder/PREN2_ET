@@ -6,7 +6,10 @@
  */
 
 #include "greifer.h"
-
+#include "AnschlagHorizontalVorne.h"
+#include "AnschlagVertikalOben.h"
+#include "AnschlagHorizontalHinten.h"
+#include "stdbool.h"
 //Zeit um Reset Wert
 int timeVertical;
 int timeHorizontal;
@@ -19,7 +22,6 @@ int timeHorizontal;
  * Greift nach dem Objekt, Servos sollte sich schliessen
  */
 void grab() {
-	Greifen_Enable();
 	Greifen_SetRatio16(Duty2ms);
 	Status.Timer0 == TIMER_USED;
 }
@@ -27,7 +29,6 @@ void grab() {
  * Öffnet den Greifer Arm
  */
 void openGreifer() {
-	Greifen_Enable();
 	Greifen_SetRatio16(Duty1ms);
 	Status.Timer0 == TIMER_USED;
 }
@@ -37,9 +38,7 @@ void openGreifer() {
  * Greifer sammt Tonne drehen und ausleeren
  */
 void turnGrabber(void) {
-	Greifen_Enable();
 	Greifen_SetRatio16(Duty2ms);
-	Drehen_Enable();
 	Drehen_SetRatio16(Duty360Deg2);
 	Status.Timer0 == TIMER_USED;
 }
@@ -48,9 +47,7 @@ void turnGrabber(void) {
  * Dreht den Greiferarm wieder zurück
  */
 void turnBackGrabber(void) {
-	Greifen_Enable();
 	Greifen_SetRatio16(Duty2ms);
-	Drehen_Enable();
 	Drehen_SetRatio16(Duty360Deg1);
 }
 
@@ -59,13 +56,11 @@ void turnBackGrabber(void) {
  * hät ihn gerade und fährt nun nach oben.
  */
 void up() {
-	up_bit();
-	Greifen_Enable();
-	DC_Greifer_Schiene_Vertikal_Enable();
-	DC_Greifer_Schiene_Vertikal_SetRatio16(100);
-	WAIT1_Waitms(100);
-	DC_Greifer_Schiene_Vertikal_Disable();
-	timeVertical += 10;
+		up_bit();
+		DC_Greifer_Schiene_Vertikal_SetRatio16(100);
+		WAIT1_Waitms(100);
+		DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
+
 }
 
 /*
@@ -74,37 +69,28 @@ void up() {
  */
 void down() {
 	down_bit();
-	//Greifen_Enable();
-	DC_Greifer_Schiene_Vertikal_Enable();
 	DC_Greifer_Schiene_Vertikal_SetRatio16(100);
 	WAIT1_Waitms(100);
-	DC_Greifer_Schiene_Vertikal_Disable();
-	timeVertical -= 10;
+	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
 }
 
 /*
  * Bringt den ganzen Greifer nach vorne
  */
 void forward() {
-	forward_bit();
-	Greifen_Enable();
-	DC_Greifer_Schiene_Horizontal_Enable();
-	DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
-	WAIT1_Waitms(100);
-	DC_Greifer_Schiene_Horizontal_Disable();
-	timeHorizontal += 10;
+		forward_bit();
+		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+		WAIT1_Waitms(100);
+		DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 }
 /*
  * Bring den Greifer nach hinten.
  */
 void backward() {
-	backward_bit();
-	Greifen_Enable();
-	DC_Greifer_Schiene_Horizontal_Enable();
-	DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
-	WAIT1_Waitms(100);
-	DC_Greifer_Schiene_Horizontal_Disable();
-	timeHorizontal -= 10;
+		backward_bit();
+		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+		WAIT1_Waitms(100);
+		DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 }
 /*
  * Setzt das Bit um Hochzufahren
@@ -180,19 +166,37 @@ void setModeBitDc(void) {
 }
 
 void backToEnd(void) {
-	while (AnschlagHorizontalHinten_GetRawVal()) {
-		backward();
+	int loop = 1;
+	while (loop) {
+		backward_bit();
+		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+		if (!AnschlagHorizontalVorne_GetRawVal()) {
+			loop = 0;
+			DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
+		}
 	}
 }
 
 void upToEnd(void) {
-	while (AnschlagVertikalOben_GetRawVal()) {
-			up();
+	int loop = 1;
+	while (loop) {
+		down_bit();
+		DC_Greifer_Schiene_Vertikal_SetRatio16(100);
+		if (!AnschlagHorizontalHinten_GetRawVal()) {
+			loop = 0;
+			DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
+		}
 	}
 }
-void FrontToEnd(void) {
-	while (AnschlagHorizontalVorne_GetRawVal()) {
-		forward();
+void frontToEnd(void) {
+	int loop = 1;
+	while (loop) {
+		forward_bit();
+		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+		if (!AnschlagVertikalOben_GetRawVal()) {
+			loop = 0;
+			DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
+		}
 	}
 }
 

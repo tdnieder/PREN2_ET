@@ -143,6 +143,10 @@ void switchCase(char* function) {
 			upToEnd();
 			CDC1_SendString((char*) "go\n");
 		}
+	else if (strcmp(function, "frontToEnd") == 0) {
+			frontToEnd();
+			CDC1_SendString((char*) "go\n");
+		}
 
 	/*
 	 * ENDE GREIFER
@@ -281,15 +285,13 @@ void shitDown() {
 //Stellt Motoren ab
 	Enable_SetVal();
 
-//Mal sehen!
-//DC_Greifer_Schiene_Vertikal_Enable();
-//DC_Greifer_Schiene_Horizontal_Enable();
-
 //Signale auf 0 setzen
 	Mulde_leeren_SetRatio16(0xFFFF);
 	Drehen_SetRatio16(0xFFFF);
 	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
 	Greifen_SetRatio16(0xFFFF);
 	DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
+	motor_links_SetRatio16(0xFFFF);
+	motor_rechts_SetRatio16(0xFFFF);
 }
 

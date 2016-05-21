@@ -117,7 +117,7 @@
 //---------------------------
 int Duty1ms = 58500;
 int Duty2ms = 61500;
-int Duty360Deg1 = 63000;
+int Duty360Deg1 = 62500;
 int Duty360Deg2 = 59000;
 //---------------------------
 //Methods
@@ -133,6 +133,7 @@ int main(void)
 	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
 	//DAMIT ALLE SIGNALE NULL SIND
+	//Alle Devices auf 0!!
 	shitDown();
 	//PULL UP PTC11 -> Switch GREEN
 	PORT_PDD_SetPinPullSelect(PORTC_BASE_PTR, 11,PORT_PDD_PULL_UP);
