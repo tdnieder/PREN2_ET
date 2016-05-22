@@ -85,6 +85,10 @@ void switchCase(char* function) {
 		setTimerFrequencyLeft(atoi(param1));
 		CDC1_SendString((char*) "go\n");
 
+	} else if (strcmp(function, "setEngineSteps") == 0) {
+		setEngineSteps(atoi(param1));
+		CDC1_SendString((char*) "go\n");
+
 	} else if (strcmp(function, "setSpeedRight") == 0) {
 		setTimerFrequencyRight(atoi(param1));
 		CDC1_SendString((char*) "go\n");
@@ -136,17 +140,15 @@ void switchCase(char* function) {
 	}
 
 	else if (strcmp(function, "backToEnd") == 0) {
-			backToEnd();
-			CDC1_SendString((char*) "go\n");
-		}
-	else if (strcmp(function, "upToEnd") == 0) {
-			upToEnd();
-			CDC1_SendString((char*) "go\n");
-		}
-	else if (strcmp(function, "frontToEnd") == 0) {
-			frontToEnd();
-			CDC1_SendString((char*) "go\n");
-		}
+		backToEnd();
+		CDC1_SendString((char*) "go\n");
+	} else if (strcmp(function, "upToEnd") == 0) {
+		upToEnd();
+		CDC1_SendString((char*) "go\n");
+	} else if (strcmp(function, "frontToEnd") == 0) {
+		frontToEnd();
+		CDC1_SendString((char*) "go\n");
+	}
 
 	/*
 	 * ENDE GREIFER
@@ -238,6 +240,16 @@ void switchCase(char* function) {
 				loop = 0;
 			}
 		}
+	}
+
+	else if (strcmp(function, "endeGelaende") == 0) {
+		CDC1_SendString((char*) "go\n");
+		exit(0);
+		CDC1_SendString((char*) "go\n");
+	}
+	else if (strcmp(function, "beginn") == 0) {
+		main();
+		CDC1_SendString((char*) "go\n");
 	}
 
 	/*

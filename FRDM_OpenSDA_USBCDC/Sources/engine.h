@@ -98,13 +98,15 @@ void setSpeed(int);
 /*
  * Fährt eine Rampe hoch
  */
-void ramp();
+void ramp(void);
 /*
  * Sollte die Strecke Ausmessen, welche bereits zurückgelegt wurde.
  */
-int calcDistance();
+int calcDistance(void);
 
-void countLeftStep();
+void countLeftStep(void);
 
-void countRightStep();
+void countRightStep(void);
+
+void setEngineSteps(int);
 #endif /* SOURCES_ENGINE_H_ */

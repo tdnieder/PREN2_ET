@@ -32,9 +32,10 @@ volatile int ModuloValueTimer1;
 void initEngines(void) {
 // Makros erstellen
 	//Bit Setzten für Treiber
-	MS1_PutVal(MSBIT1); //PTE2
-	MS2_PutVal(MSBIT2);
-	MS3_PutVal(MSBIT3);
+	//MS1_PutVal(MSBIT1); //PTE2
+	//MS2_PutVal(MSBIT2);
+	//MS3_PutVal(MSBIT3);
+	setEngineSteps(8);
 	Sleep_PutVal(SLEEP);
 
 
@@ -139,7 +140,6 @@ int calcDistance() {
 	//Weil wir im HalfStep Modus sind kann mit if's gelöst werden wenn MSB Bits automatisch geändert werden sollen
 	mean = (mean / 8);
 	distance = (int)((mean * (stepperAngle * (PII / 180)) * radiusRad)*10);	//distance;
-	//distance = distance+ 3;
 	return distance;
 }
 
@@ -149,4 +149,32 @@ void countLeftStep() {
 
 void countRightStep() {
 	counterRight++;
+}
+
+void setEngineSteps(int steps){
+	if(steps == 1){
+		MS1_PutVal(0);
+		MS2_PutVal(0);
+		MS3_PutVal(0);
+	}
+	else if(steps == 2){
+		MS1_PutVal(1);
+		MS2_PutVal(0);
+		MS3_PutVal(0);
+	}
+	else if(steps == 4){
+		MS1_PutVal(0);
+		MS2_PutVal(1);
+		MS3_PutVal(0);
+	}
+	else if(steps == 8){
+		MS1_PutVal(1);
+		MS2_PutVal(1);
+		MS3_PutVal(0);
+	}
+	else if(steps == 16){
+		MS1_PutVal(1);
+		MS2_PutVal(1);
+		MS3_PutVal(1);
+	}
 }
