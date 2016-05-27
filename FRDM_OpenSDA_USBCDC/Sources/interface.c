@@ -247,7 +247,7 @@ void switchCase(char* function) {
 		exit(0);
 		CDC1_SendString((char*) "go\n");
 	}
-	else if (strcmp(function, "beginn") == 0) {
+	else if (strcmp(function, "begin") == 0) {
 		main();
 		CDC1_SendString((char*) "go\n");
 	}
