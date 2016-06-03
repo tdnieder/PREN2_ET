@@ -42,7 +42,7 @@ void US_EventEchoCapture(LDD_TUserData *UserDataPtr) {
 	}
 }
 
-static uint16_t calcAirspeed_dms(uint8_t temperatureCelsius) {
+ uint16_t calcAirspeed_dms(uint8_t temperatureCelsius) {
 	/* Return the airspeed depending on the temperature, in deci-meter per second */
 	unsigned int airspeed; /* decimeters per second */
 
@@ -82,11 +82,6 @@ int Measure() {
 
 	us = US_Measure_us(); //mikro Meter
 	cm = US_usToCentimeters(us, 22); //Zenti Meter
-
-//Test
-//  LEDRed_Put(cm<10); /* red LED if object closer than 10 cm */
-//  LEDBlue_Put(cm>=10&&cm<=100); /* blue LED if object is in 10..100 cm range */
-//  LEDGreen_Put(cm>100); /* blue LED if object is in 10..100 cm range */
 
 	return cm;
 }

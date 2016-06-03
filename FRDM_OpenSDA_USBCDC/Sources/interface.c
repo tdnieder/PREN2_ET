@@ -119,9 +119,8 @@ void switchCase(char* function) {
 	}
 
 	else if (strcmp(function, "emptyContainer") == 0) {
-		Greifen_Enable(); //test
 		turnBackGrabber();
-		WAIT1_Waitms(2000);
+		WAIT1_Waitms(3000);
 		turnGrabber();
 		CDC1_SendString((char*) "go\n");
 	}
@@ -141,12 +140,15 @@ void switchCase(char* function) {
 
 	else if (strcmp(function, "backToEnd") == 0) {
 		backToEnd();
+		DC_Greifer_Schiene_Horizontal_SetRatio16(0);
 		CDC1_SendString((char*) "go\n");
 	} else if (strcmp(function, "upToEnd") == 0) {
 		upToEnd();
+		DC_Greifer_Schiene_Vertikal_SetRatio16(0);
 		CDC1_SendString((char*) "go\n");
 	} else if (strcmp(function, "frontToEnd") == 0) {
 		frontToEnd();
+		DC_Greifer_Schiene_Horizontal_SetRatio16(0);
 		CDC1_SendString((char*) "go\n");
 	}
 
@@ -169,9 +171,14 @@ void switchCase(char* function) {
 	 * SONTIGES
 	 */
 	else if (strcmp(function, "getDistanceEnemy") == 0) {
+		int j = 0;
 		US_Init();
-		sprintf(distanceEnemyArray, "%i\n", Measure());
+		sprintf(distanceEnemyArray, "%d\n", Measure());
 		CDC1_SendString(distanceEnemyArray);
+		while (j != 7) {
+			distanceEnemyArray[j] = 0;
+			j++;
+		}
 	} else if (strcmp(function, "battery") == 0) {
 		CDC1_SendString((char*) measureBattery()); //1 = leer
 		CDC1_SendString((char*) "go\n");
@@ -207,8 +214,8 @@ void switchCase(char* function) {
 	}
 
 	else if (strcmp(function, "testServo") == 0) {
-		Drehen_Enable();
-		Drehen_SetRatio16(atoi(param1));
+		Mulde_leeren_Enable();
+		Mulde_leeren_SetRatio16(atoi(param1));
 		CDC1_SendString((char*) "go\n");
 	}
 

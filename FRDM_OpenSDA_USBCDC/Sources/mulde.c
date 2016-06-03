@@ -10,8 +10,8 @@ extern int Duty1ms;
 extern int Duty2ms;
 
 int MuldenDutyStop = 65999;
-int ForwardDuty = 61000;
-int BackwardDuty = 60000;
+int ForwardDuty = 60000;
+int BackwardDuty = 61000;
 
 void initMulde(){
 	unloadThrough();
@@ -33,15 +33,28 @@ void turnbackThrough(){
 void unloadThrough(){
 	Status.Timer0 == TIMER_USED;
 	turnempty();
-	WAIT1_Waitms(1200);
+	WAIT1_Waitms(1300);
 
 	Mulde_leeren_SetRatio16(MuldenDutyStop);
 
 	WAIT1_Waitms(2000);
 	turnbackThrough();
-	WAIT1_Waitms(1200);
+	WAIT1_Waitms(1300);
 
 	Mulde_leeren_SetRatio16(MuldenDutyStop);
 
 	Status.Timer0 == TIMER_IDLE;
+}
+
+
+void smooth(){
+	Mulde_leeren_SetRatio16(BackwardDuty);
+	WAIT1_Waitms(200);
+	Mulde_leeren_SetRatio16(MuldenDutyStop);
+}
+
+void smoothBack(){
+	Mulde_leeren_SetRatio16(ForwardDuty);
+	WAIT1_Waitms(200);
+	Mulde_leeren_SetRatio16(MuldenDutyStop);
 }

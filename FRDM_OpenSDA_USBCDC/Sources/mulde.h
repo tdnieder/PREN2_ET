@@ -22,4 +22,7 @@ void turnbackThrough(void);
 
 void unloadThrough(void);
 
+void smooth(void);
+
+void smoothBack(void);
 #endif /* SOURCES_MULDE_H_ */

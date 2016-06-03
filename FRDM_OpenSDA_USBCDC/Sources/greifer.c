@@ -10,6 +10,7 @@
 #include "AnschlagVertikalOben.h"
 #include "AnschlagHorizontalHinten.h"
 #include "stdbool.h"
+#include "mulde.h"
 //Zeit um Reset Wert
 int timeVertical;
 int timeHorizontal;
@@ -38,6 +39,7 @@ void openGreifer() {
  * Greifer sammt Tonne drehen und ausleeren
  */
 void turnGrabber(void) {
+	smooth();
 	Greifen_SetRatio16(Duty2ms);
 	Drehen_SetRatio16(Duty360Deg2);
 	Status.Timer0 == TIMER_USED;
@@ -49,6 +51,7 @@ void turnGrabber(void) {
 void turnBackGrabber(void) {
 	Greifen_SetRatio16(Duty2ms);
 	Drehen_SetRatio16(Duty360Deg1);
+	smoothBack();
 }
 
 /*
@@ -142,23 +145,14 @@ void setGrabber(int Hor, int Vert) {
  */
 void setGrabberBack() {
 	int dummy = 0;
-	while (!AnschlagVertikalOben_GetRawVal()) {
-		up();
-	}
-	WAIT1_Waitms(100);
-	while (!AnschlagHorizontalVorne_GetRawVal()) {
-		forward();
-	}
-	WAIT1_Waitms(100);
-	for (dummy; dummy < 10; dummy++) {
-		down();
-	}
-	WAIT1_Waitms(100);
-	openGreifer();
+	upToEnd();
+	WAIT1_Waitms(2000);
+	backToEnd();
+	WAIT1_Waitms(2000);
+	turnBackGrabber();
+	WAIT1_Waitms(2000);
+	turnGrabber();
 	WAIT1_Waitms(500);
-	while (AnschlagHorizontalHinten_GetRawVal()) {
-		backward();
-	}
 }
 
 void setModeBitDc(void) {
@@ -167,36 +161,41 @@ void setModeBitDc(void) {
 
 void backToEnd(void) {
 	int loop = 1;
+	backward_bit();
+	DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
 	while (loop) {
-		backward_bit();
-		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+		WAIT1_Wait10Cycles();
 		if (!AnschlagHorizontalVorne_GetRawVal()) {
 			loop = 0;
 			DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 		}
 	}
+	DC_Greifer_Schiene_Horizontal_SetRatio16(0);
 }
 
 void upToEnd(void) {
 	int loop = 1;
+	down_bit();
+	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
 	while (loop) {
-		down_bit();
-		DC_Greifer_Schiene_Vertikal_SetRatio16(100);
+		WAIT1_Wait10Cycles();
 		if (!AnschlagHorizontalHinten_GetRawVal()) {
 			loop = 0;
-			DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
 		}
 	}
+	DC_Greifer_Schiene_Vertikal_SetRatio16(100);
 }
+
 void frontToEnd(void) {
 	int loop = 1;
+	forward_bit();
+	DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
 	while (loop) {
-		forward_bit();
-		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+		WAIT1_Wait10Cycles();
 		if (!AnschlagVertikalOben_GetRawVal()) {
 			loop = 0;
-			DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 		}
 	}
+	DC_Greifer_Schiene_Horizontal_SetRatio16(0);
 }
 

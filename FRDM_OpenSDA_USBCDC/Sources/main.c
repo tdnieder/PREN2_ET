@@ -117,7 +117,7 @@
 //---------------------------
 int Duty1ms = 58500;
 int Duty2ms = 61500;
-int Duty360Deg1 = 62500;
+int Duty360Deg1 = 62000;
 int Duty360Deg2 = 59000;
 //---------------------------
 //Methods
