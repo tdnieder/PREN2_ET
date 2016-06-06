@@ -25,36 +25,44 @@ void turnempty(){
 }
 
 void turnbackThrough(){
-
 	Mulde_leeren_SetRatio16(BackwardDuty);
-
 }
-
+/*
+ * Entleert mit 3 maligem nachrütteln
+ */
 void unloadThrough(){
+	int i = 1;
 	Status.Timer0 == TIMER_USED;
 	turnempty();
-	WAIT1_Waitms(1300);
-
+	WAIT1_Waitms(600);
 	Mulde_leeren_SetRatio16(MuldenDutyStop);
 
-	WAIT1_Waitms(2000);
+	while(i != 3){
+	WAIT1_Waitms(200);
 	turnbackThrough();
-	WAIT1_Waitms(1300);
+	WAIT1_Waitms(200);
+	turnempty();
+	WAIT1_Waitms(200);
+	Mulde_leeren_SetRatio16(MuldenDutyStop);
+	i++;
+	}
 
 	Mulde_leeren_SetRatio16(MuldenDutyStop);
-
-	Status.Timer0 == TIMER_IDLE;
+	WAIT1_Waitms(200);
+	turnbackThrough();
+	WAIT1_Waitms(283);
+	Mulde_leeren_SetRatio16(MuldenDutyStop);
 }
 
 
 void smooth(){
 	Mulde_leeren_SetRatio16(BackwardDuty);
-	WAIT1_Waitms(200);
+	WAIT1_Waitms(50);
 	Mulde_leeren_SetRatio16(MuldenDutyStop);
 }
 
 void smoothBack(){
 	Mulde_leeren_SetRatio16(ForwardDuty);
-	WAIT1_Waitms(200);
+	WAIT1_Waitms(40);
 	Mulde_leeren_SetRatio16(MuldenDutyStop);
 }

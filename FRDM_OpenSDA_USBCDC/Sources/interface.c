@@ -144,7 +144,6 @@ void switchCase(char* function) {
 		CDC1_SendString((char*) "go\n");
 	} else if (strcmp(function, "upToEnd") == 0) {
 		upToEnd();
-		DC_Greifer_Schiene_Vertikal_SetRatio16(0);
 		CDC1_SendString((char*) "go\n");
 	} else if (strcmp(function, "frontToEnd") == 0) {
 		frontToEnd();

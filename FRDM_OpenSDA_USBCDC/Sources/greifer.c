@@ -40,9 +40,9 @@ void openGreifer() {
  */
 void turnGrabber(void) {
 	smooth();
+	WAIT1_Waitms(100);
 	Greifen_SetRatio16(Duty2ms);
 	Drehen_SetRatio16(Duty360Deg2);
-	Status.Timer0 == TIMER_USED;
 }
 
 /*
@@ -51,7 +51,10 @@ void turnGrabber(void) {
 void turnBackGrabber(void) {
 	Greifen_SetRatio16(Duty2ms);
 	Drehen_SetRatio16(Duty360Deg1);
+	WAIT1_Waitms(1000);
 	smoothBack();
+	//WAIT1_Waitms(1000);
+	//shakeShake();
 }
 
 /*
@@ -99,25 +102,25 @@ void backward() {
  * Setzt das Bit um Hochzufahren
  */
 void up_bit() {
-	DCVertikalBit_ClrVal();
+	DCVertikalBit_PutVal(1);
 }
 /*
  * Setzt das Bit so um wieder runterzufahren
  */
 void down_bit() {
-	DCVertikalBit_SetVal();
+	DCVertikalBit_PutVal(0);
 }
 /*
  * Setzt das Bit um nach vorne zu fahren
  */
 void forward_bit() {
-	DCHorizontalBit_SetVal();
+	DCHorizontalBit_PutVal(1);
 }
 /*
  * Setzt das Bit um nach hinten zu fahren
  */
 void backward_bit() {
-	DCHorizontalBit_ClrVal();
+	DCHorizontalBit_PutVal(0);
 }
 /*
  * Setzt den greifer an der Schiene hoch/runter usw.
@@ -175,15 +178,21 @@ void backToEnd(void) {
 
 void upToEnd(void) {
 	int loop = 1;
-	down_bit();
-	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
+	//test
+	DCVertikalBit_PutVal(0);
+	//up_bit();
+	DC_Greifer_Schiene_Vertikal_SetRatio16(1000);
 	while (loop) {
+		//DCVertikalBit_PutVal(0);
 		WAIT1_Wait10Cycles();
 		if (!AnschlagHorizontalHinten_GetRawVal()) {
 			loop = 0;
 		}
+
 	}
-	DC_Greifer_Schiene_Vertikal_SetRatio16(100);
+	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
+	//Test
+	//DCVertikalBit_PutVal(0);
 }
 
 void frontToEnd(void) {
@@ -199,3 +208,11 @@ void frontToEnd(void) {
 	DC_Greifer_Schiene_Horizontal_SetRatio16(0);
 }
 
+
+void shakeShake(){
+	Drehen_SetRatio16(Duty360Deg1);
+	WAIT1_Waitms(500);
+	Drehen_SetRatio16(61000);
+	WAIT1_Waitms(500);
+	Drehen_SetRatio16(Duty360Deg1);
+}

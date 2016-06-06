@@ -110,4 +110,6 @@ void upToEnd(void);
  * Greifer geht bis zum Anschlagschalter vorne.
  */
 void frontToEnd(void);
+
+void shakeShake(void);
 #endif /* SOURCES_GREIFER_H_ */
