@@ -36,6 +36,12 @@
 #include "Color.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "ModeDC.h"
+#include "DCVertikalBit.h"
+#include "DCHorizontalBit.h"
+#include "DC_Greifer_Schiene_Horizontal.h"
+#include "DC_Greifer_Schiene_Vertikal.h"
+#include "mulde.h"
 
 #define RaumTemperatur 20
 
@@ -119,9 +125,19 @@ void switchCase(char* function) {
 	}
 
 	else if (strcmp(function, "emptyContainer") == 0) {
+		turnempty();
+		WAIT1_Waitms(35);
+		stopMulde();
 		turnBackGrabber();
 		WAIT1_Waitms(3000);
 		turnGrabber();
+		turnbackThrough();
+		WAIT1_Waitms(15);
+		stopMulde();
+		stopMulde();
+		stopMulde();
+		stopMulde();
+		stopMulde();
 		CDC1_SendString((char*) "go\n");
 	}
 
@@ -140,14 +156,15 @@ void switchCase(char* function) {
 
 	else if (strcmp(function, "backToEnd") == 0) {
 		backToEnd();
-		DC_Greifer_Schiene_Horizontal_SetRatio16(0);
 		CDC1_SendString((char*) "go\n");
 	} else if (strcmp(function, "upToEnd") == 0) {
 		upToEnd();
 		CDC1_SendString((char*) "go\n");
 	} else if (strcmp(function, "frontToEnd") == 0) {
 		frontToEnd();
-		DC_Greifer_Schiene_Horizontal_SetRatio16(0);
+		CDC1_SendString((char*) "go\n");
+	} else if (strcmp(function, "dropContainer") == 0) {
+		dropContainer();
 		CDC1_SendString((char*) "go\n");
 	}
 
@@ -213,8 +230,7 @@ void switchCase(char* function) {
 	}
 
 	else if (strcmp(function, "testServo") == 0) {
-		Mulde_leeren_Enable();
-		Mulde_leeren_SetRatio16(atoi(param1));
+		Drehen_SetRatio16(atoi(param1));
 		CDC1_SendString((char*) "go\n");
 	}
 
@@ -252,9 +268,24 @@ void switchCase(char* function) {
 		CDC1_SendString((char*) "go\n");
 		exit(0);
 		CDC1_SendString((char*) "go\n");
-	}
-	else if (strcmp(function, "begin") == 0) {
+	} else if (strcmp(function, "begin") == 0) {
 		main();
+		CDC1_SendString((char*) "go\n");
+	} else if (strcmp(function, "setDCBit") == 0) {
+		ModeDC_SetDir(atoi(param1));
+		CDC1_SendString((char*) "go\n");
+	} else if (strcmp(function, "setDCVHBit") == 0) {
+		DCVertikalBit_SetDir(atoi(param1));
+		DCHorizontalBit_SetDir(atoi(param2));
+		CDC1_SendString((char*) "go\n");
+	} else if (strcmp(function, "Motoren") == 0) {
+		DC_Greifer_Schiene_Vertikal_SetRatio16(100);
+		WAIT1_Waitms(100);
+		DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
+
+		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+		WAIT1_Waitms(100);
+		DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 		CDC1_SendString((char*) "go\n");
 	}
 

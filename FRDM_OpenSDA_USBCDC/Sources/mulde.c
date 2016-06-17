@@ -18,14 +18,14 @@ void initMulde(){
 }
 
 void turnempty(){
-
 	Mulde_leeren_SetRatio16(ForwardDuty);
-
-
 }
 
 void turnbackThrough(){
 	Mulde_leeren_SetRatio16(BackwardDuty);
+}
+void stopMulde(){
+	Mulde_leeren_SetRatio16(MuldenDutyStop);
 }
 /*
  * Entleert mit 3 maligem nachrütteln

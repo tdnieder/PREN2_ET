@@ -111,5 +111,8 @@ void upToEnd(void);
  */
 void frontToEnd(void);
 
+
+void dropContainer(void);
+
 void shakeShake(void);
 #endif /* SOURCES_GREIFER_H_ */

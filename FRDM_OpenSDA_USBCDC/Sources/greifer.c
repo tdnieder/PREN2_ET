@@ -39,8 +39,7 @@ void openGreifer() {
  * Greifer sammt Tonne drehen und ausleeren
  */
 void turnGrabber(void) {
-	smooth();
-	WAIT1_Waitms(100);
+	WAIT1_Waitms(400);
 	Greifen_SetRatio16(Duty2ms);
 	Drehen_SetRatio16(Duty360Deg2);
 }
@@ -52,9 +51,6 @@ void turnBackGrabber(void) {
 	Greifen_SetRatio16(Duty2ms);
 	Drehen_SetRatio16(Duty360Deg1);
 	WAIT1_Waitms(1000);
-	smoothBack();
-	//WAIT1_Waitms(1000);
-	//shakeShake();
 }
 
 /*
@@ -62,10 +58,10 @@ void turnBackGrabber(void) {
  * hät ihn gerade und fährt nun nach oben.
  */
 void up() {
-		up_bit();
-		DC_Greifer_Schiene_Vertikal_SetRatio16(100);
-		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
+	up_bit();
+	DC_Greifer_Schiene_Vertikal_SetRatio16(100);
+	WAIT1_Waitms(100);
+	DC_Greifer_Schiene_Vertikal_SetRatio16(0xFFFF);
 
 }
 
@@ -84,19 +80,19 @@ void down() {
  * Bringt den ganzen Greifer nach vorne
  */
 void forward() {
-		forward_bit();
-		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
-		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
+	forward_bit();
+	DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+	WAIT1_Waitms(100);
+	DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 }
 /*
  * Bring den Greifer nach hinten.
  */
 void backward() {
-		backward_bit();
-		DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
-		WAIT1_Waitms(100);
-		DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
+	backward_bit();
+	DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+	WAIT1_Waitms(100);
+	DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 }
 /*
  * Setzt das Bit um Hochzufahren
@@ -164,8 +160,9 @@ void setModeBitDc(void) {
 
 void backToEnd(void) {
 	int loop = 1;
-	backward_bit();
-	DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+	ModeDC_SetVal();
+	forward_bit();
+	DC_Greifer_Schiene_Horizontal_SetRatio16(10000);
 	while (loop) {
 		WAIT1_Wait10Cycles();
 		if (!AnschlagHorizontalVorne_GetRawVal()) {
@@ -173,14 +170,14 @@ void backToEnd(void) {
 			DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 		}
 	}
-	DC_Greifer_Schiene_Horizontal_SetRatio16(0);
+	DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 }
 
 void upToEnd(void) {
 	int loop = 1;
 	//test
-	DCVertikalBit_PutVal(0);
-	//up_bit();
+	ModeDC_SetVal();
+	DCVertikalBit_PutVal(1);
 	DC_Greifer_Schiene_Vertikal_SetRatio16(1000);
 	while (loop) {
 		//DCVertikalBit_PutVal(0);
@@ -195,24 +192,44 @@ void upToEnd(void) {
 	//DCVertikalBit_PutVal(0);
 }
 
-void frontToEnd(void) {
+void frontToEnd() {
 	int loop = 1;
-	forward_bit();
-	DC_Greifer_Schiene_Horizontal_SetRatio16(30000);
+	ModeDC_SetVal();
+	backward_bit();
+	DC_Greifer_Schiene_Horizontal_SetRatio16(10000);
 	while (loop) {
 		WAIT1_Wait10Cycles();
 		if (!AnschlagVertikalOben_GetRawVal()) {
 			loop = 0;
 		}
 	}
-	DC_Greifer_Schiene_Horizontal_SetRatio16(0);
+	DC_Greifer_Schiene_Horizontal_SetRatio16(0xFFFF);
 }
 
-
-void shakeShake(){
+void shakeShake() {
 	Drehen_SetRatio16(Duty360Deg1);
 	WAIT1_Waitms(500);
 	Drehen_SetRatio16(61000);
 	WAIT1_Waitms(500);
 	Drehen_SetRatio16(Duty360Deg1);
+}
+
+void dropContainer() {
+	int l = 0;
+	upToEnd();
+	WAIT1_Waitms(500);
+	frontToEnd();
+	WAIT1_Waitms(500);
+	//Bis er den Container fast nicht mehr hält.
+	//Greifen_SetRatio16();
+	for (l; l <= 20; l++) {
+		setGrabber(0, 2);
+	}
+	WAIT1_Waitms(500);
+	openGreifer();
+	WAIT1_Waitms(500);
+	upToEnd();
+	WAIT1_Waitms(100);
+	backToEnd();
+
 }

@@ -32,9 +32,9 @@ volatile int ModuloValueTimer1;
 void initEngines(void) {
 // Makros erstellen
 	//Bit Setzten für Treiber
-	//MS1_PutVal(MSBIT1); //PTE2
-	//MS2_PutVal(MSBIT2);
-	//MS3_PutVal(MSBIT3);
+	MS1_PutVal(MSBIT1); //PTE2
+	MS2_PutVal(MSBIT2);
+	MS3_PutVal(MSBIT3);
 	setEngineSteps(8);
 	Sleep_PutVal(SLEEP);
 
